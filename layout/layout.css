@@ -1,0 +1,61 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+:root {
+    --button-spacing: 5mm;
+    --calculated-spacing: calc(var(--button-spacing) / 2);
+
+    --switch-size: 15.6mm;
+    --cap-size: 18.2mm;
+
+
+
+    --pad-height: 126mm;
+    --pad-width: 97.8mm;
+}
+
+.key {
+    border: 1px solid black;
+    width: var(--cap-size);
+    height: var(--cap-size);
+    margin: var(--calculated-spacing);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.switch {
+    border: 1px solid black;
+    width: var(--switch-size);
+    height: var(--switch-size);
+    margin: var(--calculated-spacing);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pad {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: var(--calculated-spacing);
+    margin: 5em;
+
+    width: var(--pad-width);
+    height: var(--pad-height);
+}
+
+.pad>div {
+    display: flex;
+}
