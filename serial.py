@@ -10,13 +10,11 @@ def setup():
   GPIO.setup(pin, GPIO.IN)   # Set LedPin's mode is output
   GPIO.setup(pin1, GPIO.OUT)   # Set LedPin's mode is output
   
-  
-  GPIO.output(pin1, GPIO.HIGH)
 
 def loop():
   while True:
     print(GPIO.input(pin))
-    time.sleep(1)
+    time.sleep(0.2)
 
 def destroy():
   GPIO.output(pin1, GPIO.LOW)   # led off
