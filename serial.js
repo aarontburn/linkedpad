@@ -1,17 +1,7 @@
-import * as jf from 'johnny-five';
-import { RaspiIO } from 'raspi-io'
+import { Gpio } from "onoff";
 
-const board = new jf.Board({
-    io: new RaspiIO()
-});
+const PIN_1 = new Gpio(3, 'in');
+const PIN_2 = new Gpio(5, 'in');
 
-board.on('ready', () => {
-    (new jf.Pin('P1-3')).read((error, value) => {
-        console.log(value)
-    })
-    (new jf.Pin('P1-5')).read((error, value) => {
-        console.log(value)
-    })
-});
-
-
+PIN_1.watch((err, val) => console.log(val))
+PIN_2.watch((err, val) => console.log(val))
