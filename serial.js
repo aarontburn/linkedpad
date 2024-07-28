@@ -7,7 +7,6 @@ const pin = new Gpio(11);
 const pin1 = new Gpio(37)
 
 pin1.digitalWrite(HIGH)
-
 pin.digitalWrite(LOW)
 
 console.log("Listening...")
