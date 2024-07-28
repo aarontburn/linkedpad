@@ -3,7 +3,7 @@ import { Gpio } from "pigpio";
 const HIGH = 1;
 const LOW = 0;
 
-const pin = new Gpio(5, { mode: Gpio.OUTPUT });
+const pin = new Gpio(5, { mode: Gpio.INPUT, pullUpDown: Gpio.PUD_UP });
 
 pin.digitalWrite(HIGH)
 
