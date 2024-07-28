@@ -30,4 +30,8 @@ pin2.on('interrupt', (level) => {
 
 console.log("Listening...")
 
-setInterval(() => {}, 1000);
+// setInterval(() => {}, 1000);
+
+while (true) {
+    console.log(pin2.digitalRead())
+}
