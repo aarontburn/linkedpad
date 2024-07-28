@@ -13,5 +13,6 @@ pin.digitalWrite(LOW)
 console.log("Listening...")
 
 while (true) {
-    console.log(pin.digitalRead())
+    console.log("11:" + pin.digitalRead())
+    console.log("37:" + pin1.digitalRead())
 }
