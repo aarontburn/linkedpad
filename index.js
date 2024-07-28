@@ -1,17 +1,7 @@
 import { MongoClient } from "mongodb";
 
-import { SerialPort } from 'serialport'
 
-// Create a port
-const port = new SerialPort({
-    path: '/dev/tty0',
-    baudRate: 115200,
-})
 
-// Switches the port into "flowing mode"
-port.on('data', function (data) {
-    console.log('Data:', data)
-})
 
 
 
