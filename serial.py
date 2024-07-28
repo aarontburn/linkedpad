@@ -13,8 +13,8 @@ def setup():
 
 def loop():
   while True:
-    print(pin + " " + GPIO.input(pin))
-    print(pin1 + " " + GPIO.input(pin1))
+    print(pin, GPIO.input(pin))
+    print(pin1, GPIO.input(pin1))
     print()
     time.sleep(0.2)
 
