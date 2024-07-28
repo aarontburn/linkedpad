@@ -29,3 +29,5 @@ pin2.on('interrupt', (level) => {
 });
 
 console.log("Listening...")
+
+setInterval(() => {}, 1000);
