@@ -1,9 +1,25 @@
 import { MongoClient } from "mongodb";
 
+import { SerialPort } from 'serialport'
+
+// Create a port
+const port = new SerialPort({
+    path: '/dev/tty0',
+    baudRate: 115200,
+})
+
+// Switches the port into "flowing mode"
+port.on('data', function (data) {
+    console.log('Data:', data)
+})
+
+
+
+
 const ACCESS_QUERY = { 'accessID': ':3' }
 
 // ["A1", "A2", ..., "D4"]
-const KEYS = (() => { 
+const KEYS = (() => {
     const rows = ["A", "B", "C", "D"];
     const columns = ["0", "1", "2", "3"];
 
