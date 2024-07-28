@@ -19,7 +19,6 @@ def loop():
     time.sleep(1)
 
 def destroy():
-  GPIO.output(pin, GPIO.LOW)   # led off
   GPIO.output(pin1, GPIO.LOW)   # led off
   GPIO.cleanup()                  # Release resource
 
