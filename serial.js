@@ -2,7 +2,7 @@ import * as jf from 'johnny-five';
 import { RaspiIO } from 'raspi-io'
 
 const board = new jf.Board({
-    io: new Raspi()
+    io: new RaspiIO()
 });
 
 board.on('ready', () => {
