@@ -13,3 +13,5 @@ pin1.on('interrupt', (level) => {
 pin2.on('interrupt', (level) => {
     console.log(level);
 });
+
+setInterval(() => {}, 1000);
