@@ -9,7 +9,6 @@ import time
 INPUT_PIN = 3
 OUTPUT_PIN = 5
 
-pressed = False
 
 
 def setup_gpio():
@@ -24,6 +23,8 @@ def setup_gpio():
 
 def gpio_listen():
 	print("GPIO listener started.")
+ 
+	pressed = False
 	while True:
 		if pressed == True:
 			if GPIO.input(INPUT_PIN) == 1:	# Hold
