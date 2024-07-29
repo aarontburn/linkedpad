@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-pin = 35
+pin = 7
 pin1 = 37
 
 def setup():
@@ -19,9 +19,9 @@ def loop():
     time.sleep(0.2)
 
 def destroy():
-  GPIO.cleanup()                  # Release resource
+  GPIO.cleanup()
 
-if __name__ == '__main__':     # Program start from here
+if __name__ == '__main__':
   setup()
   try:
     loop()
