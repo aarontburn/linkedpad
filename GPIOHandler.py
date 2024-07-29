@@ -37,8 +37,8 @@ def gpio_listen():
 				pressed = True
 
 			
-		if GPIO.input(INPUT_PIN) == 0:
-			DatabaseHandler.on_key_press('A', '3')
+		# if GPIO.input(INPUT_PIN) == 0:
+		# 	DatabaseHandler.on_key_press('A', '3')
 			
 			
 
