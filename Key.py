@@ -18,7 +18,6 @@ class Key:
         self._col = row_col[1]
 
     def handle_input(self, callback):
-        print(callback(self._input_pin))
         if self._pressed == True:
             if callback(self._input_pin) == 0:  # Hold
                 pass
