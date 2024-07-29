@@ -5,10 +5,10 @@ _CLIENT = pymongo.MongoClient(_URI)
 _DATABASE = _CLIENT.get_database('pad_data')
 _COLLECTION = _DATABASE.get_collection('data')
 
-
 _ACCESS_QUERY = {'accessID': ':3'}
 
 _KEYS = [row + col for row in ["A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
+
 
 def _get_default_obj():
     o = {}
@@ -18,12 +18,10 @@ def _get_default_obj():
     o[key] = _ACCESS_QUERY[key]
     return o
 
+
 _DEFAULT_DB_OBJ = _get_default_obj()
 
-
-
 _local_state = {}
-
 
 
 def init_db():
@@ -31,10 +29,8 @@ def init_db():
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
-    
-    print("Database initialization finished.")
-    
 
+    print("Database initialization finished.")
 
 
 def db_listen() -> None:
@@ -47,11 +43,10 @@ def db_listen() -> None:
         _CLIENT.close()
 
 
-
 def on_key_press(row, col) -> None:
-    _COLLECTION.find_one_and_update(_ACCESS_QUERY, { "$bit": { row + col: { 'xor': 1 } } })
-    
-    
+    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$bit": {row + col: {'xor': 1}}})
+
+
 def close() -> None:
     _CLIENT.close()
 
@@ -70,6 +65,7 @@ def recalibrate() -> None:
     current_state = _get_object()
     for key in _KEYS:
         _set_light(key[0], key[1], current_state[key])
+
 
 def _check_database() -> None:
     if _COLLECTION.estimated_document_count() == 1:
@@ -95,8 +91,10 @@ def _set_light(row, col, isOn) -> None:
     _local_state[row + col] = isOn
     _displayStateToConsole()
 
+
 def _get_object() -> dict[str, str] | None:
     return _COLLECTION.find_one(_ACCESS_QUERY)
+
 
 def _displayStateToConsole() -> None:
     s = ''
@@ -109,4 +107,3 @@ def _displayStateToConsole() -> None:
         except KeyError:
             s += '0 '
     print(s)
-    
