@@ -28,7 +28,10 @@ class Key:
         else:
             if gpio_input(self._input_pin) == 0:  # Key Down
                 print("Down")
-                DatabaseHandler.on_key_press(self._row, self._col)
+                if self._input_pin == 11:
+                    DatabaseHandler.test()
+                else:
+                    DatabaseHandler.on_key_press(self._row, self._col)
                 self._pressed = True
                 
             else:                               # Inactive
