@@ -31,11 +31,13 @@ database = client.get_database('pad_data')
 collection = database.get_collection('data')
 
 def init_mongo():
-    print("Initializing MongoDB...")
+    print("Initializing database handler...")
     __check_database__()
     collection.find_one({})
     recalibrate()
-    print("MongoDB listener started")
+    
+    print("Database initialization finished.")
+    
 
 def __check_database__():
     if collection.estimated_document_count() == 1:
@@ -49,6 +51,7 @@ def __check_database__():
     reset()
 
 def listen():
+    print("Database listener started.")
     try:
         with collection.watch() as stream:
             for change in stream:
