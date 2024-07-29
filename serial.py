@@ -10,7 +10,7 @@ def setup():
   GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #   GPIO.setup(pin1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
   GPIO.setup(pin1, GPIO.OUT)
-  GPIO.output(pin1, True)
+  GPIO.output(pin, True)
   
 
 def loop():
