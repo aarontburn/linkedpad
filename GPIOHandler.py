@@ -29,7 +29,6 @@ def setup_gpio():
     print("GPIO initialization finished.")
 
 def setup_keys() -> None:
-    key_map: dict[str, Key] = {}
     key_map['A3'] = Key(3, 5, "A3")
 
 
@@ -44,7 +43,3 @@ def gpio_listen():
 
 def destroy_gpio():
     GPIO.cleanup()
-
-
-if __name__ == '__main__':
-    setup_gpio()
