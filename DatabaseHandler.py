@@ -1,31 +1,10 @@
-import threading
-import time
-import RPi.GPIO as GPIO
 import pymongo
-
-# GPIO setup
-pin = 7
-pin1 = 37
-
-def setup_gpio():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(pin1, GPIO.OUT)
-    GPIO.output(pin1, GPIO.LOW)
-
-def gpio_loop():
-    while True:
-        if GPIO.input(pin) == 0:
-            on_key_press('A', '3')
-
-def destroy_gpio():
-    GPIO.cleanup()
 
 # MongoDB setup
 URI = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 ACCESS_QUERY = {'accessID': ':3'}
 
-def get_keys():
+def __get_keys__():
     rows = ["A", "B", "C", "D"]
     columns = ["0", "1", "2", "3"]
     out = []
@@ -34,9 +13,9 @@ def get_keys():
             out.append(row + col)
     return out
 
-KEYS = get_keys()
+KEYS = __get_keys__()
 
-def get_default_obj():
+def __get_default_obj__():
     o = {}
     for key in KEYS:
         o[key] = 0
@@ -44,7 +23,7 @@ def get_default_obj():
     o[key] = ACCESS_QUERY[key]
     return o
 
-DEFAULT_DB_OBJ = get_default_obj()
+DEFAULT_DB_OBJ = __get_default_obj__()
 local_state = {}
 
 client = pymongo.MongoClient(URI)
@@ -53,15 +32,14 @@ collection = database.get_collection('data')
 
 def init_mongo():
     print("Initializing MongoDB...")
-    check_database()
+    __check_database__()
     collection.find_one({})
     recalibrate()
-    listen()
     print("MongoDB listener started")
 
-def check_database():
+def __check_database__():
     if collection.estimated_document_count() == 1:
-        entry = get_object()
+        entry = __get_object__()
         if entry is not None:
             if sorted(entry.keys()) == sorted(KEYS + ['_id', 'accessID']):
                 print("Database is properly initialized.")
@@ -74,16 +52,19 @@ def listen():
     try:
         with collection.watch() as stream:
             for change in stream:
-                on_database_change(change['updateDescription']['updatedFields'])
+                __on_database_change__(change['updateDescription']['updatedFields'])
     except pymongo.errors.PyMongoError as e:
         client.close()
 
-def on_database_change(change_object):
-    for row_col in change_object:
-        row = row_col[0]
-        col = row_col[1]
-        new_value = change_object[row_col]
-        set_light(row, col, new_value)
+
+
+def on_key_press(row, col):
+    collection.find_one_and_update(ACCESS_QUERY, { "$bit": { row + col: { 'xor': 1 } } })
+    
+    
+def close():
+    client.close()
+
 
 def reset():
     result = collection.find_one_and_update(
@@ -92,21 +73,31 @@ def reset():
         return_document='after', upsert=True,
     )
     for key in result:
-        set_light(key[0], key[1], 0)
+        __set_light__(key[0], key[1], 0)
+
 
 def recalibrate():
-    current_state = get_object()
+    current_state = __get_object__()
     for key in KEYS:
-        set_light(key[0], key[1], current_state[key])
+        __set_light__(key[0], key[1], current_state[key])
 
-def set_light(row, col, isOn):
+
+def __on_database_change__(change_object):
+    for row_col in change_object:
+        row = row_col[0]
+        col = row_col[1]
+        new_value = change_object[row_col]
+        __set_light__(row, col, new_value)
+
+
+def __set_light__(row, col, isOn):
     local_state[row + col] = isOn
-    displayStateToConsole()
+    __displayStateToConsole__()
 
-def get_object():
+def __get_object__():
     return collection.find_one(ACCESS_QUERY)
 
-def displayStateToConsole():
+def __displayStateToConsole__():
     s = ''
     for i in range(len(KEYS)):
         if i % 4 == 0:
@@ -117,8 +108,4 @@ def displayStateToConsole():
         except KeyError:
             s += '0 '
     print(s)
-
-
-def on_key_press(row, col):
-    collection.find_one_and_update(ACCESS_QUERY, { "$bit": { row + col: { 'xor': 1 } } })
-
+    
