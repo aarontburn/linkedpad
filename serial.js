@@ -16,7 +16,7 @@ function setup() {
         while (true) {
             console.log("7:" + pin.digitalRead())
             console.log("37:" + pin1.digitalRead())
-            await new Promise(r => setTimeout(r, 2000));
+            await new Promise(r => setTimeout(r, 200));
     
         }
     }
