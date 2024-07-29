@@ -24,6 +24,7 @@ def setup_gpio():
         GPIO.output(pin, GPIO.LOW)
         
     setup_keys()
+    print(key_map)
 
     print("GPIO initialization finished.")
 
@@ -43,3 +44,7 @@ def gpio_listen():
 
 def destroy_gpio():
     GPIO.cleanup()
+
+
+if __name__ == '__main__':
+    setup_gpio()
