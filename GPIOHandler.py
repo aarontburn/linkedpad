@@ -21,7 +21,7 @@ def gpio_listen():
     while True:
         if GPIO.input(INPUT_PIN) == 0:
             DatabaseHandler.on_key_press('A', '3')
-            _milli()
+            print(_milli())
 
 def destroy_gpio():
     GPIO.cleanup()
