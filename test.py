@@ -16,8 +16,7 @@ def setup_gpio():
 def gpio_loop():
     while True:
         if GPIO.input(pin) == 0:
-            print("Button pressed")
-        time.sleep(0.2)
+            on_key_press('A', '3')
 
 def destroy_gpio():
     GPIO.cleanup()
@@ -118,6 +117,11 @@ def displayStateToConsole():
         except KeyError:
             s += '0 '
     print(s)
+
+
+def on_key_press(row, col):
+    collection.find_one_and_update(ACCESS_QUERY, { "$bit": { [row + col]: { 'xor': 1 } } })
+
 
 # Threading setup
 def start_gpio_thread():
