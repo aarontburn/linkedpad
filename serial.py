@@ -8,9 +8,10 @@ def setup():
   GPIO.setmode(GPIO.BOARD)       
   
   GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-#   GPIO.setup(pin1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
   GPIO.setup(pin1, GPIO.OUT)
-  GPIO.output(pin, True)
+  
+  
+  GPIO.output(pin1, GPIO.LOW)
   
 
 def loop():
