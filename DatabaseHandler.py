@@ -24,8 +24,17 @@ _DEFAULT_DB_OBJ = _get_default_obj()
 _local_state = {}
 
 
+def test():
+    print(_CLIENT)
+    print("\n")
+    print(_DATABASE)
+    print("\n")
+    print(_COLLECTION)
+
+
 def init_db():
     print("Initializing database handler...")
+    
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
@@ -39,8 +48,9 @@ def db_listen() -> None:
         with _COLLECTION.watch() as stream:
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
-    except pymongo.errors.PyMongoError as e:
+    except Exception as e:
         print("Database closing...")
+        print(e)
         _CLIENT.close()
 
 
@@ -50,6 +60,8 @@ def on_key_press(row, col) -> None:
 
 def close() -> None:
     _CLIENT.close()
+    
+    
 
 
 def reset() -> None:

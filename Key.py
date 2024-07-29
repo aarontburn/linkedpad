@@ -17,16 +17,17 @@ class Key:
         self._row = row_col[0]
         self._col = row_col[1]
 
-    def handle_input(self, callback):
+    def handle_input(self, gpio_input):
         if self._pressed == True:
-            if callback(self._input_pin) == 0:  # Hold
+            if gpio_input(self._input_pin) == 0:  # Hold
                 pass
                 
             else:                               # Key Up
                 self._pressed = False
                 
         else:
-            if callback(self._input_pin) == 0:  # Key Down
+            if gpio_input(self._input_pin) == 0:  # Key Down
+                print("Down")
                 DatabaseHandler.on_key_press(self._row, self._col)
                 self._pressed = True
                 
