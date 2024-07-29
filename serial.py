@@ -7,8 +7,8 @@ pin1 = 37
 def setup():
   GPIO.setmode(GPIO.BOARD)       
   
-  GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-  GPIO.setup(pin1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+  GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+  GPIO.setup(pin1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
   
 
 def loop():
