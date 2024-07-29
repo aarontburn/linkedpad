@@ -16,7 +16,7 @@ def start_mongo_thread():
 
 if __name__ == '__main__':
     GPIOHandler.setup_gpio()
-    DatabaseHandler.listen()
+    DatabaseHandler.init_mongo()
     
     start_gpio_thread()
     start_mongo_thread()
