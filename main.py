@@ -3,26 +3,28 @@ import DatabaseHandler
 import threading
 import time
 
-
-def start_gpio_thread():
-    gpio_thread = threading.Thread(target=GPIOHandler.gpio_loop)
-    gpio_thread.daemon = True
-    gpio_thread.start()
-
-def start_mongo_thread():
-    mongo_thread = threading.Thread(target=DatabaseHandler.listen)
-    mongo_thread.daemon = True
-    mongo_thread.start()
-
-if __name__ == '__main__':
+def init():
+    print("Booting...")
     GPIOHandler.setup_gpio()
-    DatabaseHandler.init_mongo()
+    DatabaseHandler.init_db()
     
-    start_gpio_thread()
-    start_mongo_thread()
+    _start_thread(GPIOHandler.gpio_listen)
+    _start_thread(DatabaseHandler.db_listen)
+    
     try:
         while True:
             time.sleep(1)
     except KeyboardInterrupt:
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
+
+
+
+def _start_thread(target):
+    thread = threading.Thread(target=target)
+    thread.daemon = True
+    thread.start()
+
+
+if __name__ == '__main__':
+    init()

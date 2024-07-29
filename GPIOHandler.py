@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import DatabaseHandler
+import time
 
 # GPIO setup
 INPUT_PIN = 3
@@ -15,11 +16,16 @@ def setup_gpio():
     
     print("GPIO initialization finished.")
 
-def gpio_loop():
+def gpio_listen():
     print("GPIO listener started.")
     while True:
         if GPIO.input(INPUT_PIN) == 0:
             DatabaseHandler.on_key_press('A', '3')
+            _milli()
 
 def destroy_gpio():
     GPIO.cleanup()
+
+
+def _milli():
+    return round(time.time() * 1000)
