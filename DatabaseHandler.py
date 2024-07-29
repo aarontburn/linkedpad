@@ -40,6 +40,7 @@ def db_listen() -> None:
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except pymongo.errors.PyMongoError as e:
+        print("Database closing...")
         _CLIENT.close()
 
 
@@ -52,13 +53,13 @@ def close() -> None:
 
 
 def reset() -> None:
-    result = _COLLECTION.find_one_and_update(
+    _COLLECTION.find_one_and_update(
         _ACCESS_QUERY,
         {'$set': _DEFAULT_DB_OBJ},
         return_document='after', upsert=True,
     )
-    for key in result:
-        _set_light(key[0], key[1], 0)
+    
+    recalibrate()
 
 
 def recalibrate() -> None:
