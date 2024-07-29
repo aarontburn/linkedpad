@@ -120,7 +120,7 @@ def displayStateToConsole():
 
 
 def on_key_press(row, col):
-    collection.find_one_and_update(ACCESS_QUERY, { "$bit": { [row + col]: { 'xor': 1 } } })
+    collection.find_one_and_update(ACCESS_QUERY, { "$bit": { row + col: { 'xor': 1 } } })
 
 
 # Threading setup
