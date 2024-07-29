@@ -4,7 +4,9 @@ from Key import Key
 
 def setup_keys() -> dict[str, Key]:
 	out: dict[str, Key] = {}
-	out['A3'] = Key(3, 5, "A3");
+	out['A3'] = Key(3, 5, "A3")
+ 
+	return out
 	
 key_map: dict[str, Key] = setup_keys()
 
