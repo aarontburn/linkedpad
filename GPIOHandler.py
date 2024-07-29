@@ -27,7 +27,7 @@ def gpio_listen():
 	pressed = False
 	while True:
 		if pressed == True:
-			if GPIO.input(INPUT_PIN) == 1:	# Hold
+			if GPIO.input(INPUT_PIN) == 0:	# Hold
 				print("Holding")
 			else:							# Release
 				print("Key Up")
