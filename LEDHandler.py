@@ -8,13 +8,15 @@ PIN_GROUND = 6
 PIN_GPIO = 8
 
 
-pixels = neopixel.NeoPixel(board.D21 , 3)
+pixels = neopixel.NeoPixel(board.D10 , 3)
 	
 
 while (True):
+    print("red")
     pixels[0] = (255, 0, 0)
     sleep(1)
-    pixels[0] = (0, 0, 0)
+    print("blue")
+    pixels[0] = (0, 0, 255)
     sleep(1)
     
     
