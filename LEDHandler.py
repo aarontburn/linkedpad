@@ -8,7 +8,7 @@ PIN_GROUND = 6
 PIN_GPIO = 8
 
 
-pixels = neopixel.NeoPixel(board.D14, 3)
+pixels = neopixel.NeoPixel(board.D21 , 3)
 	
 
 while (True):
