@@ -18,21 +18,24 @@ class Key:
         self._col = row_col[1]
 
     def handle_input(self, gpio_input):
+        is_down = gpio_input(self._input_pin) == 0
+        
         if self._pressed == True:
-            if gpio_input(self._input_pin) == 0:  # Hold
+            if is_down:                 # Hold
                 pass
                 
-            else:                               # Key Up
+            else:                       # Key Up
                 self._pressed = False
                 
         else:
-            if gpio_input(self._input_pin) == 0:  # Key Down
+            if is_down:                 # Key Down
                 print("Down")
                 if self._input_pin == 11:
                     DatabaseHandler.test()
                 else:
                     DatabaseHandler.on_key_press(self._row, self._col)
+                    
                 self._pressed = True
                 
-            else:                               # Inactive
+            else:                       # Inactive
                 pass
