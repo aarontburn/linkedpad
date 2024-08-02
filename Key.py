@@ -1,8 +1,12 @@
 import DatabaseHandler
+import time
+
+_DEBOUNCE: int = 20
 
 
 class Key:
-    _pressed: bool = False
+    _currently_pressed: bool = False
+    _last_press_milli = 0
 
     _input_pin: int
     _output_pin: int
@@ -17,15 +21,18 @@ class Key:
         self._row = row_col[0]
         self._col = row_col[1]
 
-    def handle_input(self, gpio_input):
-        is_down = gpio_input(self._input_pin) == 0
+    def handle_input(self, gpio_input_callback) -> None:
+        if not self._handle_debounce():
+            return
+
+        is_down: bool = gpio_input_callback(self._input_pin) == 0
         
-        if self._pressed == True:
+        if self._currently_pressed:
             if is_down:                 # Hold
                 pass
                 
             else:                       # Key Up
-                self._pressed = False
+                self._currently_pressed = False
                 
         else:
             if is_down:                 # Key Down
@@ -35,7 +42,16 @@ class Key:
                 else:
                     DatabaseHandler.on_key_press(self._row, self._col)
                     
-                self._pressed = True
+                self._currently_pressed = True
                 
             else:                       # Inactive
                 pass
+
+    def _handle_debounce(self) -> bool:
+        milli = round(time.time() * 1000)
+
+        if milli < self._last_press_milli + _DEBOUNCE:
+            return False    # Don't proceed
+
+        self._last_press_milli = milli
+        return True     # Proceed

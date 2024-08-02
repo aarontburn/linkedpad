@@ -11,7 +11,7 @@ INPUT_PINS = [3, 11]
 OUTPUT_PINS = [5, 13]
 
 
-def setup_gpio():
+def setup_gpio() -> None:
     print("Initializing GPIO handler...")
 
     GPIO.setmode(GPIO.BOARD)
@@ -33,7 +33,7 @@ def setup_keys() -> None:
 
 
 
-def gpio_listen():
+def gpio_listen() -> None:
     print("GPIO listener started.")
 
     while True:
@@ -41,5 +41,5 @@ def gpio_listen():
             key_map[row_col].handle_input(GPIO.input)
 
 
-def destroy_gpio():
+def destroy_gpio() -> None:
     GPIO.cleanup()

@@ -1,6 +1,6 @@
 import GPIOHandler
 import DatabaseHandler
-import threading
+from threading import Thread
 import time
 
 
@@ -21,10 +21,17 @@ def init():
 
 
 def _start_thread(target):
-    thread = threading.Thread(target=target)
+    thread = Thread(target=target)
     thread.daemon = True
     thread.start()
 
 
 if __name__ == '__main__':
     init()
+
+
+
+
+# Pins 4, 6, 12 for LED
+# Pins 31, 33, 35, 37 for Key Rows
+# Pins 32, 36, 38, 40 for Key Columns
