@@ -16,6 +16,7 @@ def init():
     try:
         while True:
             time.sleep(1)
+            print("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
@@ -26,6 +27,11 @@ def _start_thread(target):
     thread = Thread(target=target)
     thread.daemon = True
     thread.start()
+
+
+def _get_temp():
+    with open('/sys/class/thermal/thermal_zone0/temp') as f:
+        return f.read()
 
 
 if __name__ == '__main__':
