@@ -26,7 +26,7 @@ def build_light_map() -> dict[str, int]:
 
 
 LIGHT_MAP: dict[str, int] = build_light_map()
-BRIGHTNESS = 0.25
+BRIGHTNESS = 0.05
 
 GPIO = board.D18 	# pin 12
 
