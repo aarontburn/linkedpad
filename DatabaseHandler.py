@@ -107,12 +107,7 @@ def _set_light(row: str, col: str, state: str) -> None:
     state = str(state)
     _local_state[row + col] = state
     
-    if (row + col == "A0"):
-        if state == '1':
-            LEDHandler.set_light(0, (255,255,255))
-        else:
-            LEDHandler.set_light(0, (0, 0, 0))
-        
+    LEDHandler.set_light(row + col, state == '1')
     
     _displayStateToConsole()
 
