@@ -35,6 +35,7 @@ def init():
     print("Initializing LED Handler...")
     global pixels
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP))
+    pixels.brightness(0.5)
 
     print("LED Handling initialized.")
     # _loop()
