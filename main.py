@@ -1,11 +1,12 @@
-import GPIOHandler
-import DatabaseHandler
 from threading import Thread
 import time
-
+import GPIOHandler
+import DatabaseHandler
+import LEDHandler
 
 def init():
     print("Booting...")
+    LEDHandler.init()
     GPIOHandler.setup_gpio()
     DatabaseHandler.init_db()
 

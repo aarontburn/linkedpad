@@ -1,4 +1,5 @@
 import pymongo
+import LEDHandler
 
 _URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 _CLIENT = pymongo.MongoClient(_URI)
@@ -104,6 +105,14 @@ def _on_database_change(change_object: dict[str, str]) -> None:
 
 def _set_light(row: str, col: str, state) -> None:
     _local_state[row + col] = state
+    
+    if (row + col == "A0"):
+        if state == '1':
+            LEDHandler.set_light(0, (255,255,255))
+        else:
+            LEDHandler.set_light(0, (0, 0, 0))
+        
+    
     _displayStateToConsole()
 
 
