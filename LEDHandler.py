@@ -52,7 +52,7 @@ def _loop(): # This should only be for debugging
 def set_light(row_col: str, is_on: bool):
     print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", WHITE if is_on else OFF)
     
-    pixels[LIGHT_MAP[row_col]] = WHITE if is_on else OFF
+    pixels[int(LIGHT_MAP[row_col])] = WHITE if is_on else OFF
     
     
     
