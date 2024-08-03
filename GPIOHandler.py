@@ -14,7 +14,14 @@ OUTPUT_PINS = [5, 13]
 def setup_gpio() -> None:
     print("Initializing GPIO handler...")
 
-    GPIO.setmode(GPIO.BOARD)
+    try:
+        GPIO.setmode(GPIO.BOARD)
+    except ValueError:
+        destroy_gpio()
+        GPIO.setmode(GPIO.BOARD)
+
+
+        
     
     for pin in INPUT_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
