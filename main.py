@@ -19,6 +19,7 @@ def init():
     except KeyboardInterrupt:
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
+        LEDHandler.cleanup()
 
 
 def _start_thread(target):
