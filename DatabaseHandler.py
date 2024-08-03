@@ -109,14 +109,14 @@ def _set_light(row: str, col: str, state: str) -> None:
     
     LEDHandler.set_light(row + col, state == '1')
     
-    _displayStateToConsole()
+    _display_to_console()
 
 
 def _get_object() -> dict[str, str] | None:
     return _COLLECTION.find_one(_ACCESS_QUERY)
 
 
-def _displayStateToConsole() -> None:
+def _display_to_console() -> None:
     s: str = ''
     for i in range(len(_KEYS)):
         if i % 4 == 0:
