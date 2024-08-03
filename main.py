@@ -31,7 +31,7 @@ def _start_thread(target):
 
 def _get_temp():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
-        return f.read()
+        return f.read().strip()
 
 
 if __name__ == '__main__':
