@@ -26,6 +26,7 @@ def build_light_map() -> dict[str, int]:
 
 
 LIGHT_MAP: dict[str, int] = build_light_map()
+BRIGHTNESS = 0.5
 
 GPIO = board.D18 	# pin 12
 
@@ -34,8 +35,7 @@ pixels = None
 def init():
     print("Initializing LED Handler...")
     global pixels
-    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP))
-    pixels.brightness(0.5)
+    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=BRIGHTNESS)
 
     print("LED Handling initialized.")
     # _loop()
