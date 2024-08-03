@@ -99,11 +99,12 @@ def _on_database_change(change_object: dict[str, str]) -> None:
     for row_col in change_object:
         row: str = row_col[0]
         col: str = row_col[1]
-        new_value: str = str(change_object[row_col])
+        new_value: str = change_object[row_col]
         _set_light(row, col, new_value)
 
 
-def _set_light(row: str, col: str, state) -> None:
+def _set_light(row: str, col: str, state: str) -> None:
+    state = str(state)
     _local_state[row + col] = state
     
     if (row + col == "A0"):
@@ -121,6 +122,7 @@ def _get_object() -> dict[str, str] | None:
 
 
 def _displayStateToConsole() -> None:
+    print(_local_state)
     s: str = ''
     for i in range(len(_KEYS)):
         if i % 4 == 0:
