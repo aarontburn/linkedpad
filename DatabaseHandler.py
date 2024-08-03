@@ -67,7 +67,7 @@ def reset() -> None:
     _COLLECTION.find_one_and_update(
         _ACCESS_QUERY,
         {'$set': _DEFAULT_DB_OBJ},
-        return_document='after', upsert=True,
+        return_document=pymongo.ReturnDocument.AFTER, upsert=True,
     )
     
     recalibrate()

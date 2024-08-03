@@ -8,6 +8,10 @@ GPIO = board.D18 	# pin 12
 
 pixels = None
 
+
+
+
+
 def init():
     print("Initializing LED Handler...")
     global pixels
