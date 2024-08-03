@@ -10,14 +10,14 @@ WHITE: tuple[int, int, int] = (255, 255, 255)
 MAX_COLS = 4
 
 def build_light_map() -> dict[str, int]:
-    rows: list[str] = ["H", 'A', 'B', 'C', 'D'] * MAX_COLS
+    rows: list[str] = ['A', 'B', 'C', 'D'] * MAX_COLS
 
     out: dict[str, int] = {}
 
     col_index: int = -1
 
     for i in range(len(rows)):
-        if rows[i] == "H":
+        if rows[i] == "A":
             col_index += 1
 
         out[rows[i] + str(col_index)] = i
@@ -50,7 +50,7 @@ def _loop(): # This should only be for debugging
 
 
 def set_light(row_col: str, is_on: bool):
-    print("Setting light at:", row_col, "(index" + str(LIGHT_MAP[row_col]) + ") to", is_on)
+    print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", is_on)
     
     pixels[LIGHT_MAP[row_col]] = WHITE if is_on else OFF
     
