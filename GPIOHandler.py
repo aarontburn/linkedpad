@@ -7,8 +7,8 @@ from Key import Key
 
 key_map: dict[str, Key] = {}
 
-INPUT_PINS = [3, 11]
-OUTPUT_PINS = [5, 13]
+INPUT_PINS = [38]
+OUTPUT_PINS = [36]
 
 
 def setup_gpio() -> None:
@@ -19,7 +19,6 @@ def setup_gpio() -> None:
     except ValueError:
         destroy_gpio()
         GPIO.setmode(GPIO.BOARD)
-
 
         
     
@@ -35,8 +34,7 @@ def setup_gpio() -> None:
     print("GPIO initialization finished.")
 
 def setup_keys() -> None:
-    key_map['A3'] = Key(3, 5, "A3")
-    key_map['D0'] = Key(11, 13, "D0")
+    key_map['A0'] = Key(38, 36, "A0")
 
 
 

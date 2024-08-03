@@ -37,10 +37,7 @@ class Key:
         else:
             if is_down:                 # Key Down
                 print("Down")
-                if self._input_pin == 11:
-                    DatabaseHandler.test()
-                else:
-                    DatabaseHandler.on_key_press(self._row, self._col)
+                DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True
                 
