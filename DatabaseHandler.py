@@ -122,7 +122,6 @@ def _get_object() -> dict[str, str] | None:
 
 
 def _displayStateToConsole() -> None:
-    print(_local_state)
     s: str = ''
     for i in range(len(_KEYS)):
         if i % 4 == 0:
