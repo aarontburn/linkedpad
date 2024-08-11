@@ -1,7 +1,7 @@
 import serial
 
 ser = serial.Serial(
-    port='/dev/tty0',
+    port='/dev/ttyAMA1',
     baudrate = 9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
