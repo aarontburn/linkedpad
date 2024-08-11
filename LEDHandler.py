@@ -52,7 +52,7 @@ def _loop(): # This should only be for debugging
 def set_light(row_col: str, is_on: bool):
     print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", ColorHandler.get_current_color() if is_on else ColorHandler.OFF)
     
-    pixels[int(LIGHT_MAP[row_col])] = ColorHandler.get_current_color() if is_on else ColorHandler.OFF
+    pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.get_current_color()) if is_on else tuple(ColorHandler.OFF)
     
     
     
