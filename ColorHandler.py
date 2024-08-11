@@ -4,13 +4,12 @@
 OFF: list[int, int, int] = [0, 0, 0]
 WHITE: list[int, int, int] = [255, 255, 255]
 RED: list[int, int, int] = [255, 0, 0]
-ORANGE: list[int, int, int] = [255, 165, 0]
 YELLOW: list[int, int, int] = [255, 255, 0]
 GREEN: list[int, int, int] = [0, 255, 0]
 BLUE: list[int, int, int] = [0, 0, 255]
 VIOLET: list[int, int, int] = [125, 0, 255]
 
-_COLOR_SEQ: list[tuple[int, int, int]] = [WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET]
+_COLOR_SEQ: list[tuple[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
 
 _current_color_index = 0
 
