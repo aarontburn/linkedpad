@@ -1,4 +1,5 @@
 import pymongo
+import ColorHandler
 
 if __name__ != "__main__":
     import LEDHandler
@@ -16,7 +17,7 @@ _KEYS: list[str] = [row + col for row in ["A", "B", "C", "D"] for col in ["0", "
 def _get_default_obj() -> dict:
     o = {}
     for key in _KEYS:
-        o[key] = (0, 0, 0)
+        o[key] = ColorHandler.OFF
     key = list(_ACCESS_QUERY.keys())[0]
     o[key] = _ACCESS_QUERY[key]
     return o
@@ -100,12 +101,11 @@ def _on_database_change(change_object: dict[str, str]) -> None:
     for row_col in change_object:
         row: str = row_col[0]
         col: str = row_col[1]
-        new_value: str = change_object[row_col]
+        new_value: list[int, int, int] = change_object[row_col]
         _set_light(row, col, new_value)
 
 
-def _set_light(row: str, col: str, state: str) -> None:
-    state = str(state)
+def _set_light(row: str, col: str, state: list[int, int, int]) -> None:
     _local_state[row + col] = state
     
     if __name__ != "__main__":
@@ -124,11 +124,15 @@ def _display_to_console() -> None:
         if i % 4 == 0:
             s += "\n"
         try:
-            t: str = _local_state[_KEYS[i]]
-            s += '1 ' if t == '1' else '0 '
+            t: list[int, int, int] = _local_state[_KEYS[i]]
+            s += str(ColorHandler.rgb_to_hex(t)) + " "
         except KeyError:
-            s += '0 '
+            s += '#ZZZZZZ '
     print(s)
+
+
+
+
 
 
 if __name__ == "__main__":
