@@ -37,7 +37,9 @@ def init():
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=BRIGHTNESS)
 
     print("LED Handling initialized.")
-    # _loop()
+    
+    if __name__ == "__main__":
+        _loop()
 
 
 def _loop(): # This should only be for debugging
