@@ -1,5 +1,7 @@
 import pymongo
-import LEDHandler
+
+if __name__ != "__main__":
+    import LEDHandler
 
 _URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 _CLIENT = pymongo.MongoClient(_URI)
@@ -14,7 +16,7 @@ _KEYS: list[str] = [row + col for row in ["A", "B", "C", "D"] for col in ["0", "
 def _get_default_obj() -> dict:
     o = {}
     for key in _KEYS:
-        o[key] = 0
+        o[key] = (0, 0, 0)
     key = list(_ACCESS_QUERY.keys())[0]
     o[key] = _ACCESS_QUERY[key]
     return o
@@ -39,7 +41,6 @@ def init_db() -> None:
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
-
     print("Database initialization finished.")
 
 
@@ -107,7 +108,8 @@ def _set_light(row: str, col: str, state: str) -> None:
     state = str(state)
     _local_state[row + col] = state
     
-    LEDHandler.set_light(row + col, state == '1')
+    if __name__ != "__main__":
+        LEDHandler.set_light(row + col, state == '1')
     
     _display_to_console()
 
@@ -127,3 +129,12 @@ def _display_to_console() -> None:
         except KeyError:
             s += '0 '
     print(s)
+
+
+if __name__ == "__main__":
+    try:
+        init_db()
+        db_listen()
+    except KeyboardInterrupt:
+        close()
+        
