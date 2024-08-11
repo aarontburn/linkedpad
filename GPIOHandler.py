@@ -16,7 +16,7 @@ def setup_gpio() -> None:
 
     try:
         GPIO.setmode(GPIO.BOARD)
-    except ValueError:
+    except ValueError: # Board is already initialized for some reason
         destroy_gpio()
         GPIO.setmode(GPIO.BOARD)
 

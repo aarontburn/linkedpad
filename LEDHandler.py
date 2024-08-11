@@ -2,22 +2,22 @@ from time import sleep
 import board
 import neopixel
 
-
 OFF: tuple[int, int, int] = (0, 0, 0)
 WHITE: tuple[int, int, int] = (255, 255, 255)
 
 
-MAX_COLS = 4
+ROWS: list[str] = ['A', 'B', 'C', 'D']
+MAX_COLS: int = 4
 
 def build_light_map() -> dict[str, int]:
-    rows: list[str] = ['A', 'B', 'C', 'D'] * MAX_COLS
+    rows: list[str] = ROWS * MAX_COLS
 
     out: dict[str, int] = {}
 
     col_index: int = -1
 
     for i in range(len(rows)):
-        if rows[i] == "A":
+        if rows[i] == ROWS[0]:
             col_index += 1
 
         out[rows[i] + str(col_index)] = i
@@ -26,7 +26,7 @@ def build_light_map() -> dict[str, int]:
 
 
 LIGHT_MAP: dict[str, int] = build_light_map()
-BRIGHTNESS = 0.15
+BRIGHTNESS: float = 0.15
 
 GPIO = board.D18 	# pin 12
 
