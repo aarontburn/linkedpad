@@ -45,9 +45,9 @@ def init():
 def _loop(): # This should only be for debugging
     print("Beginning loop")
     while (True):
-        set_light('A0', (255, 0, 0))
+        set_light('A0', True)
         sleep(1)
-        set_light('A0', (0, 0, 255))
+        set_light('A0', False)
         sleep(1)
 
 
