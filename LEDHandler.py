@@ -45,17 +45,16 @@ def init():
 def _loop(): # This should only be for debugging
     print("Beginning loop")
     while (True):
-        set_light('A0', True)
+        set_light('A0', ColorHandler.WHITE)
         sleep(1)
-        set_light('A0', False)
+        set_light('A0', ColorHandler.OFF)
         sleep(1)
 
 
-def set_light(row_col: str, is_on: bool):
-    print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", ColorHandler.get_current_color() if is_on else ColorHandler.OFF)
+def set_light(row_col: str, rgb: list[int, int, int]):
+    print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", rgb)
     
-    pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.get_current_color()) if is_on else tuple(ColorHandler.OFF)
-    
+    pixels[int(LIGHT_MAP[row_col])] = tuple(rgb)
     
     
 def cleanup() -> None:

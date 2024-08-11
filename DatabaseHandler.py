@@ -109,7 +109,7 @@ def _set_light(row: str, col: str, state: list[int, int, int]) -> None:
     _local_state[row + col] = state
     
     if __name__ != "__main__":
-        LEDHandler.set_light(row + col, state != ColorHandler.OFF)
+        LEDHandler.set_light(row + col, state)
     
     _display_to_console()
 
