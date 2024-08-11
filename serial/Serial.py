@@ -1,8 +1,7 @@
 import serial
-import time
 
 ser = serial.Serial(
-    port='/dev/tty0',
+    port='/dev/tty1',
     baudrate = 9600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
