@@ -58,7 +58,8 @@ def db_listen() -> None:
 
 
 def on_key_press(row: str, col: str) -> None:
-    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$bit": {row + col: {'xor': 1}}})
+    is_off: bool = _local_state[row + col] == ColorHandler.OFF
+    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row + col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
 
 
 def close() -> None:
@@ -107,11 +108,10 @@ def _on_database_change(change_object: dict[str, str]) -> None:
 
 def _set_light(row: str, col: str, state: list[int, int, int]) -> None:
     _local_state[row + col] = state
-    
+    _display_to_console()
     if __name__ != "__main__":
         LEDHandler.set_light(row + col, state)
     
-    _display_to_console()
 
 
 def _get_object() -> dict[str, str] | None:
