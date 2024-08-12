@@ -15,7 +15,7 @@ def main():
         baudrate = BAUD,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
-        bytesize=serial.EIGHTBITS,
+        bytesize=serial.EIGHTBITS,  
         timeout=0.25,
         rtscts=True  # Enable RTS/CTS flow control
     )
@@ -23,18 +23,16 @@ def main():
     print("Listening")
     
 
-    try:
-        while True:
+    while True:
+        try:
             x = str(ser.readline())[2:-1]
             if x != '':
                 print(x)
-    except serial.SerialException:
-        ser.close()
-        main()
-    except Exception as e:
-        print(e)
-        print("Closing serial connection.")
-        ser.close()
+        except serial.SerialException:
+            pass
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        ser.close()
