@@ -26,8 +26,7 @@ def main():
 
     while True:
         x = str(ser.readline())
-        print(type(x))
-        print(x)
+        print(x[2:-1])
             
 
 if __name__ == '__main__':
