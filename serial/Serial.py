@@ -11,6 +11,7 @@ ser: serial.Serial = None
 
 
 def main():
+    global ser
     ser = serial.Serial(
         port=PORT,
         baudrate = BAUD,
@@ -23,8 +24,9 @@ def main():
     print("Listening")
     
 
-    while 1:
+    while True:
         x = str(ser.readline())
+        print(type(x))
         print(x)
             
 
