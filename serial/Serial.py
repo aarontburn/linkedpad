@@ -32,7 +32,7 @@ if __name__ == '__main__':
     try:
         main()
     except Exception as e:
-        print(e.__class__)
+        print(e.__class__.__name__)
         print(e)
         print("Closing serial connection.")
         ser.close()
