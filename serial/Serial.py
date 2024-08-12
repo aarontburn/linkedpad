@@ -1,7 +1,7 @@
 import serial
 
 
-PORT: str = '/dev/ttyAMA0'
+PORT: str = '/dev/ttyGS0'
 BAUD: int = 9600
 
 
