@@ -3,15 +3,22 @@ import time
 import GPIOHandler
 import DatabaseHandler
 import LEDHandler
+import SerialPi
 
 def init():
     print("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
     DatabaseHandler.init_db()
+    
+    SerialPi.init()
+    
+    
 
     _start_thread(GPIOHandler.gpio_listen)
     _start_thread(DatabaseHandler.db_listen)
+    
+    _start_thread(SerialPi.listen)
 
     try:
         while True:
@@ -32,6 +39,8 @@ def _start_thread(target):
 def _get_temp():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         return round(int(f.read().strip()) / 1000, 2)
+    
+    
     
 if __name__ == '__main__':
     init()

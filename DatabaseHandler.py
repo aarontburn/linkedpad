@@ -1,5 +1,6 @@
 import pymongo
 import ColorHandler
+import SerialPi
 
 if __name__ != "__main__":
     import LEDHandler
@@ -129,6 +130,8 @@ def _display_to_console() -> None:
         except KeyError:
             s += '#ZZZZZZ '
     print(s)
+    SerialPi.send(s)
+    
 
 
 
