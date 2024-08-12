@@ -25,9 +25,10 @@ def main():
 
     while True:
         try:
-            x = str(ser.readline())[2:-1]
+            x = str(ser.read_all())[2:-1]
             if x != '':
                 print(x)
+                
         except serial.SerialException:
             ser.close()
             ser = serial.Serial(
