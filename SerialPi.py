@@ -26,7 +26,8 @@ def listen() -> None:
 
 
 def send(data: str) -> None:
-    _ser.write((str(data) + "\n").encode())
+    if _ser != None:
+        _ser.write((str(data) + "\n").encode())
     
     
 if __name__ == '__main__':

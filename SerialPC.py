@@ -21,6 +21,7 @@ def init():
     
     
 def listen() -> None:
+    print("Listening...")
     while True:
         data: str = str(_ser.readline())[2:-1]
         if data != '':
@@ -34,5 +35,6 @@ def send(data: str) -> None:
 if __name__ == '__main__':
     try:
         init()
+        listen()
     except KeyboardInterrupt:
         _ser.close()
