@@ -20,10 +20,10 @@ def setup_gpio() -> None:
         destroy_gpio()
         GPIO.setmode(GPIO.BOARD)
 
-        
-    
+
     for pin in INPUT_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        
         
     for pin in OUTPUT_PINS:
         GPIO.setup(pin, GPIO.OUT)

@@ -17,8 +17,9 @@ def main():
 
 
     while True:
-        x = str(ser.readline())
-        print(x)
+        x = str(ser.readline())[2:-1]
+        if x != '':
+            print(x)    
                     
     
 if __name__ == '__main__':
