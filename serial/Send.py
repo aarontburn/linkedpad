@@ -1,5 +1,5 @@
 import time
-import serial
+import serial   
 
 ser = serial.Serial("COM3", 9600)
 

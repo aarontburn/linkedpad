@@ -15,7 +15,8 @@ def main():
         baudrate = BAUD,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
-        bytesize=serial.EIGHTBITS
+        bytesize=serial.EIGHTBITS,
+        timeout=0.25
     )
     
     print("Listening")
