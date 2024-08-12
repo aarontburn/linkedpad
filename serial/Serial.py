@@ -29,7 +29,17 @@ def main():
             if x != '':
                 print(x)
         except serial.SerialException:
-            pass
+            ser.close()
+            ser = serial.Serial(
+                port=PORT,
+                baudrate = BAUD,
+                parity=serial.PARITY_NONE,
+                stopbits=serial.STOPBITS_ONE,
+                bytesize=serial.EIGHTBITS,  
+                timeout=0.25,
+                rtscts=True  # Enable RTS/CTS flow control
+            )
+            print("Re-establishing serial connection")
 
 if __name__ == '__main__':
     try:
