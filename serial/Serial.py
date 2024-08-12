@@ -8,8 +8,6 @@ BAUD: int = 9600
 ser: serial.Serial = None
 
 
-
-
 def main():
     global ser
     ser = serial.Serial(
@@ -25,8 +23,9 @@ def main():
     
 
     while True:
-        x = str(ser.readline())
-        print(x[2:-1])
+        x = str(ser.readline())[2:-1]
+        if x != '':
+            print(x)
             
 
 if __name__ == '__main__':
