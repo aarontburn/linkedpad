@@ -31,7 +31,7 @@ def main():
     except serial.SerialException:
         ser.close()
         main()
-    except Exception:
+    except Exception as e:
         print(e)
         print("Closing serial connection.")
         ser.close()
