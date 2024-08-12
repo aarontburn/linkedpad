@@ -2,7 +2,7 @@ import serial
 
 
 PORT: str = '/dev/ttyGS0'
-BAUD: int = 115200
+BAUD: int = 9600
 
 
 ser: serial.Serial = None
