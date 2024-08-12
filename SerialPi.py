@@ -27,11 +27,13 @@ def listen() -> None:
 
 def send(data: str) -> None:
     if _ser != None:
+        print("Sending " + str(data))
         _ser.write((str(data) + "\n").encode())
     
     
 if __name__ == '__main__':
     try:
         init()
+        listen()
     except KeyboardInterrupt:
         _ser.close()

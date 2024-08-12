@@ -130,7 +130,6 @@ def _display_to_console() -> None:
         except KeyError:
             s += '#ZZZZZZ '
     print(s)
-    SerialPi.send(s)
     
 
 
