@@ -22,10 +22,13 @@ def main():
     print("Listening")
     
 
-    while True:
-        x = str(ser.readline())[2:-1]
-        if x != '':
-            print(x)
+    try:
+        while True:
+            x = str(ser.readline())[2:-1]
+            if x != '':
+                print(x)
+    except serial.SerialException:
+        main()
             
 
 if __name__ == '__main__':
