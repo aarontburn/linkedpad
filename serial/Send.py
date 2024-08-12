@@ -1,7 +1,7 @@
 import time
 import serial   
 
-ser = serial.Serial("COM3", 9600)
+ser = serial.Serial("COM3", 115200)
 
 counter = 0  
 while True:
