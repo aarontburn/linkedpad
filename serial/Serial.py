@@ -26,7 +26,7 @@ def main():
     counter = 0
     while True:
         print(counter)
-        ser.write(("Hello\n").encode())
+        ser.write(("HelloHelloHelloHello\n").encode())
         time.sleep(1)
         counter += 1
 

@@ -5,6 +5,7 @@ import serial
 ser: serial.Serial = None
 
 def main():
+    global ser
     ser = serial.Serial(
         "COM3", 
         9600,
