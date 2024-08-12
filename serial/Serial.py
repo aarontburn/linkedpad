@@ -16,7 +16,8 @@ def main():
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=0.25
+        timeout=0.25,
+        rtscts=True  # Enable RTS/CTS flow control
     )
     
     print("Listening")
@@ -28,14 +29,12 @@ def main():
             if x != '':
                 print(x)
     except serial.SerialException:
+        ser.close()
         main()
-            
-
-if __name__ == '__main__':
-    try:
-        main()
-    except Exception as e:
-        print(e.__class__.__name__)
+    except Exception:
         print(e)
         print("Closing serial connection.")
         ser.close()
+
+if __name__ == '__main__':
+    main()
