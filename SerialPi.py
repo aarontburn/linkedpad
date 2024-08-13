@@ -7,10 +7,24 @@ _ser: serial.Serial = None
 
 def init():
     _establish_serial()
-    
+
+def establish_connection() -> None:
+    log("Attempting to establish connection with PC...")
+    while True:
+        try:
+            data: str = str(_ser.readline())[2:-3]
+        except serial.SerialException:
+            log("")
+            _establish_serial()
+            
+        if data == 'pc_ready':
+            log("Connection with PC formed.")
+            send('pi_ready')
+            break
+        
 
 def listen() -> None:
-    print("Serial: Listening...")
+    log("Listening...")
     while True:
         try:
             data: str = str(_ser.readline())[2:-1]
@@ -22,7 +36,7 @@ def listen() -> None:
 
 def send(data: str) -> None:
     if _ser != None:
-        print("Sending " + str(data))
+        log("Sending " + str(data))
         try:
             _ser.write((str(data) + "\n").encode())
         except Exception:
@@ -49,11 +63,14 @@ def _establish_serial() -> None:
 def cleanup() -> None:
     if _ser != None:
         _ser.close()
-
+        
+def log(message) -> None:
+    print(__file__.split('\\')[-1].split('.')[0] + ": " + str(message))
     
 if __name__ == '__main__':
-    try:
-        init()
-        listen()
-    except KeyboardInterrupt:
-        cleanup()
+    print(__file__.split('\\')[-1].split('.')[0])
+    # try:
+    #     init()
+    #     listen()
+    # except KeyboardInterrupt:
+    #     cleanup()

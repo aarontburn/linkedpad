@@ -22,13 +22,24 @@ def init():
         rtscts=True
     )
     
+def establish_connection() -> None:
+    print("SERIAL: Attempting to establish connection with PC...")
+    while True:
+        data: str = str(_ser.readline())[2:-3]
+        if data == 'pc_ready':
+            print("SERIAL: Connection with PC formed.")
+            send('pi_ready')
+            break
+        
+    
     
 def listen() -> None:
-    print("Listening...")
+    establish_connection()
+    print("SERIAL: Listening...")
     while True:
         data: str = str(_ser.readline())[2:-1]
         if data != '':
-            print("Received: " + data)   
+            print("SERIAL: Received: " + data)   
 
 
 def send(data: str) -> None:
@@ -51,9 +62,6 @@ if __name__ == '__main__':
         init()
         _start_thread(listen)
         test()
-        
-        
-        
         
     except KeyboardInterrupt:
         _ser.close()
