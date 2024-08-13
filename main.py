@@ -23,7 +23,7 @@ def init():
     try:
         while True:
             time.sleep(1)
-            print("Temp: " + str(_get_temp()) + " C")
+            # print("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
