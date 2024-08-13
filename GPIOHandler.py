@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 from Key import Key
+from log import log
 
 
 
@@ -12,7 +13,7 @@ OUTPUT_PINS = [36]
 
 
 def setup_gpio() -> None:
-    print("Initializing GPIO handler...")
+    log("Initializing GPIO handler...")
 
     try:
         GPIO.setmode(GPIO.BOARD)
@@ -31,7 +32,7 @@ def setup_gpio() -> None:
         
     setup_keys()
 
-    print("GPIO initialization finished.")
+    log("GPIO initialization finished.")
 
 def setup_keys() -> None:
     key_map['A0'] = Key(38, 36, "A0")
@@ -39,7 +40,7 @@ def setup_keys() -> None:
 
 
 def gpio_listen() -> None:
-    print("GPIO listener started.")
+    log("GPIO listener started.")
 
     while True:
         for row_col in key_map:

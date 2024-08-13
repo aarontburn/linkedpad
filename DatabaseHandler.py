@@ -1,6 +1,7 @@
 import pymongo
 import ColorHandler
 import SerialPi
+from log import log
 
 if __name__ != "__main__":
     import LEDHandler
@@ -30,31 +31,31 @@ _local_state: dict[str, str] = {}
 
 
 def test():
-    print(_CLIENT)
-    print("\n")
-    print(_DATABASE)
-    print("\n")
-    print(_COLLECTION)
+    log(_CLIENT)
+    log("\n")
+    log(_DATABASE)
+    log("\n")
+    log(_COLLECTION)
 
 
 def init_db() -> None:
-    print("Initializing database handler...")
+    log("Initializing database handler...")
     
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
-    print("Database initialization finished.")
+    log("Database initialization finished.")
 
 
 def db_listen() -> None:
-    print("Database listener started.")
+    log("Database listener started.")
     try:
         with _COLLECTION.watch() as stream:
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
-        print("Database closing...")
-        print(e)
+        log("Database closing...")
+        log(e)
         _CLIENT.close()
 
 
@@ -80,7 +81,7 @@ def reset() -> None:
 def recalibrate() -> None:
     current_state: dict[str, str] | None = _get_object()
     if current_state == None:
-        print("Could not recalibrate; '_get_object()' returned 'None'")
+        log("Could not recalibrate; '_get_object()' returned 'None'")
         return
     
     for key in _KEYS:
@@ -92,9 +93,9 @@ def _check_database() -> None:
         entry: dict[str, str] | None = _get_object()
         if entry is not None:
             if sorted(entry.keys()) == sorted(_KEYS + ['_id', 'accessID']):
-                print("Database is properly initialized.")
+                log("Database is properly initialized.")
                 return
-    print("WARNING: Database needs to be re-setup.")
+    log("WARNING: Database needs to be re-setup.")
     _COLLECTION.delete_many({})
     reset()
 
@@ -129,7 +130,7 @@ def _display_to_console() -> None:
             s += str(ColorHandler.rgb_to_hex(t)) + " "
         except KeyError:
             s += '#ZZZZZZ '
-    print(s)
+    log(s)
     
 
 

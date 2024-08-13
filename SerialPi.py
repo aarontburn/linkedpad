@@ -1,4 +1,5 @@
 import serial
+from log import log
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -8,20 +9,25 @@ _ser: serial.Serial = None
 def init():
     _establish_serial()
     establish_connection()
+    listen()
 
 def establish_connection() -> None:
     log("Attempting to establish connection with PC...")
     while True:
         try:
             data: str = str(_ser.readline())[2:-3]
+            if data:
+                log(data)
+            if data == 'pc_ready':
+                send('pi_ready')
+                log("Connection with PC formed.")
+                break
+            
         except serial.SerialException:
-            log("")
+            log("Error with serial connection")
             _establish_serial()
             
-        if data == 'pc_ready':
-            log("Connection with PC formed.")
-            send('pi_ready')
-            break
+
         
 
 def listen() -> None:
@@ -64,8 +70,6 @@ def cleanup() -> None:
     if _ser != None:
         _ser.close()
         
-def log(message) -> None:
-    print(__file__.split('\\')[-1].split('.')[0] + ": " + str(message))
     
 if __name__ == '__main__':
     try:

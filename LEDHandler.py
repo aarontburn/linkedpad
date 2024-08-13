@@ -2,6 +2,7 @@ from time import sleep
 import board
 import neopixel
 import ColorHandler
+from log import log
 
 
 
@@ -32,18 +33,18 @@ pixels = None
 
 
 def init():
-    print("Initializing LED Handler...")
+    log("Initializing LED Handler...")
     global pixels
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=BRIGHTNESS)
 
-    print("LED Handling initialized.")
+    log("LED Handling initialized.")
     
     if __name__ == "__main__":
         _loop()
 
 
 def _loop(): # This should only be for debugging
-    print("Beginning loop")
+    log("Beginning loop")
     while (True):
         set_light('A0', ColorHandler.WHITE)
         sleep(1)
@@ -52,7 +53,7 @@ def _loop(): # This should only be for debugging
 
 
 def set_light(row_col: str, rgb: list[int, int, int]):
-    print("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", rgb)
+    log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", rgb)
     
     pixels[int(LIGHT_MAP[row_col])] = tuple(rgb)
     

@@ -4,26 +4,23 @@ import GPIOHandler
 import DatabaseHandler
 import LEDHandler
 import SerialPi
+from log import log
 
 def init():
-    print("Booting...")
+    
+    log("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
     DatabaseHandler.init_db()
-    
-    SerialPi.init()
-    
-    
 
+    _start_thread(SerialPi.init)
     _start_thread(GPIOHandler.gpio_listen)
     _start_thread(DatabaseHandler.db_listen)
-    
-    _start_thread(SerialPi.listen)
 
     try:
         while True:
             time.sleep(1)
-            # print("Temp: " + str(_get_temp()) + " C")
+            # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
@@ -44,6 +41,7 @@ def _get_temp():
     
     
 if __name__ == '__main__':
+    
     init()
 
 
