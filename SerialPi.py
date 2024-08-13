@@ -7,6 +7,7 @@ _ser: serial.Serial = None
 
 def init():
     _establish_serial()
+    establish_connection()
 
 def establish_connection() -> None:
     log("Attempting to establish connection with PC...")
@@ -29,7 +30,7 @@ def listen() -> None:
         try:
             data: str = str(_ser.readline())[2:-1]
             if data != '':
-                print("Received: " + data)
+                log("Received: " + data)
         except Exception:
             _establish_serial()
 
@@ -59,7 +60,6 @@ def _establish_serial() -> None:
         rtscts=True
     )
 
-
 def cleanup() -> None:
     if _ser != None:
         _ser.close()
@@ -68,9 +68,8 @@ def log(message) -> None:
     print(__file__.split('\\')[-1].split('.')[0] + ": " + str(message))
     
 if __name__ == '__main__':
-    print(__file__.split('\\')[-1].split('.')[0])
-    # try:
-    #     init()
-    #     listen()
-    # except KeyboardInterrupt:
-    #     cleanup()
+    try:
+        init()
+        listen()
+    except KeyboardInterrupt:
+        cleanup()
