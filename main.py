@@ -28,6 +28,7 @@ def init():
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
         LEDHandler.cleanup()
+        SerialPi.cleanup()
 
 
 def _start_thread(target):

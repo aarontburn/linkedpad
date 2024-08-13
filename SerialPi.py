@@ -10,6 +10,7 @@ def init():
     
 
 def listen() -> None:
+    print("Serial: Listening...")
     while True:
         try:
             data: str = str(_ser.readline())[2:-1]
@@ -31,10 +32,9 @@ def send(data: str) -> None:
 
 
 def _establish_serial() -> None:
-    global _ser
-    if _ser != None:
-        _ser.close()
+    cleanup()
         
+    global _ser
     _ser = serial.Serial(
         port=_PORT,
         baudrate = _BAUD,
@@ -45,11 +45,15 @@ def _establish_serial() -> None:
         rtscts=True
     )
 
+
+def cleanup() -> None:
+    if _ser != None:
+        _ser.close()
+
     
 if __name__ == '__main__':
     try:
         init()
         listen()
     except KeyboardInterrupt:
-        if _ser != None:
-            _ser.close()
+        cleanup()
