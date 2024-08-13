@@ -1,8 +1,13 @@
 import inspect
 
 
-def log(message) -> None:
+def log(*message) -> None:
     filename = inspect.stack()[1].filename.split("\\")[-1].split('.')[0]
     
-    print(filename + ": " + str(message))
+    out: str = ''
+    
+    for s in message:
+        out += ' ' + str(s)
+    
+    print(filename + ": " + out[1:])
     
