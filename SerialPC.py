@@ -1,5 +1,8 @@
 # This file will become obsolete once the main program is written in nodejs
+import time
 import serial
+from threading import Thread
+
 
 _PORT: str = 'COM3'
 _BAUD: int = 9600
@@ -32,9 +35,27 @@ def send(data: str) -> None:
     _ser.write((str(data) + "\n").encode())
 
 
+def _start_thread(target):
+    thread = Thread(target=target)
+    thread.daemon = True
+    thread.start()
+
+def test():
+    counter = 0
+    while True:
+        time.sleep(1)
+        send(counter)
+
 if __name__ == '__main__':
     try:
         init()
-        listen()
+        _start_thread(listen)
+        test()
+        
+        
+        
+        
     except KeyboardInterrupt:
         _ser.close()
+        
+        
