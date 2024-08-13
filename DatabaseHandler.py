@@ -129,7 +129,6 @@ def _display_to_console() -> None:
             s += str(ColorHandler.rgb_to_hex(t)) + " "
         except KeyError:
             s += '#ZZZZZZ '
-    SerialPi.send('s')
     print(s)
     
 
