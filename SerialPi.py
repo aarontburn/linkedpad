@@ -8,33 +8,18 @@ _ser: serial.Serial = None
 
 def init():
     _establish_serial()
-    establish_connection()
     listen()
 
-def establish_connection() -> None:
-    log("Attempting to establish connection with PC...")
-    while True:
-        try:
-            data: str = str(_ser.readline())[2:-3]
-            if data:
-                log(data)
-            if data == 'pc_ready':
-                send('pi_ready')
-                log("Connection with PC formed.")
-                break
-            
-        except serial.SerialException:
-            log("Error with serial connection")
-            _establish_serial()
-            
 
-        
 
 def listen() -> None:
     log("Listening...")
     while True:
         try:
-            data: str = str(_ser.readline())[2:-1]
+            data: str = str(_ser.readline())[2:-3]
+            if data == 'pc_ready':
+                send('pi_ready')
+            
             if data != '':
                 log("Received: " + data)
         except Exception:
