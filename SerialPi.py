@@ -6,7 +6,35 @@ _BAUD: int = 9600
 _ser: serial.Serial = None
 
 def init():
+    _establish_serial()
+    
+
+def listen() -> None:
+    while True:
+        try:
+            data: str = str(_ser.readline())[2:-1]
+            if data != '':
+                print("Received: " + data)
+        except Exception:
+            _establish_serial()
+
+
+def send(data: str) -> None:
+    if _ser != None:
+        print("Sending " + str(data))
+        try:
+            _ser.write((str(data) + "\n").encode())
+        except Exception:
+            _establish_serial()
+            _ser.write((str(data) + "\n").encode())
+            
+
+
+def _establish_serial() -> None:
     global _ser
+    if _ser != None:
+        _ser.close()
+        
     _ser = serial.Serial(
         port=_PORT,
         baudrate = _BAUD,
@@ -16,24 +44,12 @@ def init():
         timeout=0.25,
         rtscts=True
     )
-    
 
-def listen() -> None:
-    while True:
-        data: str = str(_ser.readline())[2:-1]
-        if data != '':
-            print("Received: " + data)   
-
-
-def send(data: str) -> None:
-    if _ser != None:
-        print("Sending " + str(data))
-        _ser.write((str(data) + "\n").encode())
-    
     
 if __name__ == '__main__':
     try:
         init()
         listen()
     except KeyboardInterrupt:
-        _ser.close()
+        if _ser != None:
+            _ser.close()
