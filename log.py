@@ -1,10 +1,9 @@
 import inspect
-import os
 
 
 def log(*message) -> None:
     
-    filename = os.path.normpath(inspect.stack()[1].filename).split("\\")[-1].split('.')[0]
+    filename =inspect.stack()[1].filename.replace("\\", '/').split("/")[-1].split('.')[0]
     
     out: str = ''
     
