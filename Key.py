@@ -39,7 +39,7 @@ class Key:
         else:
             if is_down:                 # Key Down
                 log("Down")
-                SerialPi.send(self._row + self._col)
+                SerialPi.write(self._row + self._col)
                 DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True

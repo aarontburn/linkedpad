@@ -18,7 +18,7 @@ def listen() -> None:
         try:
             data: str = str(_ser.readline())[2:-3]
             if data == 'pc_ready':
-                send('pi_ready')
+                write('pi_ready')
             
             if data != '':
                 log("Received: " + data)
@@ -26,7 +26,7 @@ def listen() -> None:
             _establish_serial()
 
 
-def send(data: str) -> None:
+def write(data: str) -> None:
     if _ser != None:
         log("Sending " + str(data))
         try:
