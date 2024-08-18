@@ -100,9 +100,9 @@ def _check_database() -> None:
 
 
 def _on_database_change(change_object: dict[str, str]) -> None:
-    log(SerialHandler.is_connected())
-    if SerialHandler.is_connected() == False:
+    if SerialHandler.is_connected():
         return 
+    
     for row_col in change_object:
         row: str = row_col[0]
         col: str = row_col[1]
