@@ -64,7 +64,7 @@ def set_light(row_col: str, rgb: list[int, int, int]):
     log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", rgb)
     _local_state[row_col] = rgb
     print(pixels)
-    pixels[int(LIGHT_MAP[row_col])] = tuple(rgb)
+    pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
     
     
 def cleanup() -> None:
