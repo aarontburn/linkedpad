@@ -65,6 +65,7 @@ def set_light(row_col: str, rgb: list[int, int, int]):
     _local_state[row_col] = rgb
     
     pixels[int(LIGHT_MAP[row_col])] = tuple(rgb)
+    print(pixels)
     
     
 def cleanup() -> None:
