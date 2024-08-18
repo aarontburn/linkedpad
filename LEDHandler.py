@@ -23,7 +23,7 @@ def build_light_map() -> dict[str, int]:
 
     return out
 
-brightness = 1
+brightness_scale = 0.5 # Half brightness
 
 LIGHT_MAP: dict[str, int] = build_light_map()
 
@@ -34,7 +34,7 @@ pixels = None
 def init():
     log("Initializing LED Handler...")
     global pixels
-    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=brightness)
+    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=brightness_scale)
     
     
     log("LED Handling initialized.")
@@ -45,7 +45,7 @@ def init():
 
 
 def set_brightness(val: float) -> None:
-    pixels.brightness = val
+    pixels.brightness = val * brightness_scale
     
     
 
