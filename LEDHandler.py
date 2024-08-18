@@ -47,6 +47,9 @@ def init():
 def set_brightness(val: float) -> None:
     global brightness
     brightness = val
+    for i in range(len(pixels)):
+        rgb = pixels[i]
+        pixels[i] = (rgb[0] * brightness, rgb[1] * brightness, rgb[2] * brightness)
     
     
     
