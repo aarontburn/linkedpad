@@ -2,6 +2,7 @@ import serial
 from log import log
 import time
 import json
+import LEDHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -59,8 +60,8 @@ def _handle_events(event_string: str) -> None:
         
         case 'state':
             state: list[str] = json.loads(split_str[1])
-            log(state)
-            
+            for row_col in state:
+                LEDHandler.set_light(row_col, state[row_col])
         
         case _:
             log('No handler for: ' + split_str[0])
