@@ -34,6 +34,8 @@ _local_state: dict[str, str] = {}
 
 
 def init_db() -> None:
+    return
+    
     log("Initializing database handler...")
     
     _check_database()
@@ -43,6 +45,8 @@ def init_db() -> None:
 
 
 def db_listen() -> None:
+    return
+    
     log("Database listener started.")
     try:
         with _COLLECTION.watch() as stream:
