@@ -1,9 +1,6 @@
 import serial
 from log import log
 import time
-import asyncio
-from threading import Thread
-from main import _start_thread
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
