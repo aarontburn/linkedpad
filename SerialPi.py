@@ -23,9 +23,9 @@ def _attempt_connection() -> None:
         time.sleep(1)
         
         data: str = str(_ser.readline())[2:-3];
-        if (data != '') {
-            print(data)
-        }
+        if (data != ''): 
+            log(data)
+        
         if data == 'pc_ready':
             return
         
