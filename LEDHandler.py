@@ -46,13 +46,6 @@ def init():
 
 def set_brightness(val: float) -> None:
     pixels.brightness = val
-    # global brightness
-    # brightness = val
-    # for i in range(len(pixels)):
-    #     rgb = pixels[i]
-    #     pixels[i] = (rgb[0] * brightness, rgb[1] * brightness, rgb[2] * brightness)
-    #     pixels
-    
     
     
 
@@ -68,7 +61,7 @@ def _loop(): # This should only be for debugging
 
 def set_light(row_col: str, rgb: list[int, int, int]):
     log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", tuple(rgb))
-    pixels[int(LIGHT_MAP[row_col])] = (rgb[0] * brightness, rgb[1] * brightness, rgb[2] * brightness)
+    pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
     
     
 def cleanup() -> None:
