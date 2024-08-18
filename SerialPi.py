@@ -16,17 +16,15 @@ def init():
     listen()
 
 def _attempt_connection() -> None: 
-    log('Attempting to connect to PC...')
+    log('Connecting to PC...')
     
     while True:
-        write('pi_ready')
+        write('pi_ready', False)
         time.sleep(1)
         
         data: str = str(_ser.readline())[2:-3];
-        if (data != ''): 
-            log(data)
-        
         if data == 'pc_ready':
+            log('Successfully established connection with PC.')
             return
         
 
@@ -43,9 +41,11 @@ def listen() -> None:
             _establish_serial()
 
 
-def write(data: str) -> None:
+def write(data: str, out: bool = True) -> None:
     if _ser != None:
-        log("Sending " + str(data))
+        if out:
+            log("Sending " + str(data))
+            
         try:
             _ser.write((str(data) + "\n").encode())
         except Exception:
