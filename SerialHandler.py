@@ -58,10 +58,6 @@ def _handle_events(event_string: str) -> None:
             rgb: list[int] = json.loads(split_str[1])
             log("RGB:", rgb)
         
-        case 'state':
-            state: list[str] = json.loads(split_str[1])
-            LEDHandler.set_state(state)
-        
         case 'change':
             row_col: str = split_str[1]
             rgb: list[int] = json.loads(split_str[2])
