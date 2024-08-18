@@ -1,3 +1,4 @@
+import sys
 import pymongo
 import ColorHandler
 import SerialHandler
@@ -15,7 +16,6 @@ _ACCESS_QUERY: dict[str, str] = {'accessID': ':3'}
 
 _KEYS: list[str] = [row + col for row in ["A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
 
-_open: bool = False
 
 
 def _get_default_obj() -> dict:
@@ -39,8 +39,6 @@ def init_db() -> None:
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
-    global _open
-    _open = True
     log("Database initialization finished.")
 
 
@@ -48,9 +46,6 @@ def db_listen() -> None:
     log("Database listener started.")
     try:
         with _COLLECTION.watch() as stream:
-            if not _open:
-                return
-            
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
@@ -60,19 +55,15 @@ def db_listen() -> None:
 
 
 def on_key_press(row: str, col: str) -> None:
-    if not _open:
-        return
-    
     is_off: bool = _local_state[row + col] == ColorHandler.OFF
     _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row + col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
 
 
 def close() -> None:
     log('Closing...')
-    global _open
-    _open = False
-    
     _CLIENT.close()
+    sys.exit()
+    
     
 
 def reset() -> None:
@@ -109,6 +100,8 @@ def _check_database() -> None:
 
 
 def _on_database_change(change_object: dict[str, str]) -> None:
+    if SerialHandler.is_connected() == False:
+        return 
     for row_col in change_object:
         row: str = row_col[0]
         col: str = row_col[1]
