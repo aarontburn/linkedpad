@@ -4,7 +4,7 @@ import neopixel
 import ColorHandler
 from log import log
 
-
+_local_state = {}
 
 ROWS: list[str] = ['A', 'B', 'C', 'D']
 MAX_COLS: int = 4
@@ -52,8 +52,17 @@ def _loop(): # This should only be for debugging
         sleep(1)
 
 
+def set_state(state):
+    global _local_state
+    _local_state = state
+    
+    for row_col in _local_state:
+        set_light(row_col, _local_state[row_col])
+    
+
 def set_light(row_col: str, rgb: list[int, int, int]):
     log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", rgb)
+    _local_state[row_col] = rgb
     
     pixels[int(LIGHT_MAP[row_col])] = tuple(rgb)
     
