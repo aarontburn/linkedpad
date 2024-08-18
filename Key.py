@@ -1,6 +1,6 @@
 import time
 import DatabaseHandler
-import SerialPi
+import SerialHandler
 from log import log
 
 _DEBOUNCE: int = 20
@@ -39,7 +39,7 @@ class Key:
         else:
             if is_down:                 # Key Down
                 log("Down")
-                SerialPi.write(self._row + self._col)
+                SerialHandler.write(self._row + self._col)
                 DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True

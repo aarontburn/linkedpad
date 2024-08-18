@@ -1,11 +1,13 @@
 import serial
 from log import log
 import time
+import DatabaseHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
 
 _ser: serial.Serial = None
+_is_connected = False
 
 def init():
     _establish_serial()
@@ -19,11 +21,19 @@ def _attempt_connection() -> None:
         write('pi_ready', False)
         time.sleep(1)
         
-        data: str = str(_ser.readline())[2:-3];
+        data: str = str(_ser.readline())[2:-3]
         if data == 'pc_ready':
             log('Successfully established connection with PC.')
+            
+            DatabaseHandler.close()
+            
+            global _is_connected
+            _is_connected = True
             return
         
+        
+def is_connected() -> bool:
+    return _is_connected
 
 
 def listen() -> None:
@@ -31,9 +41,9 @@ def listen() -> None:
     while True:
         try:
             data: str = str(_ser.readline())[2:-3]
-            
             if data != '':
                 log("Received: " + data)
+                
         except Exception:
             _establish_serial()
 

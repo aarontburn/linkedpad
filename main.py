@@ -3,7 +3,7 @@ import time
 import GPIOHandler
 import DatabaseHandler
 import LEDHandler
-import SerialPi
+import SerialHandler
 from log import log
 
 def init():
@@ -13,7 +13,7 @@ def init():
     GPIOHandler.setup_gpio()
     DatabaseHandler.init_db()
 
-    _start_thread(SerialPi.init)
+    _start_thread(SerialHandler.init)
     _start_thread(GPIOHandler.gpio_listen)
     _start_thread(DatabaseHandler.db_listen)
 
@@ -25,7 +25,7 @@ def init():
         GPIOHandler.destroy_gpio()
         DatabaseHandler.close()
         LEDHandler.cleanup()
-        SerialPi.cleanup()
+        SerialHandler.cleanup()
 
 
 def _start_thread(target):

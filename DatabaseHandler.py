@@ -1,6 +1,6 @@
 import pymongo
 import ColorHandler
-import SerialPi
+import SerialHandler
 from log import log
 
 if __name__ != "__main__":
@@ -14,6 +14,8 @@ _COLLECTION = _DATABASE.get_collection('data')
 _ACCESS_QUERY: dict[str, str] = {'accessID': ':3'}
 
 _KEYS: list[str] = [row + col for row in ["A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
+
+_open: bool = False
 
 
 def _get_default_obj() -> dict:
@@ -30,13 +32,6 @@ _DEFAULT_DB_OBJ: dict = _get_default_obj()
 _local_state: dict[str, str] = {}
 
 
-def test():
-    log(_CLIENT)
-    log("\n")
-    log(_DATABASE)
-    log("\n")
-    log(_COLLECTION)
-
 
 def init_db() -> None:
     log("Initializing database handler...")
@@ -44,6 +39,8 @@ def init_db() -> None:
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
+    global _open
+    _open = True
     log("Database initialization finished.")
 
 
@@ -60,15 +57,22 @@ def db_listen() -> None:
 
 
 def on_key_press(row: str, col: str) -> None:
+    if not _open:
+        return
+    
     is_off: bool = _local_state[row + col] == ColorHandler.OFF
     _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row + col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
 
 
 def close() -> None:
+    log('Closing...')
+    global _open
+    _open = False
     _CLIENT.close()
     
 
 def reset() -> None:
+    
     _COLLECTION.find_one_and_update(
         _ACCESS_QUERY,
         {'$set': _DEFAULT_DB_OBJ},
