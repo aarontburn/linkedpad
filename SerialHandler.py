@@ -1,7 +1,7 @@
 import serial
 from log import log
 import time
-import DatabaseHandler
+import json
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -40,10 +40,30 @@ def listen() -> None:
         try:
             data: str = str(_ser.readline())[2:-3]
             if data != '':
-                log("Received: " + data)
+                _handle_events(data)
                 
         except Exception:
             _establish_serial()
+
+
+def _handle_events(event_string: str) -> None:
+    split_str: list[str] = event_string.split(' ')
+    match split_str[0]:
+        case 'brightness':
+            brightness: float = float(split_str[1])
+            log('Brightness: ' + str(brightness))
+            
+        case 'rgb': 
+            rgb: list[int] = json.loads(split_str[1])
+            log("RGB:", rgb)
+        
+        case 'state':
+            state: list[str] = json.loads(split_str[1])
+            log(state)
+            
+        
+        case _:
+            log('No handler for: ' + split_str[0])
 
 
 def write(data: str, out: bool = True) -> None:
