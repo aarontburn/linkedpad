@@ -1,5 +1,9 @@
 import serial
 from log import log
+import time
+import asyncio
+from threading import Thread
+from main import _start_thread
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -10,6 +14,26 @@ def init():
     _establish_serial()
     listen()
 
+def attempt_connection() -> None: 
+    log('Attempting to connect to PC...')
+    
+    _start_thread(listen_to_pc_ready)
+    
+    while True:
+        write('pi_ready')
+        time.sleep(1)
+        
+def listen_to_pc_ready() -> None:
+    while True:
+        try:
+            data: str = str(_ser.readline())[2:-3]
+            if data == 'pc_ready':
+                write('pi_ready')
+                return
+        except Exception:
+            _establish_serial()
+    
+    
 
 
 def listen() -> None:
