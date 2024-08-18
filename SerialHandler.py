@@ -48,7 +48,7 @@ def listen() -> None:
 
 
 def _handle_events(event_string: str) -> None:
-    log(event_string)
+    log(eve)
     split_str: list[str] = event_string.split(' ')
     match split_str[0]:
         case 'brightness':
@@ -65,7 +65,7 @@ def _handle_events(event_string: str) -> None:
         
         case 'change':
             row_col: str = split_str[1]
-            rgb: list[int] = split_str[2]
+            rgb: list[int] = json.loads(split_str[2])
             
             LEDHandler.set_light(row_col, rgb)
         
