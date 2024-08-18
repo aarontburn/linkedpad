@@ -12,27 +12,23 @@ _ser: serial.Serial = None
 
 def init():
     _establish_serial()
+    _attempt_connection()
     listen()
 
-def attempt_connection() -> None: 
+def _attempt_connection() -> None: 
     log('Attempting to connect to PC...')
-    
-    _start_thread(listen_to_pc_ready)
     
     while True:
         write('pi_ready')
         time.sleep(1)
         
-def listen_to_pc_ready() -> None:
-    while True:
-        try:
-            data: str = str(_ser.readline())[2:-3]
-            if data == 'pc_ready':
-                write('pi_ready')
-                return
-        except Exception:
-            _establish_serial()
-    
+        data: str = str(_ser.readline())[2:-3];
+        if data == 'pc_ready':
+            return
+        
+        
+        
+
     
 
 
@@ -41,8 +37,6 @@ def listen() -> None:
     while True:
         try:
             data: str = str(_ser.readline())[2:-3]
-            if data == 'pc_ready':
-                write('pi_ready')
             
             if data != '':
                 log("Received: " + data)
