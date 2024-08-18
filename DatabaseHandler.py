@@ -48,6 +48,9 @@ def db_listen() -> None:
     log("Database listener started.")
     try:
         with _COLLECTION.watch() as stream:
+            if not _open:
+                return
+            
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
@@ -68,6 +71,7 @@ def close() -> None:
     log('Closing...')
     global _open
     _open = False
+    
     _CLIENT.close()
     
 
