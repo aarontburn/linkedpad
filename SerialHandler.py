@@ -53,6 +53,7 @@ def _handle_events(event_string: str) -> None:
         case 'brightness':
             brightness: float = float(split_str[1])
             log('Brightness: ' + str(brightness))
+            LEDHandler.set_brightness(brightness)
             
         case 'rgb': 
             rgb: list[int] = json.loads(split_str[1])
