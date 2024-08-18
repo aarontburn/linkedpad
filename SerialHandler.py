@@ -25,8 +25,6 @@ def _attempt_connection() -> None:
         if data == 'pc_ready':
             log('Successfully established connection with PC.')
             
-            DatabaseHandler.close()
-            
             global _is_connected
             _is_connected = True
             return
