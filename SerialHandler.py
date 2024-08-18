@@ -48,7 +48,6 @@ def listen() -> None:
 
 
 def _handle_events(event_string: str) -> None:
-    log(eve)
     split_str: list[str] = event_string.split(' ')
     match split_str[0]:
         case 'brightness':
