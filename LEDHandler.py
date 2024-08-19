@@ -5,7 +5,7 @@ import ColorHandler
 from log import log
 
 
-ROWS: list[str] = ['A', 'B', 'C', 'D']
+ROWS: list[str] = ['H', 'A', 'B', 'C', 'D']
 MAX_COLS: int = 4
 
 def build_light_map() -> dict[str, int]:
