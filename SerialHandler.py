@@ -78,7 +78,7 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.set_light(row_col, rgb)
         
         case 'linked-mode':
-            log("linked-mode:", split_str[0])
+            log("linked-mode:", split_str[1])
         
         case _:
             log('No handler for: ' + split_str[0])
