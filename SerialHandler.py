@@ -10,6 +10,7 @@ _BAUD: int = 9600
 
 _ser: serial.Serial = None
 _is_connected = False
+_is_exiting = False
 
 def init():
     _establish_serial()
@@ -35,6 +36,9 @@ def _attempt_connection() -> None:
         
 def maintain_connection() -> None:
     while True:
+        if _is_exiting:
+            break
+        
         write('pi_ready', False)
         time.sleep(3)
         
@@ -103,6 +107,9 @@ def _establish_serial() -> None:
     )
 
 def cleanup() -> None:
+    global _is_exiting
+    _is_exiting = True
+    
     if _ser != None:
         write('pi_exit')
         time.sleep(0.1)
