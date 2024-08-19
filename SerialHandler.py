@@ -26,7 +26,7 @@ def _attempt_connection() -> None:
         data: str = str(_ser.readline())[2:-3]
         if data == 'pc_ready':
             log('Successfully established connection with PC.')
-            # _start_thread(maintain_connection)
+            _start_thread(maintain_connection)
             LEDHandler.cleanup()
             
             global _is_connected
@@ -36,7 +36,7 @@ def _attempt_connection() -> None:
 def maintain_connection() -> None:
     while True:
         write('pi_ready', False)
-        time.sleep(1)
+        time.sleep(3)
         
         
 def is_connected() -> bool:
@@ -91,8 +91,6 @@ def write(data: str, out: bool = True) -> None:
 
 
 def _establish_serial() -> None:
-    cleanup()
-        
     global _ser
     _ser = serial.Serial(
         port=_PORT,
