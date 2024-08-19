@@ -3,6 +3,7 @@ from log import log
 import time
 import json
 import LEDHandler
+from main import _start_thread
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -25,11 +26,17 @@ def _attempt_connection() -> None:
         data: str = str(_ser.readline())[2:-3]
         if data == 'pc_ready':
             log('Successfully established connection with PC.')
+            _start_thread(maintain_connection)
             LEDHandler.cleanup()
             
             global _is_connected
             _is_connected = True
             return
+        
+def maintain_connection() -> None:
+    while True:
+        write('pi_ready', False)
+        time.sleep(1)
         
         
 def is_connected() -> bool:
