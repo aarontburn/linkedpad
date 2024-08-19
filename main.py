@@ -22,10 +22,14 @@ def init():
             time.sleep(1)
             # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
-        GPIOHandler.destroy_gpio()
-        DatabaseHandler.close()
-        LEDHandler.cleanup()
-        SerialHandler.cleanup()
+        print("Exiting program...")
+        try:
+            GPIOHandler.destroy_gpio()
+            DatabaseHandler.close()
+            LEDHandler.cleanup()
+            SerialHandler.cleanup()
+        except Exception:
+            print("Error on close")
 
 
 def _start_thread(target):
