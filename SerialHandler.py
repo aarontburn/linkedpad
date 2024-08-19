@@ -77,7 +77,10 @@ def _handle_events(event_string: str) -> None:
             rgb: list[int] = json.loads(split_str[2])
             LEDHandler.set_light(row_col, rgb)
         
-        case _:
+        case 'mode':
+            log("Mode:", split_str[0])
+        
+         case _:
             log('No handler for: ' + split_str[0])
 
 
