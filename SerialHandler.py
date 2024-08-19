@@ -82,7 +82,11 @@ def write(data: str, out: bool = True) -> None:
         if out:
             log("Sending " + str(data))
             
-        _ser.write((str(data) + "\n").encode())
+        try:
+            _ser.write((str(data) + "\n").encode())
+        except Exception as e:
+            log(e)
+            
             
 
 
@@ -103,6 +107,7 @@ def _establish_serial() -> None:
 def cleanup() -> None:
     if _ser != None:
         write('pi_exit')
+        time.sleep(0.1)
         _ser.close()
         
     
