@@ -3,7 +3,7 @@ import inspect
 
 def log(*message) -> None:
     
-    filename =inspect.stack()[1].filename.replace("\\", '/').split("/")[-1].split('.')[0]
+    filename = inspect.stack()[1].filename.replace("\\", '/').split("/")[-1].split('.')[0]
     
     out: str = ''
     
