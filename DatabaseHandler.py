@@ -3,9 +3,12 @@ import pymongo
 import ColorHandler
 import SerialHandler
 from log import log
+import socket
 
 if __name__ != "__main__":
     import LEDHandler
+
+_is_init: bool = False
 
 _URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 _CLIENT = pymongo.MongoClient(_URI)
@@ -36,13 +39,22 @@ _local_state: dict[str, str] = {}
 def init_db() -> None:
     log("Initializing database handler...")
     
+    if _is_connected_to_internet() == False:
+        log("Not connected to the internet.")
+        return
+    
     _check_database()
     _COLLECTION.find_one({})
     recalibrate()
+    global _is_init
+    _is_init = True
     log("Database initialization finished.")
 
 
 def db_listen() -> None:
+    if _is_init == False:
+        return
+    
     log("Database listener started.")
     try:
         with _COLLECTION.watch() as stream:
@@ -86,6 +98,14 @@ def recalibrate() -> None:
     for key in _KEYS:
         _set_light(key[0], key[1], current_state[key])
 
+def _is_connected_to_internet(host="8.8.8.8", port=53, timeout=3) -> bool:
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        return False
+    
 
 def _check_database() -> None:
     if _COLLECTION.estimated_document_count() == 1:
@@ -99,6 +119,7 @@ def _check_database() -> None:
     reset()
 
 
+    
 def _on_database_change(change_object: dict[str, str]) -> None:
     if SerialHandler.is_connected():
         return 
