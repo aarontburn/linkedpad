@@ -74,7 +74,6 @@ def on_key_press(row: str, col: str) -> None:
 def close() -> None:
     log('Closing...')
     _CLIENT.close()
-    sys.exit()
     
     
 

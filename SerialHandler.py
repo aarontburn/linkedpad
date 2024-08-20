@@ -4,6 +4,7 @@ import time
 import json
 import LEDHandler
 from main import _start_thread
+import subprocess
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -11,6 +12,7 @@ _BAUD: int = 9600
 _ser: serial.Serial = None
 _is_connected = False
 _is_exiting = False
+_linked_mode = False 
 
 def init():
     _establish_serial()
@@ -47,6 +49,10 @@ def is_connected() -> bool:
     return _is_connected
 
 
+def in_linked_mode() -> bool:
+    return _linked_mode
+
+
 def listen() -> None:
     log("Listening...")
     while True:
@@ -78,7 +84,23 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.set_light(row_col, rgb)
         
         case 'linked-mode':
+            global _linked_mode
+            _linked_mode = int(split_str[1]) == 1
+            
             log("linked-mode:", split_str[1])
+            
+        case 'pc_ready': # Ignore?
+            pass
+        
+        case 'wifi-setup':
+            wifi_ssid: str = split_str[1]
+            wifi_pass: str = split_str[2]
+            
+            log("Attempting wifi connection with " + wifi_ssid + " and " + wifi_pass)
+            
+            output = subprocess.call(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', wifi_ssid, wifi_pass]) 
+            log(output)
+            
         
         case _:
             log('No handler for: ' + split_str[0])

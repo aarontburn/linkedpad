@@ -1,7 +1,9 @@
 import time
+import ColorHandler
 import DatabaseHandler
 import SerialHandler
 from log import log
+import LEDHandler
 
 _DEBOUNCE: int = 20
 
@@ -36,11 +38,22 @@ class Key:
             else:                       # Key Up
                 self._currently_pressed = False
                 
+                if SerialHandler.is_connected():
+                    if SerialHandler.in_linked_mode() == False:
+                        LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)
+                    
+                
+                
         else:
             if is_down:                 # Key Down
                 log("Down")
-                SerialHandler.write(self._row + self._col)
-                DatabaseHandler.on_key_press(self._row, self._col)
+                
+                if SerialHandler.is_connected():
+                    if SerialHandler.in_linked_mode() == False:
+                        LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
+                    SerialHandler.write(self._row + self._col)
+                else:
+                    DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True
                 
