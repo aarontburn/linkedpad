@@ -10,15 +10,13 @@ ROWS: list[str] = ['H', 'A', 'B', 'C', 'D']
 MAX_COLS: int = 4
 
 def build_light_map() -> dict[str, int]:
-    rows: list[str] = (ROWS + list(reversed(ROWS.copy()))) * int(MAX_COLS / 2)
+    rows = (ROWS + list(reversed(ROWS.copy()))) * int(MAX_COLS / 2)
 
-    out: dict[str, int] = {}
-
+    out = {}
     pos_index: int = len(rows) - 1
-    col_index: int = -1
-
+    col_index = -1
     for i in range(len(rows)):
-        if rows[i] == ROWS[0]:
+        if i % 5 == 0:
             col_index += 1
 
         out[rows[i] + str(col_index)] = pos_index
