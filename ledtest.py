@@ -2,16 +2,17 @@ import neopixel
 import time
 import board
 
-pixels = neopixel.NeoPixel(board.D18, 2)
+lights = 19
+pixels = neopixel.NeoPixel(board.D18, lights)
 
 while True:
     print('white')
-    pixels[0] = (255, 255, 255)
-    pixels[1] = (255, 255, 255)
+    for i in range(lights):
+        pixels[i] = (255, 255, 255)
     time.sleep(1)
     print('off')
-    pixels[0] = (0, 0, 0)
-    pixels[1] = (0, 0, 0)
+    for i in range(lights):
+        pixels[i] = (0, 0, 0)
     time.sleep(1)
     
     
