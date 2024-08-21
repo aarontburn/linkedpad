@@ -54,7 +54,8 @@ def set_brightness(val: float) -> None:
 def _loop(): # This should only be for debugging
     log("Beginning loop")
     
-    for row_col in LIGHT_MAP:
+    while True:
+        for row_col in LIGHT_MAP:
             pixels[LIGHT_MAP[row_col]] = ColorHandler.WHITE
             time.sleep(0.5)
             pixels[LIGHT_MAP[row_col]] = ColorHandler.OFF
