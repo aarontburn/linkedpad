@@ -29,6 +29,7 @@ def build_light_map() -> dict[str, int]:
 brightness_scale = 0.5 # Half brightness
 
 LIGHT_MAP: dict[str, int] = build_light_map()
+log(LIGHT_MAP)
 
 GPIO = board.D18 	# pin 12
 pixels = None
