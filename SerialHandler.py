@@ -1,3 +1,4 @@
+import socket
 import serial
 from log import log
 import time
@@ -5,6 +6,7 @@ import json
 import LEDHandler
 from main import _start_thread, _get_temp
 import subprocess
+from threading import Thread
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -97,14 +99,36 @@ def _handle_events(event_string: str) -> None:
             wifi_ssid: str = split_str[1]
             wifi_pass: str = split_str[2]
             
-            log("Attempting wifi connection with " + wifi_ssid + " and " + wifi_pass)
-            
-            output = subprocess.run(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', wifi_ssid, wifi_pass]) 
-            log(output)
+            thread = Thread(target=_attempt_wifi, args=(wifi_ssid, wifi_pass))
+            thread.daemon = True
+            thread.start()
             
         
         case _:
             log('No handler for: ' + split_str[0])
+
+
+
+def _attempt_wifi(ssid: str, password: str) -> None:
+    log("Attempting wifi connection with " + ssid + " and " + password)
+    write('wifi start')
+    
+    subprocess.run(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', ssid, password]) 
+    log("Checking wifi connection...")
+    write('wifi end')
+    
+    try:
+        socket.setdefaulttimeout(3)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(("8.8.8.8", 53))
+        log("Wifi connected.")
+        write('wifi connected')
+        
+    except socket.error as ex:
+        log("Wifi not connected.")
+        write('wifi disconnected')
+
+    
+    
 
 
 def write(data: str, out: bool = True) -> None:
