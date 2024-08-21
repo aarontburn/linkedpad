@@ -2,7 +2,7 @@ import neopixel
 import time
 import board
 
-lights = 19
+lights = 20
 pixels = neopixel.NeoPixel(board.D18, lights)
 
 while True:
