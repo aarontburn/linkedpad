@@ -1,4 +1,5 @@
 from time import sleep
+import time
 import board
 import neopixel
 import ColorHandler
@@ -40,8 +41,6 @@ def init():
     log("LED Handling initialized.")
     
     
-    
-    
     if __name__ == "__main__":
         _loop()
 
@@ -54,11 +53,13 @@ def set_brightness(val: float) -> None:
 
 def _loop(): # This should only be for debugging
     log("Beginning loop")
-    while (True):
-        set_light('A0', ColorHandler.WHITE)
-        sleep(1)
-        set_light('A0', ColorHandler.OFF)
-        sleep(1)
+    
+    for row_col in LIGHT_MAP:
+            pixels[LIGHT_MAP[row_col]] = ColorHandler.WHITE
+            time.sleep(0.5)
+            pixels[LIGHT_MAP[row_col]] = ColorHandler.OFF
+            time.sleep(0.5)
+            
 
 
 

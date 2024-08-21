@@ -10,7 +10,7 @@ _DEBOUNCE: int = 20
 
 class Key:
     _currently_pressed: bool = False
-    _last_press_milli = 0
+    _last_press_time = 0
 
     _input_pin: int
     _output_pin: int
@@ -61,10 +61,10 @@ class Key:
                 pass
 
     def _handle_debounce(self) -> bool:
-        milli = round(time.time() * 1000)
+        milliseconds = round(time.time() * 1000)
 
-        if milli < self._last_press_milli + _DEBOUNCE:
+        if milliseconds < self._last_press_time + _DEBOUNCE:
             return False    # Don't proceed
 
-        self._last_press_milli = milli
+        self._last_press_time = milliseconds
         return True     # Proceed
