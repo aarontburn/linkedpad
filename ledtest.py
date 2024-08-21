@@ -3,7 +3,7 @@ import time
 import board
 
 lights = 20
-pixels = neopixel.NeoPixel(board.D18, lights)
+pixels = neopixel.NeoPixel(board.D18, lights, brightness=0.2)
 
 while True:
     print('white')
@@ -15,4 +15,4 @@ while True:
         pixels[i] = (0, 0, 0)
     time.sleep(1)
     
-    
+     
