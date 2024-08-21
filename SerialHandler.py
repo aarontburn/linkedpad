@@ -3,7 +3,7 @@ from log import log
 import time
 import json
 import LEDHandler
-from main import _start_thread
+from main import _start_thread, _get_temp
 import subprocess
 
 _PORT: str = '/dev/ttyGS0'
@@ -42,6 +42,7 @@ def maintain_connection() -> None:
             break
         
         write('pi_ready', False)
+        write('temp' + str(_get_temp()), False)
         time.sleep(3)
         
         
