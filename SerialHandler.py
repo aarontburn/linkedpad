@@ -99,7 +99,7 @@ def _handle_events(event_string: str) -> None:
             
             log("Attempting wifi connection with " + wifi_ssid + " and " + wifi_pass)
             
-            output = subprocess.call(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', wifi_ssid, wifi_pass], shell=True) 
+            output = subprocess.run(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', wifi_ssid, wifi_pass]) 
             log(output)
             
         
