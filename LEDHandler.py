@@ -10,11 +10,11 @@ ROWS: list[str] = ['H', 'A', 'B', 'C', 'D']
 MAX_COLS: int = 4
 
 def build_light_map() -> dict[str, int]:
-    rows = (ROWS + list(reversed(ROWS.copy()))) * int(MAX_COLS / 2)
+    rows: list[str] = (ROWS + list(reversed(ROWS.copy()))) * int(MAX_COLS / 2)
 
-    out = {}
+    out: dict[str, int] = {}
     pos_index: int = len(rows) - 1
-    col_index = -1
+    col_index: int = -1
     for i in range(len(rows)):
         if i % 5 == 0:
             col_index += 1
@@ -27,7 +27,6 @@ def build_light_map() -> dict[str, int]:
 brightness_scale = 0.5 # Half brightness
 
 LIGHT_MAP: dict[str, int] = build_light_map()
-log(LIGHT_MAP)
 
 GPIO = board.D18 	# pin 12
 pixels = None
