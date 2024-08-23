@@ -21,7 +21,6 @@ def setup_gpio() -> None:
         GPIO.setmode(GPIO.BOARD)
         
     except ValueError as e:      # Board is already initialized for some reason
-        print(e)
         destroy_gpio()
         GPIO.setmode(GPIO.BOARD)
 
@@ -34,7 +33,7 @@ def setup_gpio() -> None:
     for pin in ROW_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
-        
+    print("here")        
     setup_keys()
 
     log("GPIO initialization finished.")
