@@ -41,13 +41,17 @@ def setup_keys() -> None:
     
     index = 0
     
-    for i in range(len(COL_PINS)):
-        col = COL_PINS[i]
-        for j in range(len(ROW_PINS)):
-            row = ROW_PINS[j]
-            print(key_map)
-            key_map[KEYS[index]] = Key(col, row, KEYS[index])
-            index += 1
+    try:
+        for i in range(len(COL_PINS)):
+            col = COL_PINS[i]
+            for j in range(len(ROW_PINS)):
+                row = ROW_PINS[j]
+                print(key_map)
+                key_map[KEYS[index]] = Key(col, row, KEYS[index])
+                index += 1
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        
     print("here")
 
             
