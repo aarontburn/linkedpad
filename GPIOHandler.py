@@ -15,7 +15,7 @@ key_map: dict[str, Key] = {}
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
 ROW_PINS = [37, 35, 33, 31, 29] 
-COL_PINS = [7, 11, 13]
+COL_PINS = [7, 11, 13, 15]
 
 
 
@@ -59,8 +59,18 @@ def gpio_listen() -> None:
     log("GPIO listener started.")
 
     while True:
-        for row_col in key_map:
-            key_map[row_col].handle_input(GPIO.input)
+        for row_pin in ROW_PINS:
+            GPIO.output(row_pin, 0)
+            for col_pin in COL_PINS:
+                if GPIO.input(col_pin) == 0:
+                    print(row_pin, col_pin)
+                
+            GPIO.output(row_pin, 0)
+            
+                
+        
+        # for row_col in key_map:
+        #     key_map[row_col].handle_input(GPIO.input)
 
 
 def destroy_gpio() -> None:
