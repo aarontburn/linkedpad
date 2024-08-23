@@ -29,7 +29,7 @@ class Key:
 
     def handle_input(self, gpio_input_callback) -> None:
         if (self._row + self._col == 'H0'):
-            print(gpio_input_callback(self._input_pin, self._output_pin))
+            print(gpio_input_callback(self._input_pin), gpio_input_callback(self._output_pin))
         
         # print(gpio_input_callback(self._input_pin))
         GPIO.output(self._output_pin, 0)
