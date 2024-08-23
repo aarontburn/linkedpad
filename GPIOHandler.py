@@ -40,11 +40,14 @@ def setup_gpio() -> None:
 def setup_keys() -> None:
     print("here")
     i = 0
+    
     for col in COL_PINS:
         for row in ROW_PINS:
             key_map[KEYS[i]] = Key(row, col, KEYS[i])
-            log(key_map[KEYS[i]])
+            print(key_map[KEYS[i]])
             i += 1
+            print(i)
+            
     print("here 1")
     
     print(key_map)
