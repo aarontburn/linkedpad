@@ -6,11 +6,7 @@ from log import log
 
 
 
-key_map: dict[str, Key] = {}
-
-# ROW_PINS = [29, 31, 33, 35, 37]
-# COL_PINS = [40, 38, 36, 32]
-
+key_map: dict[tuple[int, int], Key] = {}
 
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
@@ -45,14 +41,10 @@ def setup_gpio() -> None:
 
 def setup_keys() -> None:
     index = 0
-    for i in range(len(ROW_PINS)):
-        col = ROW_PINS[i]
-        for j in range(len(COL_PINS)):
-            row = COL_PINS[j]
-            key_map[KEYS[i]] = Key(row, col, KEYS[i])
+    for row in ROW_PINS:
+        for col in COL_PINS:
+            key_map[(row, col)] = Key(row, col, KEYS[index])
             index += 1
-    
-            
     
 
 def gpio_listen() -> None:
@@ -62,15 +54,9 @@ def gpio_listen() -> None:
         for row_pin in ROW_PINS:
             GPIO.output(row_pin, 0)
             for col_pin in COL_PINS:
-                if GPIO.input(col_pin) == 0:
-                    print(row_pin, col_pin)
+                key_map[(row_pin, col_pin)].handle_input(GPIO.input)
                 
             GPIO.output(row_pin, 1)
-            
-                
-        
-        # for row_col in key_map:
-        #     key_map[row_col].handle_input(GPIO.input)
 
 
 def destroy_gpio() -> None:
