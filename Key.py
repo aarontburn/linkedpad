@@ -46,7 +46,6 @@ class Key:
         else:
             if is_down:                 # Key Down
                 log("Down", self._row, self._col)
-                log(self)
                 
                 # if SerialHandler.is_connected():
                 #     if SerialHandler.in_linked_mode() == False:
