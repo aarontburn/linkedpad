@@ -50,6 +50,7 @@ def setup_keys() -> None:
 def gpio_listen() -> None:
     log("GPIO listener started.")
 
+    log(key_map)
     while True:
         for row_pin in ROW_PINS:
             GPIO.output(row_pin, 0)
@@ -57,6 +58,7 @@ def gpio_listen() -> None:
                 key_map[(row_pin, col_pin)].handle_input(GPIO.input)
                 
             GPIO.output(row_pin, 1)
+
 
 
 def destroy_gpio() -> None:
