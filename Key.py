@@ -4,6 +4,8 @@ import time
 # import SerialHandler
 from log import log
 # import LEDHandler
+import RPi.GPIO as GPIO
+
 
 _DEBOUNCE: int = 20
 
@@ -27,8 +29,9 @@ class Key:
 
     def handle_input(self, gpio_input_callback) -> None:
         # print(gpio_input_callback(self._input_pin))
-        if not self._handle_debounce():
-            return
+        GPIO.output(self._output_pin, 0)
+        # if not self._handle_debounce():
+        #     return
 
         is_down: bool = gpio_input_callback(self._input_pin) == 0
         
@@ -61,6 +64,8 @@ class Key:
                 
             else:                       # Inactive
                 pass
+        GPIO.output(self._output_pin, 1)
+        
 
     def _handle_debounce(self) -> bool:
         milliseconds = round(time.time() * 1000)

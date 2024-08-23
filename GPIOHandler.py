@@ -31,7 +31,6 @@ def setup_gpio() -> None:
 
     for pin in COL_PINS:
         GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, GPIO.LOW)
 
 
     for pin in ROW_PINS:
