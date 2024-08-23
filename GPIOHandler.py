@@ -33,7 +33,6 @@ def setup_gpio() -> None:
     for pin in ROW_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
-    setup_keys()
 
     log("GPIO initialization finished.")
 
@@ -64,6 +63,7 @@ def destroy_gpio() -> None:
 
 if __name__ == '__main__':
     try:
+        setup_keys()
         setup_gpio()
         gpio_listen()
     except Exception:
