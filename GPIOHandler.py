@@ -65,7 +65,7 @@ def gpio_listen() -> None:
                 if GPIO.input(col_pin) == 0:
                     print(row_pin, col_pin)
                 
-            GPIO.output(row_pin, 0)
+            GPIO.output(row_pin, 1)
             
                 
         
