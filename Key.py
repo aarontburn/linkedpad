@@ -25,6 +25,9 @@ class Key:
         self._col_pin = col_pin
         self._row = row_col[0]
         self._col = row_col[1]
+        
+        if row_col == 'H0':
+            LEDHandler.set_light(row_col, ColorHandler.get_current_color)
 
     def handle_input(self, gpio_input_callback) -> None:
         if self._handle_debounce() == False:
@@ -54,14 +57,23 @@ class Key:
                 log("Down", self._row, self._col)
                 
                 if (self._row == 'H'):
-                    return
-                
-                if SerialHandler.is_connected():
-                    if SerialHandler.in_linked_mode() == False:
-                        LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
-                    SerialHandler.write(self._row + self._col)
+                    match self._col:
+                        case 0:
+                            ColorHandler.next_color()
+                            LEDHandler.set_light('H0', ColorHandler.get_current_color())
+                        case 1:
+                            pass
+                        case 2:
+                            pass
+                        case 3:
+                            pass
                 else:
-                    DatabaseHandler.on_key_press(self._row, self._col)
+                    if SerialHandler.is_connected():
+                        if SerialHandler.in_linked_mode() == False:
+                            LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
+                        SerialHandler.write(self._row + self._col)
+                    else:
+                        DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True
                 
