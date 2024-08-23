@@ -15,7 +15,7 @@ key_map: dict[str, Key] = {}
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
 ROW_PINS = [37, 35, 33, 31, 29] 
-COL_PINS = [7, 11, 13, 15]
+COL_PINS = [32, 36, 38, 40]
 
 
 
