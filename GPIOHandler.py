@@ -11,8 +11,8 @@ key_map: dict[str, Key] = {}
 # ROW_PINS = [29, 31, 33, 35, 37]
 # COL_PINS = [40, 38, 36, 32]
 # KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
-ROW_PINS = [29]
-COL_PINS = [32]
+ROW_PINS = [40]
+COL_PINS = [38]
 
 
 def setup_gpio() -> None:
