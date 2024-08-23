@@ -4,7 +4,6 @@ import time
 # import SerialHandler
 from log import log
 # import LEDHandler
-import RPi.GPIO as GPIO
 
 
 _DEBOUNCE: int = 20
@@ -60,7 +59,6 @@ class Key:
                 
             else:                       # Inactive
                 pass
-        GPIO.output(self._col_pin, 1)
         
 
     def _handle_debounce(self) -> bool:
