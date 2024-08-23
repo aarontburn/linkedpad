@@ -1,9 +1,9 @@
 import time
-# import ColorHandler
-# import DatabaseHandler
-# import SerialHandler
+import ColorHandler
+import DatabaseHandler
+import SerialHandler
 from log import log
-# import LEDHandler
+import LEDHandler
 
 
 _DEBOUNCE: int = 20
@@ -27,6 +27,8 @@ class Key:
         self._col = row_col[1]
 
     def handle_input(self, gpio_input_callback) -> None:
+        if self._handle_debounce() == False:
+            return
 
         is_down: bool = gpio_input_callback(self._col_pin) == 0
         
@@ -37,9 +39,9 @@ class Key:
             else:                       # Key Up
                 self._currently_pressed = False
                 
-                # if SerialHandler.is_connected():
-                #     if SerialHandler.in_linked_mode() == False:
-                #         LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)
+                if SerialHandler.is_connected():
+                    if SerialHandler.in_linked_mode() == False:
+                        LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)
                     
                 
                 
@@ -47,12 +49,12 @@ class Key:
             if is_down:                 # Key Down
                 log("Down", self._row, self._col)
                 
-                # if SerialHandler.is_connected():
-                #     if SerialHandler.in_linked_mode() == False:
-                #         LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
-                #     SerialHandler.write(self._row + self._col)
-                # else:
-                #     DatabaseHandler.on_key_press(self._row, self._col)
+                if SerialHandler.is_connected():
+                    if SerialHandler.in_linked_mode() == False:
+                        LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
+                    SerialHandler.write(self._row + self._col)
+                else:
+                    DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True
                 
