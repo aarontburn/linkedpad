@@ -44,7 +44,7 @@ def setup_keys() -> None:
         col = COL_PINS[i]
         for j in range(len(ROW_PINS)):
             row = ROW_PINS[j]
-            key_map[KEYS[index]] = Key(col, row, KEYS[index])
+            key_map[KEYS[index]] = Key(row, col, KEYS[index])
             index += 1
 
             
