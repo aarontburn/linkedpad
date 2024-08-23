@@ -27,7 +27,7 @@ class Key:
         self._col = row_col[1]
         
         if row_col == 'H0':
-            LEDHandler.set_light(row_col, ColorHandler.get_current_color)
+            LEDHandler.set_light(row_col, ColorHandler.get_current_color())
 
     def handle_input(self, gpio_input_callback) -> None:
         if self._handle_debounce() == False:
