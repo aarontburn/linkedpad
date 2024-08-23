@@ -33,7 +33,7 @@ def setup_gpio() -> None:
     for pin in ROW_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
-    setup_keys()
+    # setup_keys()
 
     log("GPIO initialization finished.")
 
