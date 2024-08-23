@@ -48,13 +48,13 @@ def setup_keys() -> None:
         col = COL_PINS[i]
         for j in range(len(ROW_PINS)):
             row = ROW_PINS[j]
-            # key_map[KEYS[index]] = Key(col, row, KEYS[index])
+            print(key_map)
+            key_map[KEYS[index]] = Key(col, row, KEYS[index])
             index += 1
              
 
             
     
-    print(key_map)
 
 def gpio_listen() -> None:
     log("GPIO listener started.")
