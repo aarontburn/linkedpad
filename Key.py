@@ -58,14 +58,14 @@ class Key:
                 
                 if (self._row == 'H'):
                     match self._col:
-                        case 0:
+                        case '0':
                             ColorHandler.next_color()
                             LEDHandler.set_light('H0', ColorHandler.get_current_color())
-                        case 1:
+                        case '1':
                             pass
-                        case 2:
+                        case '2':
                             pass
-                        case 3:
+                        case '3':
                             pass
                 else:
                     if SerialHandler.is_connected():
