@@ -27,7 +27,6 @@ class Key:
 
     def handle_input(self, gpio_input_callback) -> None:
         print(gpio_input_callback(self._input_pin))
-        print(gpio_input_callback(self._output_pin))
         if not self._handle_debounce():
             return
 
