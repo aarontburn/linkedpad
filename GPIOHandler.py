@@ -39,16 +39,16 @@ def setup_gpio() -> None:
 
 
 def setup_keys() -> None:
-    log("here")
+    print("here")
     i = 0
     for col in COL_PINS:
         for row in ROW_PINS:
             key_map[KEYS[i]] = Key(row, col, KEYS[i])
             log(key_map[KEYS[i]])
             i += 1
-    log("here 1")
+    print("here 1")
     
-    log(key_map)
+    print(key_map)
 
 def gpio_listen() -> None:
     log("GPIO listener started.")
