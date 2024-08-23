@@ -33,18 +33,21 @@ def setup_gpio() -> None:
     for pin in ROW_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
-    # setup_keys()
+    setup_keys()
 
     log("GPIO initialization finished.")
 
 
 def setup_keys() -> None:
+    log("here")
     i = 0
     for col in COL_PINS:
         for row in ROW_PINS:
             key_map[KEYS[i]] = Key(row, col, KEYS[i])
             log(key_map[KEYS[i]])
             i += 1
+    log("here 1")
+    
     log(key_map)
 
 def gpio_listen() -> None:
