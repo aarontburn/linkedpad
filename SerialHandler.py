@@ -161,8 +161,9 @@ def cleanup() -> None:
     _is_exiting = True
     
     if _ser != None:
-        write('pi_exit')
-        time.sleep(0.1)
+        if _is_connected:
+            write('pi_exit')
+            time.sleep(0.1)
         _ser.close()
         
     
