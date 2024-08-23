@@ -14,8 +14,8 @@ key_map: dict[str, Key] = {}
 
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
-COL_PINS = list(reversed([37, 35, 33, 31, 29]))
-ROW_PINS = [40, 38, 36, 32]
+ROW_PINS = [37, 35, 33, 31, 29] 
+COL_PINS = [40, 38, 36, 32]
 
 
 
@@ -32,11 +32,11 @@ def setup_gpio() -> None:
         GPIO.setmode(GPIO.BOARD)
 
 
-    for pin in COL_PINS:
+    for pin in ROW_PINS:
         GPIO.setup(pin, GPIO.OUT)
 
 
-    for pin in ROW_PINS:
+    for pin in COL_PINS:
         GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
 
@@ -45,10 +45,10 @@ def setup_gpio() -> None:
 
 def setup_keys() -> None:
     index = 0
-    for i in range(len(COL_PINS)):
-        col = COL_PINS[i]
-        for j in range(len(ROW_PINS)):
-            row = ROW_PINS[j]
+    for i in range(len(ROW_PINS)):
+        col = ROW_PINS[i]
+        for j in range(len(COL_PINS)):
+            row = COL_PINS[j]
             key_map[KEYS[i]] = Key(row, col, KEYS[i])
             index += 1
 
