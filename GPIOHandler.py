@@ -44,6 +44,7 @@ def setup_keys() -> None:
     
     print(len(COL_PINS))
     print(COL_PINS)
+    print(ROW_PINS)
     
     for i in range(len(COL_PINS)):
         
