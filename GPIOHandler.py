@@ -41,10 +41,11 @@ def setup_keys() -> None:
     print("here")
     i = 0
     
+    
+    print(len(COL_PINS) * len(ROW_PINS))
     for col in COL_PINS:
         for row in ROW_PINS:
             key_map[KEYS[i]] = Key(row, col, KEYS[i])
-            print(key_map[KEYS[i]])
             i += 1
             print(i)
             
