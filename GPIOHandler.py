@@ -14,7 +14,7 @@ key_map: dict[str, Key] = {}
 
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
-COL_PINS = [37, 35, 33, 31, 29].reverse()
+COL_PINS = list(reversed([37, 35, 33, 31, 29]))
 ROW_PINS = [40, 38, 36, 32]
 
 
