@@ -39,6 +39,7 @@ def setup_gpio() -> None:
 
 
 def setup_keys() -> None:
+    log("here")
     i = 0
     for col in COL_PINS:
         for row in ROW_PINS:
