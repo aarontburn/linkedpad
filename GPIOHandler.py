@@ -53,7 +53,6 @@ def setup_keys() -> None:
 def gpio_listen() -> None:
     log("GPIO listener started.")
 
-    log(key_map)
     while True:
         for row_pin in ROW_PINS:
             GPIO.output(row_pin, 0)
