@@ -7,6 +7,7 @@ import LEDHandler
 from main import _start_thread, _get_temp
 import subprocess
 from threading import Thread
+import LEDHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -104,6 +105,9 @@ def _handle_events(event_string: str) -> None:
             thread.daemon = True
             thread.start()
             
+        case 'reset':
+            for row_col in LEDHandler.LIGHT_MAP:
+                LEDHandler.set_light(row_col, [0, 0, 0])
         
         case _:
             log('No handler for: ' + split_str[0])

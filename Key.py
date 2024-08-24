@@ -12,7 +12,6 @@ _REPEAT_DELAY: int = 250
 
 class Key:
     _currently_pressed: bool = False
-    _last_press_time = 0
     
     _down_time = 0
 
@@ -45,7 +44,6 @@ class Key:
                 
             else:                       # Key Up
                 self._currently_pressed = False
-                self._hold_time = 0
                 
                 if SerialHandler.is_connected():
                     SerialHandler.write(self._row + self._col + " up")
@@ -73,9 +71,9 @@ class Key:
                                 LEDHandler.set_light('H0', ColorHandler.get_current_color())
                             case '1':
                                 LEDHandler.set_brightness(0.1)
-                                pass
                             case '2':
-                                pass
+                                DatabaseHandler.reset()
+                                DatabaseHandler.recalibrate()
                             case '3':
                                 pass
                         
