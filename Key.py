@@ -6,7 +6,7 @@ from log import log
 import LEDHandler
 
 
-_DEBOUNCE: int = 20
+_DEBOUNCE: int = 50
 
 
 class Key:
@@ -37,7 +37,6 @@ class Key:
         
         if self._currently_pressed:
             if is_down:                 # Hold
-                log('down')
                 if SerialHandler.is_connected():
                     SerialHandler.write(self._row + self._col)
 
