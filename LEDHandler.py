@@ -1,5 +1,4 @@
 from time import sleep
-import time
 import board
 import neopixel
 import ColorHandler

@@ -79,7 +79,6 @@ def close() -> None:
     
 
 def reset() -> None:
-    
     _COLLECTION.find_one_and_update(
         _ACCESS_QUERY,
         {'$set': _DEFAULT_DB_OBJ},

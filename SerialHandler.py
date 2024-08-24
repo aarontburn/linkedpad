@@ -107,7 +107,8 @@ def _handle_events(event_string: str) -> None:
             
         case 'reset':
             for row_col in LEDHandler.LIGHT_MAP:
-                LEDHandler.set_light(row_col, [0, 0, 0])
+                if row_col[0] != 'H':
+                    LEDHandler.set_light(row_col, [0, 0, 0])
         
         case _:
             log('No handler for: ' + split_str[0])
