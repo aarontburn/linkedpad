@@ -37,7 +37,10 @@ class Key:
         
         if self._currently_pressed:
             if is_down:                 # Hold
-                pass
+                log('down')
+                if SerialHandler.is_connected():
+                    SerialHandler.write(self._row + self._col)
+
                 
             else:                       # Key Up
                 self._currently_pressed = False
