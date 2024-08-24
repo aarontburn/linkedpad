@@ -89,6 +89,7 @@ def _handle_events(event_string: str) -> None:
         case 'linked-mode':
             global _linked_mode
             _linked_mode = int(split_str[1]) == 1
+            LEDHandler.linked_mode_toggle(_linked_mode)
             
             log("linked-mode:", split_str[1])
             
