@@ -42,10 +42,6 @@ class Key:
             else:                       # Key Up
                 self._currently_pressed = False
                 
-                
-                if (self._row == 'H'):
-                    return
-                
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)

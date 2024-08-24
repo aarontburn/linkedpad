@@ -24,6 +24,9 @@ def build_light_map() -> dict[str, int]:
         
     return out
 
+_linked_mode_state = {}
+
+
 brightness_scale = 0.5 # Half brightness
 
 LIGHT_MAP: dict[str, int] = build_light_map()
@@ -41,9 +44,6 @@ def init():
     log("LED Handling initialized.")
     
     
-    if __name__ == "__main__":
-        _loop()
-
 
 
 def set_brightness(val: float) -> None:
@@ -51,20 +51,21 @@ def set_brightness(val: float) -> None:
     
     
 
-def _loop(): # This should only be for debugging
-    log("Beginning loop")
-    
-    while True:
-        for row_col in LIGHT_MAP:
-            pixels[LIGHT_MAP[row_col]] = ColorHandler.WHITE
-            time.sleep(0.5)
-            pixels[LIGHT_MAP[row_col]] = ColorHandler.OFF
-            time.sleep(0.5)
+def linked_mode_toggle(in_linked_mode: bool) -> None: 
+    if in_linked_mode:
+        for row_col in _linked_mode_state:
+            set_light(row_col, _linked_mode_state[row_col])
             
-
-
+    else:
+        for i in range(len(LIGHT_MAP)):
+            pixels[i] = (0, 0, 0)
+            
+        
+        
 
 def set_light(row_col: str, rgb: list[int, int, int]):
+    _linked_mode_state[row_col] = rgb
+    
     log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", tuple(rgb))
     pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
     
