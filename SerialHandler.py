@@ -88,11 +88,12 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.set_light(row_col, rgb)
         
         case 'linked-mode':
+            log("linked-mode:", split_str[1])
+            
             global _linked_mode
             _linked_mode = int(split_str[1]) == 1
             LEDHandler.linked_mode_toggle(_linked_mode)
             
-            log("linked-mode:", split_str[1])
             
         case 'pc_ready': # Ignore?
             pass
