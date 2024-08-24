@@ -7,11 +7,14 @@ import LEDHandler
 
 
 _DEBOUNCE: int = 50
+_REPEAT_DELAY: int = 50
 
 
 class Key:
     _currently_pressed: bool = False
     _last_press_time = 0
+    
+    _down_time = 0
 
     _row_pin: int
     _col_pin: int
@@ -36,11 +39,13 @@ class Key:
         if self._currently_pressed:
             if is_down:                 # Hold
                 if SerialHandler.is_connected():
-                    SerialHandler.write(self._row + self._col + " hold")
+                    if self._wait_for_repeat_delay():
+                        SerialHandler.write(self._row + self._col + " hold")
 
                 
             else:                       # Key Up
                 self._currently_pressed = False
+                self._hold_time = 0
                 
                 if SerialHandler.is_connected():
                     SerialHandler.write(self._row + self._col + " up")
@@ -52,6 +57,8 @@ class Key:
                 
         else:
             if is_down:                 # Key Down
+                self._down_time = self._ms()
+                
                 log("Down", self._row, self._col)
                 
                 if SerialHandler.is_connected():
@@ -82,10 +89,18 @@ class Key:
         
 
     def _handle_debounce(self) -> bool:
-        milliseconds = round(time.time() * 1000)
+        ms = self._ms()
 
-        if milliseconds < self._last_press_time + _DEBOUNCE:
+        if ms < self._last_press_time + _DEBOUNCE:
             return False    # Don't proceed
 
-        self._last_press_time = milliseconds
+        self._last_press_time = ms
         return True     # Proceed
+
+
+    def _wait_for_repeat_delay(self) -> bool:
+        return self._ms() > self._down_time + _REPEAT_DELAY
+    
+    
+    def _ms(self):
+        return round(time.time() * 1000)
