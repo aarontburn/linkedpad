@@ -56,24 +56,25 @@ class Key:
             if is_down:                 # Key Down
                 log("Down", self._row, self._col)
                 
-                if (self._row == 'H'):
-                    match self._col:
-                        case '0':
-                            ColorHandler.next_color()
-                            LEDHandler.set_light('H0', ColorHandler.get_current_color())
-                        case '1':
-                            LEDHandler.set_brightness(0.1)
-                            pass
-                        case '2':
-                            pass
-                        case '3':
-                            pass
+                if SerialHandler.is_connected():
+                    if SerialHandler.in_linked_mode() == False:
+                        LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
+                    SerialHandler.write(self._row + self._col)
                 else:
-                    if SerialHandler.is_connected():
-                        if SerialHandler.in_linked_mode() == False:
-                            LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
-                        SerialHandler.write(self._row + self._col)
-                    else:
+                    if (self._row == 'H'):
+                        match self._col:
+                            case '0':
+                                ColorHandler.next_color()
+                                LEDHandler.set_light('H0', ColorHandler.get_current_color())
+                            case '1':
+                                LEDHandler.set_brightness(0.1)
+                                pass
+                            case '2':
+                                pass
+                            case '3':
+                                pass
+                        
+                        
                         DatabaseHandler.on_key_press(self._row, self._col)
                     
                 self._currently_pressed = True
