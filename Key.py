@@ -12,6 +12,7 @@ _REPEAT_DELAY: int = 250
 
 class Key:
     _currently_pressed: bool = False
+    _last_press_time = 0
     _down_time = 0
 
     _row_pin: int
