@@ -2,7 +2,6 @@ import time
 import ColorHandler
 import DatabaseHandler
 import SerialHandler
-from log import log
 import LEDHandler
 
 
@@ -56,9 +55,6 @@ class Key:
         else:
             if is_down:                 # Key Down
                 self._down_time = self._ms()
-                
-                log("Down", self._row, self._col)
-                
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)

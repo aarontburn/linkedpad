@@ -132,7 +132,7 @@ def _on_database_change(change_object: dict[str, str]) -> None:
 
 def _set_light(row: str, col: str, state: list[int, int, int]) -> None:
     _local_state[row + col] = state
-    _display_to_console()
+    # _display_to_console()
     if __name__ != "__main__":
         LEDHandler.set_light(row + col, state)
     

@@ -139,8 +139,8 @@ def _attempt_wifi(ssid: str, password: str) -> None:
 
 def write(data: str, out: bool = True) -> None:
     if _ser != None:
-        if out:
-            log("Sending " + str(data))
+        # if out:
+            # log("Sending " + str(data))
             
         try:
             _ser.write((str(data) + "\n").encode())
