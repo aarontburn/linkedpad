@@ -36,13 +36,15 @@ class Key:
         if self._currently_pressed:
             if is_down:                 # Hold
                 if SerialHandler.is_connected():
-                    SerialHandler.write(self._row + self._col)
+                    SerialHandler.write(self._row + self._col + " hold")
 
                 
             else:                       # Key Up
                 self._currently_pressed = False
                 
                 if SerialHandler.is_connected():
+                    SerialHandler.write(self._row + self._col + " up")
+                    
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)
                     
@@ -55,7 +57,7 @@ class Key:
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
-                    SerialHandler.write(self._row + self._col)
+                    SerialHandler.write(self._row + self._col + " down")
                 else:
                     if (self._row == 'H'):
                         match self._col:
