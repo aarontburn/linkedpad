@@ -6,7 +6,7 @@ from log import log
 import LEDHandler
 
 
-_DEBOUNCE: int = 50
+_DEBOUNCE: int = 100
 
 
 class Key:
