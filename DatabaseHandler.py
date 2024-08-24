@@ -48,6 +48,7 @@ def init_db() -> None:
     recalibrate()
     global _is_init
     _is_init = True
+    LEDHandler.set_light('H0', ColorHandler.get_current_color())
     log("Database initialization finished.")
 
 
