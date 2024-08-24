@@ -7,7 +7,7 @@ import LEDHandler
 
 
 _DEBOUNCE: int = 50
-_REPEAT_DELAY: int = 1000
+_REPEAT_DELAY: int = 250
 
 
 class Key:
