@@ -4,6 +4,12 @@ import neopixel
 import ColorHandler
 from log import log
 
+_BRIGHTNESS_STEPS = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+_BRIGHTNESS_SCALE = 0.5 # Half brightness
+_brightness_index = 1
+_DEFAULT_BRIGHTNESS = _BRIGHTNESS_STEPS[_brightness_index] # 0.1
+
+
 
 ROWS: list[str] = ['H', 'A', 'B', 'C', 'D']
 MAX_COLS: int = 4
@@ -26,7 +32,7 @@ def build_light_map() -> dict[str, int]:
 _linked_mode_state = {}
 
 
-brightness_scale = 0.5 # Half brightness
+
 
 LIGHT_MAP: dict[str, int] = build_light_map()
 
@@ -37,7 +43,7 @@ pixels = None
 def init():
     log("Initializing LED Handler...")
     global pixels
-    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=brightness_scale)
+    pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=_DEFAULT_BRIGHTNESS * _BRIGHTNESS_SCALE)
     
     
     log("LED Handling initialized.")
@@ -45,8 +51,18 @@ def init():
     
 
 
-def set_brightness(val: float) -> None:
-    pixels.brightness = val * brightness_scale
+def set_brightness(val: float = None) -> None:
+    if val is None: # Go next
+        global _brightness_index
+        _brightness_index += 1
+        
+        if _brightness_index >= len(_BRIGHTNESS_STEPS):
+            _brightness_index = 0
+        
+        val = _BRIGHTNESS_STEPS[_brightness_index]
+
+    log(val)    
+    pixels.brightness = val * _BRIGHTNESS_SCALE
     
     
 
