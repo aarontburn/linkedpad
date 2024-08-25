@@ -17,15 +17,12 @@ class Key:
     _row_pin: int
     _col_pin: int
 
-    # Could be reduced to rowCol ('A3')
-    _row: str
-    _col: str
+    _row_col: str
 
     def __init__(self, row_pin: int, col_pin: int, row_col: str) -> None:
         self._row_pin = row_pin
         self._col_pin = col_pin
-        self._row = row_col[0]
-        self._col = row_col[1]
+        self._row_col = row_col
         
 
     def handle_input(self, gpio_input_callback) -> None:
@@ -39,17 +36,17 @@ class Key:
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         if self._wait_for_repeat_delay():
-                           SerialHandler.write(self._row + self._col + " hold")
+                           SerialHandler.write(self._row_col + " hold")
                            
                 
             else:                       # Key Up
                 self._currently_pressed = False
                 
                 if SerialHandler.is_connected():
-                    SerialHandler.write(self._row + self._col + " up")
+                    SerialHandler.write(self._row_col + " up")
                     
                     if SerialHandler.in_linked_mode() == False:
-                        LEDHandler.set_light(self._row + self._col, ColorHandler.OFF)
+                        LEDHandler.set_light(self._row_col, ColorHandler.OFF)
                     
                 
                 
@@ -58,11 +55,11 @@ class Key:
                 self._down_time = self._ms()
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
-                        LEDHandler.set_light(self._row + self._col, ColorHandler.WHITE)
-                    SerialHandler.write(self._row + self._col + " down")
+                        LEDHandler.set_light(self._row_col, ColorHandler.WHITE)
+                    SerialHandler.write(self._row_col + " down")
                 else:
-                    if (self._row == 'H'):
-                        match self._col:
+                    if (self._row_col[0] == 'H'):
+                        match self._row_col[1]:
                             case '0':
                                 ColorHandler.next_color()
                                 LEDHandler.set_light('H0', ColorHandler.get_current_color())
@@ -75,7 +72,7 @@ class Key:
                                 pass
                         
                         
-                        DatabaseHandler.on_key_press(self._row, self._col)
+                        DatabaseHandler.on_key_press(self._row_col)
                     
                 self._currently_pressed = True
                 

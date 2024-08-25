@@ -67,9 +67,9 @@ def db_listen() -> None:
         _CLIENT.close()
 
 
-def on_key_press(row: str, col: str) -> None:
-    is_off: bool = _local_state[row + col] == ColorHandler.OFF
-    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row + col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
+def on_key_press(row_col: str) -> None:
+    is_off: bool = _local_state[row_col] == ColorHandler.OFF
+    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row_col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
 
 
 def close() -> None:
@@ -96,6 +96,7 @@ def recalibrate() -> None:
     
     for key in _KEYS:
         _set_light(key[0], key[1], current_state[key])
+
 
 def _is_connected_to_internet(host="8.8.8.8", port=53, timeout=3) -> bool:
     try:
