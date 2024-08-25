@@ -70,8 +70,7 @@ class Key:
                                 DatabaseHandler.recalibrate()
                             case '3':
                                 pass
-                        
-                        
+                    else:
                         DatabaseHandler.on_key_press(self._row_col)
                     
                 self._currently_pressed = True
