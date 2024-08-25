@@ -64,7 +64,7 @@ class Key:
                                 ColorHandler.next_color()
                                 LEDHandler.set_light('H0', ColorHandler.get_current_color())
                             case '1':
-                                LEDHandler.set_brightness(0.1)
+                                LEDHandler.set_brightness()
                             case '2':
                                 DatabaseHandler.reset()
                                 DatabaseHandler.recalibrate()
