@@ -53,16 +53,10 @@ class Key:
                     if (self._row_col[0] == 'H'):
                         match self._row_col[1]:
                             case '0':
-                                ColorHandler.next_color()
-                                LEDHandler.set_light('H0', ColorHandler.get_current_color())
+                                pass
                             case '1':
-                                LEDHandler.set_brightness()
                                 LEDHandler.set_light(self._row_col, ColorHandler.OFF)
-                                
                             case '2':
-                                DatabaseHandler.reset()
-                                DatabaseHandler.recalibrate()
-                                
                                 LEDHandler.set_light(self._row_col, ColorHandler.OFF)
                             case '3':
                                 pass
