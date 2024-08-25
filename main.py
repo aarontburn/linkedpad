@@ -33,8 +33,8 @@ def init():
             log("Error on close")
 
 
-def _start_thread(target):
-    thread = Thread(target=target)
+def _start_thread(target, args = ()):
+    thread = Thread(target=target, args=args)
     thread.daemon = True
     thread.start()
 

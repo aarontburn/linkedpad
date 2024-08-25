@@ -102,9 +102,7 @@ def _handle_events(event_string: str) -> None:
             wifi_ssid: str = split_str[1]
             wifi_pass: str = split_str[2]
             
-            thread = Thread(target=_attempt_wifi, args=(wifi_ssid, wifi_pass))
-            thread.daemon = True
-            thread.start()
+            _start_thread(_attempt_wifi, (wifi_ssid, wifi_pass))
             
         case 'reset':
             for row_col in LEDHandler.LIGHT_MAP:

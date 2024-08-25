@@ -83,7 +83,6 @@ class Key:
                             case '2':
                                 LEDHandler.set_light(self._row_col, ColorHandler.RED)
                                 DatabaseHandler.reset()
-                                DatabaseHandler.recalibrate()
                             case '3':
                                 pass
                     else:
