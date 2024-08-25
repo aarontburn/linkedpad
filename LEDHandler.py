@@ -52,7 +52,7 @@ def init():
 
 
 def set_brightness(val: float = None) -> None:
-    if val is None: # Go next
+    if val is None: # Go next. Not sure why VSCode says this code is unreachable
         global _brightness_index
         _brightness_index += 1
         
@@ -61,7 +61,6 @@ def set_brightness(val: float = None) -> None:
         
         val = _BRIGHTNESS_STEPS[_brightness_index]
 
-    log(val)    
     pixels.brightness = val * _BRIGHTNESS_SCALE
     
     

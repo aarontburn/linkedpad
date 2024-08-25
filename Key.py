@@ -42,17 +42,37 @@ class Key:
             else:                       # Key Up
                 self._currently_pressed = False
                 
+                
                 if SerialHandler.is_connected():
                     SerialHandler.write(self._row_col + " up")
                     
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row_col, ColorHandler.OFF)
+                        
+                else:
+                    if (self._row_col[0] == 'H'):
+                        match self._row_col[1]:
+                            case '0':
+                                ColorHandler.next_color()
+                                LEDHandler.set_light('H0', ColorHandler.get_current_color())
+                            case '1':
+                                LEDHandler.set_brightness()
+                                LEDHandler.set_light(self._row_col, ColorHandler.OFF)
+                                
+                            case '2':
+                                DatabaseHandler.reset()
+                                DatabaseHandler.recalibrate()
+                                
+                                LEDHandler.set_light(self._row_col, ColorHandler.OFF)
+                            case '3':
+                                pass
                     
                 
                 
         else:
             if is_down:                 # Key Down
                 self._down_time = self._ms()
+                
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         LEDHandler.set_light(self._row_col, ColorHandler.WHITE)
@@ -65,9 +85,11 @@ class Key:
                                 LEDHandler.set_light('H0', ColorHandler.get_current_color())
                             case '1':
                                 LEDHandler.set_brightness()
+                                LEDHandler.set_light(self._row_col, ColorHandler.YELLOW)
                             case '2':
                                 DatabaseHandler.reset()
                                 DatabaseHandler.recalibrate()
+                                LEDHandler.set_light(self._row_col, ColorHandler.RED)
                             case '3':
                                 pass
                     else:
