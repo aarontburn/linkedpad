@@ -10,5 +10,5 @@ def log(*message) -> None:
     for s in message:
         out += ' ' + str(s)
     
-    print(filename + ": " + out[1:])
+    print(filename + ": " + out[1:], flush=True)
     
