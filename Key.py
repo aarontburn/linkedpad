@@ -39,8 +39,8 @@ class Key:
                 if SerialHandler.is_connected():
                     if SerialHandler.in_linked_mode() == False:
                         if self._wait_for_repeat_delay():
-                            SerialHandler.write(self._row + self._col + " hold")
-
+                           SerialHandler.write(self._row + self._col + " hold")
+                           
                 
             else:                       # Key Up
                 self._currently_pressed = False
