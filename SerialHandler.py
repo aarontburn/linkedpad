@@ -6,7 +6,6 @@ import json
 import LEDHandler
 from main import _start_thread, _get_temp
 import subprocess
-from threading import Thread
 import LEDHandler
 
 _PORT: str = '/dev/ttyGS0'

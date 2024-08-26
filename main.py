@@ -7,7 +7,6 @@ import SerialHandler
 from log import log
 
 def init():
-    
     log("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
@@ -44,16 +43,14 @@ def _get_temp():
         return round(int(f.read().strip()) / 1000, 2)
     
     
-
-    
-    
 if __name__ == '__main__':
-    
     init()
 
 
 
 
 # Pins 4, 6, 12 for LED
-# Pins 31, 33, 35, 37 for Key Rows
+# Pins 29, 31, 33, 35, 37 for Key Rows
 # Pins 32, 36, 38, 40 for Key Columns
+
+# 32, 29 for H0

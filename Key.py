@@ -72,7 +72,7 @@ class Key:
                         LEDHandler.set_light(self._row_col, ColorHandler.WHITE)
                     SerialHandler.write(self._row_col + " down")
                 else:
-                    if (self._row_col[0] == 'H'):
+                    if self._row_col[0] == 'H':
                         match self._row_col[1]:
                             case '0':
                                 ColorHandler.next_color()

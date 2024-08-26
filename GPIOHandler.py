@@ -11,7 +11,7 @@ key_map: dict[tuple[int, int], Key] = {}
 
 KEYS = [row + col for row in ['H', "A", "B", "C", "D"] for col in ["0", "1", "2", "3"]]
 ROW_PINS = [29, 31, 33, 35, 37] 
-COL_PINS = [32, 36, 38, 40]
+COL_PINS = list(reversed([32, 36, 38, 40]))
 
 
 
@@ -57,7 +57,11 @@ def gpio_listen() -> None:
         for row_pin in ROW_PINS:
             GPIO.output(row_pin, 0)
             for col_pin in COL_PINS:
-                key_map[(row_pin, col_pin)].handle_input(GPIO.input)
+                if __name__ != '__main__':
+                    key_map[(row_pin, col_pin)].handle_input(GPIO.input)
+                else:
+                    if GPIO.input(col_pin) == 0:
+                        log(key_map[(row_pin, col_pin)]._row_col)
                 
             GPIO.output(row_pin, 1)
 
