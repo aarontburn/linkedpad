@@ -14,7 +14,7 @@ _BAUD: int = 9600
 _ser: serial.Serial = None
 _is_connected = False
 _is_exiting = False
-_linked_mode = False 
+_linked_mode = True # By default, we are in linked-mode 
 
 def init():
     _establish_serial()
