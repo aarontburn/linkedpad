@@ -16,12 +16,15 @@ def init():
     _start_thread(GPIOHandler.gpio_listen)
     _start_thread(DatabaseHandler.db_listen)
 
+
+    exiting = False
     try:
-        while True:
-            time.sleep(1)
+        while not exiting:
+            time.sleep(0.5)
             # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         log("Exiting program...")
+        exiting = True
         _run_with_exception(LEDHandler.cleanup)
         _run_with_exception(SerialHandler.cleanup)
         _run_with_exception(DatabaseHandler.close)
