@@ -108,6 +108,7 @@ class Key:
             
     
     def _on_hold(self) -> None:
+        return
         if SerialHandler.is_connected():
             if SerialHandler.in_linked_mode() == False:
                 if self._wait_for_repeat_delay():
