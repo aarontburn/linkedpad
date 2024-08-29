@@ -22,14 +22,19 @@ def init():
             # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         log("Exiting program...")
-        try:
-            LEDHandler.cleanup()
-            SerialHandler.cleanup()
-            DatabaseHandler.close()
-            GPIOHandler.destroy_gpio()
+        _run_with_exception(LEDHandler.cleanup)
+        _run_with_exception(SerialHandler.cleanup)
+        _run_with_exception(DatabaseHandler.close)
+        _run_with_exception(GPIOHandler.destroy_gpio)
 
-        except Exception:
-            log("Error on close")
+
+
+def _run_with_exception(target) -> None:
+    try:
+        target()
+    except Exception as e:
+        log(e)
+    
 
 
 def _start_thread(target, args = ()):

@@ -95,7 +95,7 @@ class Key:
                             LEDHandler.set_light(self._row_col, ColorHandler.OFF)
                 
         else:
-            if (self._row_col[0] == 'H'):
+            if self._row_col[0] == 'H':
                 match self._row_col[1]:
                     case '0':
                         pass
