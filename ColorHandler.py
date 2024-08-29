@@ -9,9 +9,19 @@ GREEN: list[int, int, int] = [0, 255, 0]
 BLUE: list[int, int, int] = [0, 0, 255]
 VIOLET: list[int, int, int] = [125, 0, 255]
 
-_COLOR_SEQ: list[tuple[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
+_COLOR_SEQ: list[list[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
 
 _current_color_index = 0
+
+_macro_press_color: list[int, int, int] = WHITE
+
+def set_macro_press_color(rgb: list[int, int, int]) -> None:
+    global _macro_press_color
+    _macro_press_color = rgb
+
+def get_macro_press_color() -> list[int, int, int]:
+    return _macro_press_color
+
 
 def next_color() -> None:
     global _current_color_index

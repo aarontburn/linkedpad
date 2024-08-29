@@ -53,7 +53,7 @@ class Key:
             
             
             if SerialHandler.in_linked_mode() == False:
-                LEDHandler.set_light(self._row_col, ColorHandler.WHITE)
+                LEDHandler.set_light(self._row_col, ColorHandler.get_macro_press_color())
             else:
                 if self._row_col[0] == 'H':
                     match self._row_col[1]:

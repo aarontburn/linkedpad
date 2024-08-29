@@ -7,6 +7,7 @@ import LEDHandler
 from main import _start_thread, _get_temp
 import subprocess
 import LEDHandler
+import ColorHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -106,6 +107,11 @@ def _handle_events(event_string: str) -> None:
             for row_col in LEDHandler.LIGHT_MAP:
                 if row_col[0] != 'H':
                     LEDHandler.set_light(row_col, [0, 0, 0])
+        
+        case 'macro-press-color':
+            rgb: list[int] = json.loads(split_str[1])
+            ColorHandler.set_macro_press_color(rgb)
+            
         
         case _:
             log('No handler for: ' + split_str[0])
