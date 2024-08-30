@@ -121,7 +121,7 @@ def _get_device_status() -> str:
     temp: str = str(get_temp())
     wifi_connection: bool = is_connected_to_internet()
     
-    return 'status {' + f'"temp": {temp}, "wifi": {wifi_connection}' + '}'
+    return 'status {' + f'"temp": {temp}, "wifi": {'true' if wifi_connection else 'false'}' + '}'
     
     
 
