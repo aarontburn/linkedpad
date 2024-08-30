@@ -18,7 +18,6 @@ _macro_press_color: list[int, int, int] = WHITE
 def set_macro_press_color(rgb: list[int, int, int]) -> None:
     global _macro_press_color
     _macro_press_color = rgb
-    print(rgb)
 
 def get_macro_press_color() -> list[int, int, int]:
     return _macro_press_color
