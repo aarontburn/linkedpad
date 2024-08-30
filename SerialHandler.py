@@ -95,6 +95,7 @@ def _handle_events(event_string: str) -> None:
             
             
         case 'pc_ready': # Ignore?
+            log("Connection with PC formed")
             pass
         
         case 'wifi-setup':
