@@ -119,9 +119,9 @@ def _handle_events(event_string: str) -> None:
 
 def _get_device_status() -> str:
     temp: str = str(get_temp())
-    wifi_connection: bool = is_connected_to_internet()
+    wifi_connection: str = 'true' if is_connected_to_internet() else 'false'
     
-    return 'status {' + f'"temp": {temp}, "wifi": {'true' if wifi_connection else 'false'}' + '}'
+    return 'status {' + f'"temp": {temp}, "wifi": {wifi_connection}' + '}'
     
     
 
