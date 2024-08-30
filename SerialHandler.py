@@ -4,7 +4,7 @@ from log import log
 import time
 import json
 import LEDHandler
-from main import _start_thread, _get_temp
+from main import is_connected_to_internet, start_thread, get_temp
 import subprocess
 import LEDHandler
 import ColorHandler
@@ -32,7 +32,7 @@ def _attempt_connection() -> None:
         data: str = str(_ser.readline())[2:-3]
         if data == 'pc_ready':
             log('Successfully established connection with PC.')
-            _start_thread(maintain_connection)
+            start_thread(maintain_connection)
             LEDHandler.cleanup()
             
             global _is_connected
@@ -45,7 +45,7 @@ def maintain_connection() -> None:
             break
         
         write('pi_ready', False)
-        write('temp ' + str(_get_temp()), False)
+        write(_get_device_status(), False)
         time.sleep(3)
         
         
@@ -102,7 +102,7 @@ def _handle_events(event_string: str) -> None:
             wifi_ssid: str = split_str[1]
             wifi_pass: str = split_str[2]
             
-            _start_thread(_attempt_wifi, (wifi_ssid, wifi_pass))
+            start_thread(_attempt_wifi, (wifi_ssid, wifi_pass))
             
         case 'reset':
             for row_col in LEDHandler.LIGHT_MAP:
@@ -117,7 +117,13 @@ def _handle_events(event_string: str) -> None:
         case _:
             log('No handler for: ' + split_str[0])
 
-
+def _get_device_status() -> str:
+    temp: str = str(get_temp())
+    wifi_connection: bool = is_connected_to_internet()
+    
+    return '{' + f'"temp": {temp}, "wifi": {wifi_connection}' + '}'
+    
+    
 
 def _attempt_wifi(ssid: str, password: str) -> None:
     log("Attempting wifi connection with " + ssid + " and " + password)

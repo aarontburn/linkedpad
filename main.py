@@ -5,6 +5,7 @@ import DatabaseHandler
 import LEDHandler
 import SerialHandler
 from log import log
+import socket
 
 def init():
     log("Booting...")
@@ -12,9 +13,9 @@ def init():
     GPIOHandler.setup_gpio()
     DatabaseHandler.init_db()
 
-    _start_thread(SerialHandler.init)
-    _start_thread(GPIOHandler.gpio_listen)
-    _start_thread(DatabaseHandler.db_listen)
+    start_thread(SerialHandler.init)
+    start_thread(GPIOHandler.gpio_listen)
+    start_thread(DatabaseHandler.db_listen)
 
 
     exiting = False
@@ -40,15 +41,24 @@ def _run_with_exception(target) -> None:
     
 
 
-def _start_thread(target, args = ()):
+def start_thread(target, args = ()):
     thread = Thread(target=target, args=args)
     thread.daemon = True
     thread.start()
 
 
-def _get_temp():
+def get_temp():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         return round(int(f.read().strip()) / 1000, 2)
+    
+    
+def is_connected_to_internet(host="8.8.8.8", port=53, timeout=3) -> bool:
+    try:
+        socket.setdefaulttimeout(timeout)
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
+        return True
+    except socket.error as ex:
+        return False
     
     
 if __name__ == '__main__':

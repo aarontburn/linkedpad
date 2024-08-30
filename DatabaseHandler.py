@@ -1,9 +1,9 @@
-import sys
 import pymongo
 import ColorHandler
 import SerialHandler
 from log import log
 import socket
+from main import is_connected_to_internet
 
 if __name__ != "__main__":
     import LEDHandler
@@ -39,7 +39,7 @@ _local_state: dict[str, str] = {}
 def init_db() -> None:
     log("Initializing database handler...")
     
-    if _is_connected_to_internet() == False:
+    if is_connected_to_internet() == False:
         log("Not connected to the internet.")
         return
     
@@ -97,15 +97,6 @@ def recalibrate() -> None:
     for key in _KEYS:
         _set_light(key[0], key[1], current_state[key])
 
-
-def _is_connected_to_internet(host="8.8.8.8", port=53, timeout=3) -> bool:
-    try:
-        socket.setdefaulttimeout(timeout)
-        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-        return True
-    except socket.error as ex:
-        return False
-    
 
 def _check_database() -> None:
     if _COLLECTION.estimated_document_count() == 1:
