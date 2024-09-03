@@ -98,7 +98,7 @@ def do_loading_pattern() -> None:
             log(index)
             
             rgb = ColorHandler.WHITE
-            pixels[index] = tuple(rgb[0], rgb[1], rgb[2])
+            pixels[index] = (rgb[0], rgb[1], rgb[2])
             
             sleep(0.5)
             rgb = ColorHandler.OFF
