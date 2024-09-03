@@ -96,10 +96,7 @@ def do_loading_pattern() -> None:
     while True:
         for row_col in pattern:
             index: int = int(LIGHT_MAP[row_col])
-            log(index)
-            
             pixels[index] = tuple(ColorHandler.WHITE)
-            
             sleep(0.25)
             pixels[index] = tuple(ColorHandler.OFF)
 
