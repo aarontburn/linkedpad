@@ -92,7 +92,7 @@ def cleanup() -> None:
 
 def do_loading_pattern() -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
-    set_brightness(0.5)
+    set_brightness(0.3)
     while True:
         for row_col in pattern:
             index: int = int(LIGHT_MAP[row_col])
@@ -105,13 +105,24 @@ def do_loading_pattern() -> None:
 
             
             
-        
+def do_error_pattern() -> None:
+    pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
+    
+    while True:
+        for row_col in pattern:
+            index: int = int(LIGHT_MAP[row_col])
+            log(index)
+            
+            pixels[index] = tuple(ColorHandler.RED)
+            
+            sleep(0.5)
+            pixels[index] = tuple(ColorHandler.RED)
         
 
 if __name__ == "__main__":
     try:
         init()
-        do_loading_pattern()
+        do_error_pattern()
     except KeyboardInterrupt:
         cleanup()
         
