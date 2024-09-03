@@ -1,0 +1,73 @@
+connected to PC
+
+
+
+connected to PC -> Disconnected from PC -> Off
+
+disconnected from PC -> connected to PC -> Booting
+
+
+Pi booted -> Software not booted
+	Flash yellow?
+
+
+Pi booted -> Software finished booting
+	Send Pi Ready
+
+
+
+if serial connection isn't established ->
+	- every second, if software is not already connected, scan for the port. 
+
+once port is open ->
+	- listen to pi_ready from the pad. once pi_ready is heard, consider the pi connected.
+	
+once pi is connected ->
+	- every five seconds, if pi_ready hasn't been received, consider the pi disconnected,
+	- On software exit, send pc_exit to pi, which will return it to database mode.
+	- On Pi software exit, send pi_exit to PC, which will consider the pi disconnected
+
+On Pi disconnected ->
+	- return to waiting for pi_ready
+	
+
+
+Pi Boot Cycle
+	Plugged in
+	- Run python program to create a loading wheel with the buttons
+	- Once <some condition> is met, stop the loading animation and 
+
+
+
+
+States:
+
+
+Pi is booting -> Maybe write a program to toggle the lights and stops once the main program is booted?
+
+Pi started software but is not connected to PC
+	- Wifi Connected -> Work as standalone linked pad
+				- Continuously check wifi connection every ~5 seconds.
+					- If wifi disconnects, flash header buttons red.
+						- Once reconnected, reconnect database and proceed
+		
+	- Wifi Not Connected -> Flash red at low brightness
+	
+Pi started software and is connected to PC
+Pi started software but crashed
+
+
+PC on, pc software not on
+PC on and software is on
+PC on, software was on but closed
+
+
+Pi already on, PC software just turned on
+PC software already on, Pi software just turned on
+
+
+
+
+Loading Sequence:
+
+A0 - A3, B3 - D3, D2 - D0, C0 - A0

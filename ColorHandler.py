@@ -1,6 +1,3 @@
-
-
-
 OFF: list[int, int, int] = [0, 0, 0]
 WHITE: list[int, int, int] = [255, 255, 255]
 RED: list[int, int, int] = [255, 0, 0]
