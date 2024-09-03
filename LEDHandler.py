@@ -116,6 +116,9 @@ def do_error_pattern() -> None:
         
         for row_col in pattern:
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
+        
+        sleep(0.5)
+        
             
         
         
