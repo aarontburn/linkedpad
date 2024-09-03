@@ -110,13 +110,14 @@ def do_error_pattern() -> None:
     
     while True:
         for row_col in pattern:
-            index: int = int(LIGHT_MAP[row_col])
-            log(index)
+            pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.RED)
             
-            pixels[index] = tuple(ColorHandler.RED)
+        sleep(0.5)
+        
+        for row_col in pattern:
+            pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
             
-            sleep(0.5)
-            pixels[index] = tuple(ColorHandler.RED)
+        
         
 
 if __name__ == "__main__":
