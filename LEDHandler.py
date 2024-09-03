@@ -96,12 +96,12 @@ def do_loading_pattern() -> None:
         for row_col in pattern:
             log(int(LIGHT_MAP[row_col]))
             
-            rgb = ColorHandler.WHITE
-            pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
+            # rgb = ColorHandler.WHITE
+            # pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
             
             set_light(row_col, ColorHandler.WHITE)
             sleep(0.5)
-            rgb = ColorHandler.OFF
+            # rgb = ColorHandler.OFF
             set_light(row_col, ColorHandler.OFF)
             
         
