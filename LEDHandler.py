@@ -94,6 +94,7 @@ def do_loading_pattern() -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     while True:
         for row_col in pattern:
+            log(row_col)
             set_light(row_col, ColorHandler.WHITE)
             sleep(0.5)
             set_light(row_col, ColorHandler.OFF)
