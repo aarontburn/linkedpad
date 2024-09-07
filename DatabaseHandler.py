@@ -35,7 +35,7 @@ _local_state: dict[str, str] = {}
 
 
 def init_db() -> None:
-    log("Initializing database handler...")
+    log("Initializing...")
     
     if WifiHandler.attempt_wifi_connection() == False:
         log("Not connected to the internet.")
@@ -47,7 +47,7 @@ def init_db() -> None:
     global _is_init
     _is_init = True
     LEDHandler.set_light('H0', ColorHandler.get_current_color())
-    log("Database initialization finished.")
+    log("Finished initializing.")
 
 
 def db_listen() -> None:

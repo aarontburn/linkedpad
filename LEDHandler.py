@@ -41,12 +41,12 @@ pixels = None
 
 
 def init():
-    log("Initializing LED Handler...")
+    log("Initializing...")
     global pixels
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=_DEFAULT_BRIGHTNESS * _BRIGHTNESS_SCALE)
     
     
-    log("LED Handling initialized.")
+    log("Finished initializing.")
     
     
 

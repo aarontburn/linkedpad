@@ -17,9 +17,11 @@ _is_exiting = False
 _linked_mode = True # By default, we are in linked-mode 
 
 def init():
+    log('Initializing...')
     _establish_serial()
     _attempt_connection()
     listen()
+    log('Finished initializing.')
 
 def _attempt_connection() -> None: 
     log('Connecting to PC...')

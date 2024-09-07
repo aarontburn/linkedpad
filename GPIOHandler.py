@@ -17,7 +17,7 @@ COL_PINS = list(reversed([32, 36, 38, 40]))
 
 
 def setup_gpio() -> None:
-    log("Initializing GPIO handler...")
+    log("Initializing...")
 
     try:
         GPIO.setmode(GPIO.BOARD)
@@ -38,7 +38,7 @@ def setup_gpio() -> None:
     setup_keys()
     
 
-    log("GPIO initialization finished.")
+    log("Finished initializing.")
 
 
 def setup_keys() -> None:
