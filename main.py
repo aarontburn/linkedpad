@@ -51,12 +51,14 @@ def _await_boot_finish() -> None:
     
     i: int = 0
     while True:
-        if WifiHandler.attempt_wifi_connection():
+        
+        
+        if i > 10 and WifiHandler.attempt_wifi_connection():
             log("\nWifi connection found.")
             LEDHandler.alert_boot_process(1)
             break
         
-        if SerialHandler.is_connected():
+        if i > 10 and SerialHandler.is_connected():
             log("\nConnected to PC.")
             LEDHandler.alert_boot_process(1)
             break
