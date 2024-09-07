@@ -14,6 +14,7 @@ def init():
     
     # Do loading animation
     _await_boot_finish()
+    WifiHandler.listen_to_wifi()
     
     
     
@@ -36,6 +37,7 @@ def init():
         _run_with_exception(SerialHandler.cleanup)
         _run_with_exception(DatabaseHandler.close)
         _run_with_exception(GPIOHandler.destroy_gpio)
+
 
 
 

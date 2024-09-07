@@ -102,6 +102,12 @@ def _handle_events(event_string: str) -> None:
             # log("Connection with PC formed")
             pass
         
+        case 'pc_exit':
+            log("PC Exiting...")
+            DatabaseHandler.init_db()
+            start_thread(DatabaseHandler.db_listen)
+            pass
+        
         case 'wifi-setup':
             wifi_ssid: str = split_str[1]
             wifi_pass: str = split_str[2]

@@ -49,6 +49,10 @@ def _wifi_listener(is_connected: bool) -> None:
 def init_db() -> None:
     log("Initializing...")
     
+    if WifiHandler.is_connected() == False:
+        log("Not connected to the internet.")
+        return
+    
     global _client
     global _database
     global _collection
@@ -57,11 +61,6 @@ def init_db() -> None:
     _database = _client.get_database('pad_data')
     _collection = _database.get_collection('data')
     
-    
-    
-    if WifiHandler.is_connected() == False:
-        log("Not connected to the internet.")
-        return
     
     _check_database()
     _collection.find_one({})
