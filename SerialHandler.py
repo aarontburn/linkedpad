@@ -75,6 +75,9 @@ def listen() -> None:
 
 def _handle_events(event_string: str) -> None:
     split_str: list[str] = event_string.split(' ')
+    global _linked_mode
+    global _is_connected
+    
     match split_str[0]:
         case 'brightness':
             brightness: float = float(split_str[1])
@@ -93,7 +96,6 @@ def _handle_events(event_string: str) -> None:
         case 'linked-mode':
             log("linked-mode:", split_str[1])
             
-            global _linked_mode
             _linked_mode = int(split_str[1]) == 1
             LEDHandler.linked_mode_toggle(_linked_mode)
             
@@ -106,8 +108,6 @@ def _handle_events(event_string: str) -> None:
             log("PC Exiting...")
             DatabaseHandler.init_db()
             start_thread(DatabaseHandler.db_listen)
-            global _is_connected
-            global _linked_mode
             _is_connected = False
             _linked_mode = True
             pass
