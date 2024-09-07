@@ -76,8 +76,8 @@ def db_listen() -> None:
     
     try:
         with _COLLECTION.watch() as stream:
-            log("here")
             for change in stream:
+                log("here")
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
         log("Database closing...")
