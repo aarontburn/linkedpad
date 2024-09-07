@@ -7,6 +7,7 @@ from subprocess import run
 import LEDHandler
 import ColorHandler
 import WifiHandler
+import DatabaseHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -38,6 +39,8 @@ def _attempt_connection() -> None:
             
             global _is_connected
             _is_connected = True
+            
+            DatabaseHandler.close()
             return
         
 def maintain_connection() -> None:

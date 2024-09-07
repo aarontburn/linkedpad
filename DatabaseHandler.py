@@ -9,9 +9,11 @@ if __name__ != "__main__":
 _is_init: bool = False
 
 _URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
-_CLIENT = None
-_DATABASE = None
-_COLLECTION = None
+_client = None
+_database = None
+_collection = None
+_stream = None
+
 
 _ACCESS_QUERY: dict[str, str] = {'accessID': ':3'}
 
@@ -35,6 +37,8 @@ _local_state: dict[str, str] = {}
 def init() -> None:
     WifiHandler.add_listener(_wifi_listener)
 
+
+
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
         init_db()
@@ -45,13 +49,13 @@ def _wifi_listener(is_connected: bool) -> None:
 def init_db() -> None:
     log("Initializing...")
     
-    global _CLIENT
-    global _DATABASE
-    global _COLLECTION
+    global _client
+    global _database
+    global _collection
     
-    _CLIENT = pymongo.MongoClient(_URI)
-    _DATABASE = _CLIENT.get_database('pad_data')
-    _COLLECTION = _DATABASE.get_collection('data')
+    _client = pymongo.MongoClient(_URI)
+    _database = _client.get_database('pad_data')
+    _collection = _database.get_collection('data')
     
     
     
@@ -60,7 +64,7 @@ def init_db() -> None:
         return
     
     _check_database()
-    _COLLECTION.find_one({})
+    _collection.find_one({})
     recalibrate()
     global _is_init
     _is_init = True
@@ -74,30 +78,31 @@ def db_listen() -> None:
     
     log("Database listener started.")
     
+    global _stream
+    _stream = _collection.watch()
     try:
-        with _COLLECTION.watch() as stream:
-            for change in stream:
-                log("here")
+        with _stream:
+            for change in _stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
-        log("Database closing...")
         log(e)
-        _CLIENT.close()
+        close()
 
 
 def on_key_press(row_col: str) -> None:
     is_off: bool = _local_state[row_col] == ColorHandler.OFF
-    _COLLECTION.find_one_and_update(_ACCESS_QUERY, {"$set": {row_col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
+    _collection.find_one_and_update(_ACCESS_QUERY, {"$set": {row_col: ColorHandler.get_current_color() if is_off else ColorHandler.OFF}})
 
 
 def close() -> None:
     log('Closing...')
-    _CLIENT.close()
+    _client.close()
+    _stream._cursor.close()
     
     
 
 def reset() -> None:
-    _COLLECTION.find_one_and_update(
+    _collection.find_one_and_update(
         _ACCESS_QUERY,
         {'$set': _DEFAULT_DB_OBJ},
         return_document=pymongo.ReturnDocument.AFTER, upsert=True,
@@ -117,14 +122,14 @@ def recalibrate() -> None:
 
 
 def _check_database() -> None:
-    if _COLLECTION.estimated_document_count() == 1:
+    if _collection.estimated_document_count() == 1:
         entry: dict[str, str] | None = _get_object()
         if entry is not None:
             if sorted(entry.keys()) == sorted(_KEYS + ['_id', 'accessID']):
                 log("Database is properly initialized.")
                 return
     log("WARNING: Database needs to be re-setup.")
-    _COLLECTION.delete_many({})
+    _collection.delete_many({})
     reset()
 
 
@@ -149,7 +154,7 @@ def _set_light(row: str, col: str, state: list[int, int, int]) -> None:
 
 
 def _get_object() -> dict[str, str] | None:
-    return _COLLECTION.find_one(_ACCESS_QUERY)
+    return _collection.find_one(_ACCESS_QUERY)
 
 
 def _display_to_console() -> None:
