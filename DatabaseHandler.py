@@ -9,9 +9,9 @@ if __name__ != "__main__":
 _is_init: bool = False
 
 _URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
-_CLIENT = pymongo.MongoClient(_URI)
-_DATABASE = _CLIENT.get_database('pad_data')
-_COLLECTION = _DATABASE.get_collection('data')
+_CLIENT = None
+_DATABASE = None
+_COLLECTION = None
 
 _ACCESS_QUERY: dict[str, str] = {'accessID': ':3'}
 
@@ -32,12 +32,30 @@ _DEFAULT_DB_OBJ: dict = _get_default_obj()
 
 _local_state: dict[str, str] = {}
 
+def init() -> None:
+    WifiHandler.add_listener(_wifi_listener)
 
+def _wifi_listener(is_connected: bool) -> None:
+    if is_connected:
+        init_db()
+        
+        
+        
 
 def init_db() -> None:
     log("Initializing...")
     
-    if WifiHandler.attempt_wifi_connection() == False:
+    global _CLIENT
+    global _DATABASE
+    global _COLLECTION
+    
+    _CLIENT = pymongo.MongoClient(_URI)
+    _DATABASE = _CLIENT.get_database('pad_data')
+    _COLLECTION = _DATABASE.get_collection('data')
+    
+    
+    
+    if WifiHandler.is_connected() == False:
         log("Not connected to the internet.")
         return
     
@@ -55,8 +73,10 @@ def db_listen() -> None:
         return
     
     log("Database listener started.")
+    
     try:
         with _COLLECTION.watch() as stream:
+            log("here")
             for change in stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:

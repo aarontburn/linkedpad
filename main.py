@@ -10,6 +10,7 @@ def init():
     log("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
+    DatabaseHandler.init()
     
     # Do loading animation
     _await_boot_finish()
@@ -50,12 +51,13 @@ def _await_boot_finish() -> None:
     
     i: int = 0
     while True:
-        if i > 10 and WifiHandler.attempt_wifi_connection():
+        log('\t\tCONNECTION ATTEMPT #' + str(i))
+        if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
             LEDHandler.alert_boot_process(1)
             break
         
-        if i > 10 and SerialHandler.is_connected():
+        if SerialHandler.is_connected():
             log("\tConnected to PC.")
             LEDHandler.alert_boot_process(1)
             break
