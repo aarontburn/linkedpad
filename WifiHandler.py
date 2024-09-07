@@ -1,6 +1,6 @@
 
 from socket import setdefaulttimeout, socket, error, AF_INET, SOCK_STREAM
-from main import start_thread
+from Helper import start_thread
 from time import sleep
 
 DELAY_SECONDS: float = 1 # Every second

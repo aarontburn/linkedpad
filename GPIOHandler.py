@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
-import time
 from Key import Key
-from log import log
+from Helper import log
 
 
 

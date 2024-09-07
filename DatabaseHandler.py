@@ -1,7 +1,7 @@
 import pymongo
 import ColorHandler
 import SerialHandler
-from log import log
+from Helper import log
 import WifiHandler
 if __name__ != "__main__":
     import LEDHandler

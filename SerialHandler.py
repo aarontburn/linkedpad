@@ -1,9 +1,8 @@
 import serial
-from log import log
 import time
 import json
 import LEDHandler
-from main import start_thread, get_temp
+from Helper import start_thread, get_temp, log
 from subprocess import run
 import LEDHandler
 import ColorHandler

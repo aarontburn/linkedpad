@@ -1,11 +1,10 @@
-from threading import Thread
 from time import sleep
 import GPIOHandler
 import DatabaseHandler
 import LEDHandler
 import SerialHandler
 import WifiHandler
-from log import log
+from Helper import start_thread, log
 
 def init():
     log("Booting...")
@@ -82,17 +81,6 @@ def _run_with_exception(target) -> None:
         log(e)
     
 
-
-def start_thread(target, args = ()):
-    thread = Thread(target=target, args=args)
-    thread.daemon = True
-    thread.start()
-
-
-def get_temp():
-    with open('/sys/class/thermal/thermal_zone0/temp') as f:
-        return round(int(f.read().strip()) / 1000, 2)
-    
     
     
 if __name__ == '__main__':
