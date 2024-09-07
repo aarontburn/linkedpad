@@ -106,6 +106,10 @@ def _handle_events(event_string: str) -> None:
             log("PC Exiting...")
             DatabaseHandler.init_db()
             start_thread(DatabaseHandler.db_listen)
+            global _is_connected
+            global _linked_mode
+            _is_connected = False
+            _linked_mode = True
             pass
         
         case 'wifi-setup':

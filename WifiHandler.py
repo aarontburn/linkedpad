@@ -35,7 +35,6 @@ def attempt_wifi_connection() -> bool:
     
     current_status = False
     try:
-        
         socket(AF_INET, SOCK_STREAM).connect(("8.8.8.8", 53))
         current_status = True
     except error:
