@@ -4,13 +4,19 @@ import GPIOHandler
 import DatabaseHandler
 import LEDHandler
 import SerialHandler
+import WifiHandler
 from log import log
-import socket
 
 def init():
     log("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
+    
+    # Do loading animation
+    _await_boot_finish()
+    
+    
+    
     DatabaseHandler.init_db()
 
     start_thread(SerialHandler.init)
@@ -32,6 +38,40 @@ def init():
         _run_with_exception(GPIOHandler.destroy_gpio)
 
 
+
+def _await_boot_finish() -> None:
+    log("Awaiting boot finished...")
+    
+    log("\tAwaiting Wifi or PC connection...")
+    
+    
+    start_thread(LEDHandler.do_loading_pattern)
+    
+    MAX_POLLING_SECS: int = 15
+    
+    i: int = 0
+    while True:
+        if WifiHandler.attempt_wifi_connection():
+            log("\nWifi connection found.")
+            LEDHandler.alert_boot_process(1)
+            break
+        
+        if SerialHandler.is_connected():
+            log("\nConnected to PC.")
+            LEDHandler.alert_boot_process(1)
+            break
+        
+        i += 1
+        if i == MAX_POLLING_SECS:
+            log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
+            LEDHandler.alert_boot_process(2)
+            start_thread(LEDHandler.do_error_pattern)
+        sleep(1)
+    
+    log("\tBoot processed finished.")
+    
+    
+    
 
 def _run_with_exception(target) -> None:
     try:

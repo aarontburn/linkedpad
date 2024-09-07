@@ -90,26 +90,44 @@ def cleanup() -> None:
 
 
 
+_boot_flag: int = 0
+
+def alert_boot_process(flag: int) -> None:
+    global _boot_flag
+    _boot_flag = flag
+
+    
+
 def do_loading_pattern() -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     set_brightness(0.3)
-    while True:
+    
+    while _boot_flag <= 0:
         for row_col in pattern:
-            index: int = int(LIGHT_MAP[row_col])
-            pixels[index] = tuple(ColorHandler.WHITE)
-            sleep(0.25)
-            pixels[index] = tuple(ColorHandler.OFF)
-
+            if _boot_flag > 0:
+                break
             
+            pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.WHITE)
+            sleep(0.25)
+            # Maybe one more break flag here
+            
+            pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
+
             
 def do_error_pattern() -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     
-    while True:
+    while _boot_flag == 2:
+        if _boot_flag > 2:
+            break
+        
         for row_col in pattern:
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.RED)
-            
+
         sleep(0.5)
+        
+        if _boot_flag > 2:
+            break
         
         for row_col in pattern:
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
