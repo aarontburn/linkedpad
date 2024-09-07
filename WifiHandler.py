@@ -35,12 +35,20 @@ def _wifi_listener():
 
 
 
+
 def attempt_wifi_connection() -> bool:
+    current_status = False
     try:
         setdefaulttimeout(3)
+        
         socket(AF_INET, SOCK_STREAM).connect(("8.8.8.8", 53))
-        return True
+        current_status = True
     except error:
-        return False
+        current_status = False
     
+    if _connected != current_status:
+        for listener in listeners:
+            listener(current_status)
 
+    _connected = current_status
+    return current_status
