@@ -1,5 +1,5 @@
 from threading import Thread
-import time
+from time import sleep
 import GPIOHandler
 import DatabaseHandler
 import LEDHandler
@@ -21,7 +21,7 @@ def init():
     exiting = False
     try:
         while not exiting:
-            time.sleep(0.5)
+            sleep(0.5)
             # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
         log("Exiting program...")
@@ -51,14 +51,6 @@ def get_temp():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         return round(int(f.read().strip()) / 1000, 2)
     
-    
-def is_connected_to_internet(host="8.8.8.8", port=53, timeout=3) -> bool:
-    try:
-        socket.setdefaulttimeout(timeout)
-        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-        return True
-    except socket.error as ex:
-        return False
     
     
 if __name__ == '__main__':

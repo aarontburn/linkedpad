@@ -1,4 +1,6 @@
-connected to PC
+
+
+
 
 
 
@@ -36,6 +38,24 @@ Pi Boot Cycle
 	Plugged in
 	- Run python program to create a loading wheel with the buttons
 	- Once <some condition> is met, stop the loading animation and 
+	
+	Software started
+	- Initialize the LEDHandler, GPIOHandler, WiFiHHandler
+	- If Wifi is connected, or once wifi is connected:
+		- Start DatabaseHandler
+	- If 'pc_ready' has been received from PC:
+		- Toggle some boolean to have events handled by PC
+		- Block DatabaseHandler
+
+
+
+	- If 'pc_exit' has been received:
+		- Unblock DatabaseHandler
+	
+	- On software exit or crash:
+		- Attempt 'pi_exit' to PC
+
+
 
 
 

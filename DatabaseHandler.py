@@ -2,9 +2,7 @@ import pymongo
 import ColorHandler
 import SerialHandler
 from log import log
-import socket
-from main import is_connected_to_internet
-
+import WifiHandler
 if __name__ != "__main__":
     import LEDHandler
 
@@ -39,7 +37,7 @@ _local_state: dict[str, str] = {}
 def init_db() -> None:
     log("Initializing database handler...")
     
-    if is_connected_to_internet() == False:
+    if WifiHandler.attempt_wifi_connection() == False:
         log("Not connected to the internet.")
         return
     

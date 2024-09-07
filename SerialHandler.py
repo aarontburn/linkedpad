@@ -1,13 +1,13 @@
-import socket
 import serial
 from log import log
 import time
 import json
 import LEDHandler
-from main import is_connected_to_internet, start_thread, get_temp
-import subprocess
+from main import start_thread, get_temp
+from subprocess import run
 import LEDHandler
 import ColorHandler
+import WifiHandler
 
 _PORT: str = '/dev/ttyGS0'
 _BAUD: int = 9600
@@ -119,7 +119,7 @@ def _handle_events(event_string: str) -> None:
 
 def _get_device_status() -> str:
     temp: str = str(get_temp())
-    wifi_connection: str = 'true' if is_connected_to_internet() else 'false'
+    wifi_connection: str = 'true' if WifiHandler.is_connected() else 'false'
     
     return 'status {' + f'"temp": {temp}, "wifi": {wifi_connection}' + '}'
     
@@ -129,21 +129,19 @@ def _attempt_wifi(ssid: str, password: str) -> None:
     log("Attempting wifi connection with " + ssid + " and " + password)
     write('wifi start')
     
-    subprocess.run(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', ssid, password]) 
+    run(['sudo', 'raspi-config', 'nonint', 'do_wifi_ssid_passphrase', ssid, password]) 
     log("Checking wifi connection...")
     write('wifi end')
     
-    try:
-        socket.setdefaulttimeout(3)
-        socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect(("8.8.8.8", 53))
+
+    if WifiHandler.attempt_wifi_connection():
         log("Wifi connected.")
         write('wifi connected')
-        
-    except socket.error as ex:
+    else:
         log("Wifi not connected.")
         write('wifi disconnected')
 
-    
+
     
 
 
