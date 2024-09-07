@@ -37,6 +37,8 @@ def _wifi_listener():
 
 
 def attempt_wifi_connection() -> bool:
+    global _connected
+    
     current_status = False
     try:
         setdefaulttimeout(3)
