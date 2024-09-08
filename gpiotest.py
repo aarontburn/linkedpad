@@ -53,7 +53,7 @@ def gpio_listen() -> None:
             GPIO.output(row_pin, 0)
             for col_pin in COL_PINS:
                 if GPIO.input(col_pin) == 0:
-                    log(key_map[(row_pin, col_pin)]._row_col)
+                    log(key_map[(row_pin, col_pin)])
                 
             GPIO.output(row_pin, 1)
 
