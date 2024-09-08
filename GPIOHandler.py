@@ -19,12 +19,12 @@ COL_PINS = list(reversed([32, 36, 38, 40]))
 def setup_gpio() -> None:
     log("Initializing...")
 
-    try:
-        GPIO.setmode(GPIO.BOARD)
+    # try:
+    #     GPIO.setmode(GPIO.BOARD)
         
-    except ValueError as e:      # Board is already initialized for some reason
-        GPIO.cleanup()
-        GPIO.setmode(GPIO.BOARD)
+    # except ValueError as e:      # Board is already initialized for some reason
+    #     GPIO.cleanup()
+    #     GPIO.setmode(GPIO.BOARD)
 
 
     for pin in ROW_PINS:
