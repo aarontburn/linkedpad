@@ -41,7 +41,9 @@ def init() -> None:
 
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
-        init_db()
+        
+        if SerialHandler.is_connected() == False:
+            init_db()
         
         
         
