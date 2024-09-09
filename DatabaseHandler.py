@@ -97,8 +97,11 @@ def on_key_press(row_col: str) -> None:
 
 def close() -> None:
     log('Closing...')
+    try:
+        _stream._cursor.close()
+    except:
+          pass      
     _client.close()
-    _stream._cursor.close()
     
     
 
