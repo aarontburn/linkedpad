@@ -73,7 +73,7 @@ def linked_mode_toggle(in_linked_mode: bool) -> None:
         # set_light('H0', ColorHandler.get_current_color())
     else:
         for i in range(len(LIGHT_MAP)):
-            pixels[i] = (0, 0, 0)
+            pixels[i] = tuple(ColorHandler.OFF)
             
         
         
@@ -87,7 +87,7 @@ def set_light(row_col: str, rgb: list[int, int, int]):
     
 def cleanup() -> None:
     for row_col in LIGHT_MAP:
-        pixels[LIGHT_MAP[row_col]] = ColorHandler.OFF
+        pixels[LIGHT_MAP[row_col]] = tuple(ColorHandler.OFF)
 
 
 
