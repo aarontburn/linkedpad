@@ -64,7 +64,6 @@ def init_db() -> None:
     global _database
     global _collection
     
-    log(_URI)
     _client = pymongo.MongoClient(_URI)
     _database = _client.get_database('pad_data')
     _collection = _database.get_collection('data')
