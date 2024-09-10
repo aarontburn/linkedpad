@@ -36,7 +36,11 @@ _local_state: dict[str, str] = {}
 
 def init() -> None:
     WifiHandler.add_listener(_wifi_listener)
-
+    
+    with open('key.txt', 'r') as f:
+        username_password: list[str] = f.read().split(" ")
+        global _URI
+        _URI = f"mongodb+srv://{username_password[0]}:{username_password[1]}@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 
 
 def _wifi_listener(is_connected: bool) -> None:
@@ -67,6 +71,7 @@ def init_db() -> None:
     _check_database()
     _collection.find_one({})
     recalibrate()
+    
     global _is_init
     _is_init = True
     LEDHandler.set_light('H0', ColorHandler.get_current_color())
