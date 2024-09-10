@@ -78,11 +78,11 @@ def linked_mode_toggle(in_linked_mode: bool) -> None:
         
         
 
-def set_light(row_col: str, rgb: list[int, int, int]):
+def set_light(row_col: str, rgb: list[int, int, int], b: bool = True):
     _linked_mode_state[row_col] = rgb
     
-    # log("Setting light at:", row_col, "(index " + str(LIGHT_MAP[row_col]) + ") to", tuple(rgb))
-    pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
+    if (b == False):
+        pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
     
     
 def cleanup() -> None:

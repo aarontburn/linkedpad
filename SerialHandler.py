@@ -82,7 +82,7 @@ def _handle_events(event_string: str) -> None:
         case 'change':
             row_col: str = split_str[1]
             rgb: list[int] = json.loads(split_str[2])
-            LEDHandler.set_light(row_col, rgb)
+            LEDHandler.set_light(row_col, rgb, _linked_mode)
         
         case 'linked-mode':
             log("linked-mode:", split_str[1])
