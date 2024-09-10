@@ -39,6 +39,7 @@ def init() -> None:
     
     with open('key.txt', 'r') as f:
         username_password: list[str] = f.read().split(" ")
+        log(username_password)
         global _URI
         _URI = f"mongodb+srv://{username_password[0]}:{username_password[1]}@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 
