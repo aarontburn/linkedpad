@@ -33,18 +33,11 @@ def _attempt_connection() -> None:
         
         data: str = str(_ser.readline())[2:-3]
         if data == 'pc_ready':
-            log('Successfully established connection with PC.')
-            start_thread(maintain_connection)
-            LEDHandler.cleanup()
-            
-            global _is_connected
-            _is_connected = True
-            
-            DatabaseHandler.close()
+            _on_pc_connection()
             return
         
 def maintain_connection() -> None:
-    while True:
+    while _is_connected:
         if _is_exiting:
             break
         
@@ -101,7 +94,8 @@ def _handle_events(event_string: str) -> None:
             
             
         case 'pc_ready': # Ignore?
-            # log("Connection with PC formed")
+            if _is_connected == False:
+                _on_pc_connection()
             pass
         
         case 'pc_exit':
@@ -130,6 +124,17 @@ def _handle_events(event_string: str) -> None:
         
         case _:
             log('No handler for: ' + split_str[0])
+
+def _on_pc_connection():
+    log('Successfully established connection with PC.')
+    LEDHandler.cleanup()
+    
+    global _is_connected
+    _is_connected = True
+    
+    start_thread(maintain_connection)
+    DatabaseHandler.close()
+    
 
 def _get_device_status() -> str:
     temp: str = str(get_temp())
