@@ -8,7 +8,7 @@ if __name__ != "__main__":
 
 _is_init: bool = False
 
-_URI: str = "mongodb+srv://admin:j2MzVYcewmPjnzrG@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
+_URI: str = None
 _client = None
 _database = None
 _collection = None
@@ -64,6 +64,7 @@ def init_db() -> None:
     global _database
     global _collection
     
+    log(_URI)
     _client = pymongo.MongoClient(_URI)
     _database = _client.get_database('pad_data')
     _collection = _database.get_collection('data')
