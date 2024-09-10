@@ -17,8 +17,10 @@ def init():
     WifiHandler.listen_to_wifi()
     
     
-    
+    LEDHandler.alert_boot_process(0)
+    start_thread(LEDHandler.do_loading_pattern)
     DatabaseHandler.init_db()
+    LEDHandler.alert_boot_process(1)
 
     start_thread(SerialHandler.init)
     start_thread(GPIOHandler.gpio_listen)
