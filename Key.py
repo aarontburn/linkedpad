@@ -48,6 +48,9 @@ class Key:
     def _on_press(self) -> None:
         self._down_time = self._ms()
         
+        if SerialHandler.is_connected() == False and DatabaseHandler._is_init == False:
+            return
+        
         if SerialHandler.is_connected():
             SerialHandler.write(self._row_col + " down")
             
@@ -81,6 +84,9 @@ class Key:
     
     
     def _on_release(self) -> None:
+        if SerialHandler.is_connected() == False and DatabaseHandler._is_init == False:
+            return
+        
         if SerialHandler.is_connected():
             SerialHandler.write(self._row_col + " up")
             

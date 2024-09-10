@@ -108,8 +108,7 @@ def _handle_events(event_string: str) -> None:
             _is_connected = False
             _linked_mode = True
             for row_col in LEDHandler.LIGHT_MAP:
-                if row_col[0] != 'H':
-                    LEDHandler.set_light(row_col, ColorHandler.OFF)
+                LEDHandler.set_light(row_col, ColorHandler.OFF)
             
             LEDHandler.alert_boot_process(0)
             start_thread(LEDHandler.do_loading_pattern)

@@ -102,6 +102,8 @@ def on_key_press(row_col: str) -> None:
 
 def close() -> None:
     log('Closing...')
+    global _is_init
+    _is_init = False
     try:
         _stream._cursor.close()
     except:
