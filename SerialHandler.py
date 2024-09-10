@@ -101,7 +101,11 @@ def _handle_events(event_string: str) -> None:
             pass
         
         case 'pc_exit':
+            if _is_connected:
+                return
+            
             log("PC Exiting...")
+            
             
             _is_connected = False
             _linked_mode = True
