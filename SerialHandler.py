@@ -58,7 +58,7 @@ def in_linked_mode() -> bool:
 
 def listen() -> None:
     log("Listening...")
-    while True:
+    while _is_connected:
         try:
             data: str = str(_ser.readline())[2:-3]
             if data != '':
@@ -119,6 +119,7 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.alert_boot_process(1)
             
             start_thread(DatabaseHandler.db_listen)
+            init()
 
             pass
         
