@@ -92,7 +92,6 @@ def db_listen() -> None:
             for change in _stream:
                 _on_database_change(change['updateDescription']['updatedFields'])
     except Exception as e:
-        log(e)
         close()
 
 
