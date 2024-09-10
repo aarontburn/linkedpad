@@ -59,14 +59,10 @@ def in_linked_mode() -> bool:
 def listen() -> None:
     log("Listening...")
     while _is_connected:
-        try:
-            data: str = str(_ser.readline())[2:-3]
-            if data != '':
-                _handle_events(data)
+        data: str = str(_ser.readline())[2:-3]
+        if data != '':
+            _handle_events(data)
                 
-        except Exception:
-            _establish_serial()
-
 
 def _handle_events(event_string: str) -> None:
     split_str: list[str] = event_string.split(' ')
