@@ -21,6 +21,7 @@ def init():
     start_thread(LEDHandler.do_loading_pattern)
     DatabaseHandler.init_db()
     LEDHandler.alert_boot_process(1)
+    sleep(0.25)
 
     start_thread(SerialHandler.init)
     start_thread(GPIOHandler.gpio_listen)
