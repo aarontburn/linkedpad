@@ -70,7 +70,7 @@ def linked_mode_toggle(in_linked_mode: bool) -> None:
         for row_col in _linked_mode_state:
             set_light(row_col, _linked_mode_state[row_col])
             
-        set_light('H0', ColorHandler.get_current_color())
+        # set_light('H0', ColorHandler.get_current_color())
     else:
         for i in range(len(LIGHT_MAP)):
             pixels[i] = (0, 0, 0)
