@@ -37,6 +37,8 @@ def _attempt_connection() -> None:
             return
         
 def maintain_connection() -> None:
+    if _is_connected:
+        log("Maintaining PC Connection...")
     while _is_connected:
         if _is_exiting:
             break
