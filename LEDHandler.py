@@ -110,7 +110,9 @@ def do_loading_pattern() -> None:
             
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.WHITE)
             sleep(0.25)
-            # Maybe one more break flag here
+            
+            if _boot_flag > 0:
+                break
             
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
 
