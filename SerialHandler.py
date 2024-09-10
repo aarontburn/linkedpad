@@ -102,10 +102,20 @@ def _handle_events(event_string: str) -> None:
         
         case 'pc_exit':
             log("PC Exiting...")
-            DatabaseHandler.init_db()
-            start_thread(DatabaseHandler.db_listen)
+            
             _is_connected = False
             _linked_mode = True
+            for row_col in LEDHandler.LIGHT_MAP:
+                if row_col[0] != 'H':
+                    LEDHandler.set_light(row_col, ColorHandler.OFF)
+            
+            LEDHandler.alert_boot_process(0)
+            start_thread(LEDHandler.do_loading_pattern)
+            DatabaseHandler.init_db()
+            LEDHandler.alert_boot_process(1)
+            
+            start_thread(DatabaseHandler.db_listen)
+
             pass
         
         case 'wifi-setup':
@@ -117,7 +127,7 @@ def _handle_events(event_string: str) -> None:
         case 'reset':
             for row_col in LEDHandler.LIGHT_MAP:
                 if row_col[0] != 'H':
-                    LEDHandler.set_light(row_col, [0, 0, 0])
+                    LEDHandler.set_light(row_col, ColorHandler.OFF)
         
         case 'macro-press-color':
             rgb: list[int] = json.loads(split_str[1])
