@@ -2,7 +2,9 @@ import pymongo
 import ColorHandler
 import SerialHandler
 from Helper import log
+
 import WifiHandler
+from pathlib import Path
 if __name__ != "__main__":
     import LEDHandler
 
@@ -38,8 +40,8 @@ def init() -> None:
     WifiHandler.add_listener(_wifi_listener)
 
     
-    log(__file__ + 'key.txt')
-    with open(__file__ + 'key.txt', 'r') as f:
+    log(Path(__file__).resolve().parent + 'key.txt')
+    with open(Path(__file__).resolve().parent + 'key.txt', 'r') as f:
         username_password: list[str] = f.read().replace("\n", '').split(" ")
         
         global _URI
