@@ -2,7 +2,7 @@ import serial
 import time
 import json
 import LEDHandler
-from Helper import start_thread, get_temp, log
+from Helper import start_thread, get_temp, log, pwd
 from subprocess import run
 import LEDHandler
 import ColorHandler
@@ -144,16 +144,17 @@ def _handle_events(event_string: str) -> None:
             
         
         case 'color-options':
-            hex_list: list[str] = split_str[1].split(',')
+            hex_list: list[str] = split_str[1].split(' ')
             
+            out_str: str = ''
             for hex in hex_list:
-                log(ColorHandler.hex_to_rgb(hex))
+                out_str += hex + " "
+                
+                
+            with open(pwd() + "/colors.txt", 'a') as f:
+                log("Writing " + hex)
+                f.write(out_str.strip())
             
-            
-            
-            
-            
-        
         
         case _:
             log('No handler for: ' + split_str[0])

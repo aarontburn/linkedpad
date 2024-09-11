@@ -6,10 +6,14 @@ GREEN: list[int, int, int] = [0, 255, 0]
 BLUE: list[int, int, int] = [0, 0, 255]
 VIOLET: list[int, int, int] = [125, 0, 255]
 
+
+_DEFAULT_COLOR_SEQ: list[list[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
+
 _COLOR_SEQ: list[list[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
 
 _current_color_index = 0
 
+# Default macro press color is white.
 _macro_press_color: list[int, int, int] = WHITE
 
 def set_macro_press_color(rgb: list[int, int, int]) -> None:

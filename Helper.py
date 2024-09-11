@@ -1,5 +1,10 @@
 from threading import Thread
 import inspect
+from pathlib import Path
+
+def pwd() -> str:
+    return str(Path(__file__).resolve().parent)
+    
 
 
 def start_thread(target, args = ()):
