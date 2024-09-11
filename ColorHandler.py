@@ -27,7 +27,7 @@ def load_colors_from_storage():
         if (contents == ''):
             pass # Ignore, leave _COLOR_SEQ as default
         else:
-            rgb_list: list[list[int, int, int]] = map(hex_to_rgb, contents.split(" "))
+            rgb_list: list[list[int, int, int]] = list(map(hex_to_rgb, contents.split(" ")))
             
             global _COLOR_SEQ
             _COLOR_SEQ = rgb_list
