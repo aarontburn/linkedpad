@@ -152,7 +152,7 @@ def _handle_events(event_string: str) -> None:
                 out_str += hex + " "
                 
                 
-            with open(pwd() + "/colors.txt", 'a') as f:
+            with open(pwd() + "/colors.txt", 'w+') as f:
                 log("Writing " + out_str)
                 f.write(out_str.strip())
             
