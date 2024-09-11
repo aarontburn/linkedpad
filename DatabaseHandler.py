@@ -40,7 +40,6 @@ def init() -> None:
     WifiHandler.add_listener(_wifi_listener)
 
     
-    log(str(Path(__file__).resolve().parent) + '/key.txt')
     with open(str(Path(__file__).resolve().parent) + '/key.txt', 'r') as f:
         username_password: list[str] = f.read().replace("\n", '').split(" ")
         
