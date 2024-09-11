@@ -51,11 +51,11 @@ def init() -> None:
 
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
-        LEDHandler.alert_boot_process(1)
-        
         if SerialHandler.is_connected() == False:
+            LEDHandler.alert_boot_process(1)
             init_db()
-    else: # Diconnect
+            
+    else: # Disconnect
         if SerialHandler.is_connected() == False:
             LEDHandler.alert_boot_process(0)
             start_thread(LEDHandler.do_error_pattern)
@@ -70,11 +70,6 @@ def _wifi_listener(is_connected: bool) -> None:
 
 def init_db() -> None:
     log("Initializing...")
-    
-    
-    if WifiHandler.is_connected() == False:
-        log("Not connected to the internet.")
-        return
     
     ColorHandler.load_colors_from_storage()
     
@@ -145,7 +140,10 @@ def recalibrate() -> None:
     if current_state == None:
         log("Could not recalibrate; '_get_object()' returned 'None'")
         return
-    
+    for key in _KEYS:
+        _set_light(key[0], key[1], ColorHandler.OFF)
+        
+        
     for key in _KEYS:
         _set_light(key[0], key[1], current_state[key])
 
