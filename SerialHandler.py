@@ -120,7 +120,7 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.alert_boot_process(1)
             
             start_thread(DatabaseHandler.db_listen)
-            init()
+            start_thread(init)
 
             pass
         
