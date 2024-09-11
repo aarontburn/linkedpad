@@ -20,10 +20,12 @@ def init():
     _await_boot_finish()
     WifiHandler.listen_to_wifi()
     
-    q = Queue()
-    start_thread(LEDHandler.do_loading_pattern, args=(q,))
-    DatabaseHandler.init_db()
-    q.put_nowait(1)
+    
+    if (SerialHandler.is_connected):
+        q = Queue()
+        start_thread(LEDHandler.do_loading_pattern, args=(q,))
+        DatabaseHandler.init_db()
+        q.put_nowait(1)
     
     
     sleep(0.25)
