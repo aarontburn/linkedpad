@@ -144,19 +144,15 @@ def _handle_events(event_string: str) -> None:
             
         
         case 'color-options':
-            log(split_str[1])
             hex_list: list[str] = split_str[1].split(',')
             
             out_str: str = ''
             for hex in hex_list:
                 out_str += hex + " "
                 
-                
             with open(pwd() + "/colors.txt", 'w+') as f:
-                log("Writing " + out_str)
                 f.write(out_str.strip())
             
-        
         case _:
             log('No handler for: ' + split_str[0])
 

@@ -22,19 +22,14 @@ def load_colors_from_storage():
     
     with open(pwd() + "/colors.txt", "r") as f:
         contents: str = f.read()
-        log(contents)
         
         if (contents == ''):
             pass # Ignore, leave _COLOR_SEQ as default
         else:
             rgb_list: list[list[int, int, int]] = list(map(hex_to_rgb, contents.split(" ")))
-            
             global _COLOR_SEQ
             _COLOR_SEQ = rgb_list
             
-            log(_COLOR_SEQ)
-        
-    
 
 # Default macro press color is white.
 _macro_press_color: list[int, int, int] = WHITE
