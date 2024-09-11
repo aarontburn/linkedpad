@@ -114,6 +114,7 @@ def _handle_events(event_string: str) -> None:
             for row_col in LEDHandler.LIGHT_MAP:
                 LEDHandler.set_light(row_col, ColorHandler.OFF)
             
+            LEDHandler.set_brightness(LEDHandler._DEFAULT_BRIGHTNESS)
             LEDHandler.alert_boot_process(0)
             start_thread(LEDHandler.do_loading_pattern)
             DatabaseHandler.init_db()
