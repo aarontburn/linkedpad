@@ -144,8 +144,8 @@ def _handle_events(event_string: str) -> None:
             
         
         case 'color-options':
-            log(event_string)
-            log(json.loads(split_str[1]))
+            hex_string: list[str] = split_str[1].split(',')
+            log(hex_string)
             
             
             
