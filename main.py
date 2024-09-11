@@ -60,21 +60,22 @@ def _await_boot_finish() -> None:
         log('\t\tCONNECTION ATTEMPT #' + str(i))
         if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
-            LEDHandler.alert_boot_process(1)
             break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
-            LEDHandler.alert_boot_process(1)
             break
         
         i += 1
         if i == MAX_POLLING_SECS:
             log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
-            LEDHandler.alert_boot_process(2)
+            LEDHandler.alert_boot_process(0)
             start_thread(LEDHandler.do_error_pattern)
+            
         sleep(1)
-    
+        
+        
+    LEDHandler.alert_boot_process(1)
     log("\tBoot processed finished.")
     
     

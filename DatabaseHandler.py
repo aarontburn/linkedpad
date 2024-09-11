@@ -46,11 +46,17 @@ def init() -> None:
         _URI = f"mongodb+srv://{username_password[0]}:{username_password[1]}@linkedpad.qrzkm98.mongodb.net/?retryWrites=true&w=majority&appName=linkedpad"
 
 
+
+
+
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
-        
         if SerialHandler.is_connected() == False:
             init_db()
+    else: # Diconnect
+        if SerialHandler.is_connected() == False:
+            
+        
         
         
         
