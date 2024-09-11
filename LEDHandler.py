@@ -14,7 +14,7 @@ _DEFAULT_BRIGHTNESS = _BRIGHTNESS_STEPS[1] # 0.1
 ROWS: list[str] = ['H', 'A', 'B', 'C', 'D']
 MAX_COLS: int = 4
 
-def build_light_map() -> dict[str, int]:
+def _build_light_map() -> dict[str, int]:
     rows: list[str] = (ROWS + list(reversed(ROWS.copy()))) * int(MAX_COLS / 2)
 
     out: dict[str, int] = {}
@@ -29,12 +29,25 @@ def build_light_map() -> dict[str, int]:
         
     return out
 
-_linked_mode_state = {}
+def _build_default_state() -> dict[str, list[int]]:
+    out: dict[str, list[int]] = {}
+    
+    for row in ROWS:
+        for col in range(MAX_COLS):
+            out[str(row) + str(col)] = ColorHandler.OFF
+            
+    return out
+        
+    
+
+
+
+_linked_mode_state = _build_default_state()
 
 
 
 
-LIGHT_MAP: dict[str, int] = build_light_map()
+LIGHT_MAP: dict[str, int] = _build_light_map()
 
 GPIO = board.D18 	# pin 12
 pixels = None

@@ -5,6 +5,7 @@ import LEDHandler
 import SerialHandler
 import WifiHandler
 from Helper import start_thread, log
+import signal
 
 def init():
     log("Booting...")
@@ -86,6 +87,9 @@ def _run_with_exception(target) -> None:
         log(e)
     
 
+    
+    
+    
     
     
 if __name__ == '__main__':
