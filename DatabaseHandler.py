@@ -36,8 +36,10 @@ _local_state: dict[str, str] = {}
 
 def init() -> None:
     WifiHandler.add_listener(_wifi_listener)
+
     
-    with open('key.txt', 'r') as f:
+    log(__file__ + 'key.txt')
+    with open(__file__ + 'key.txt', 'r') as f:
         username_password: list[str] = f.read().replace("\n", '').split(" ")
         
         global _URI
