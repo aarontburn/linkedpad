@@ -121,7 +121,7 @@ def _handle_events(event_string: str) -> None:
             LEDHandler.alert_boot_process(0)
             
             q = Queue()
-            start_thread(LEDHandler.do_loading_pattern, args=(q))
+            start_thread(LEDHandler.do_loading_pattern, args=(q,))
             DatabaseHandler.init_db()
             q.put_nowait(1)
             
