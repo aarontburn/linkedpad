@@ -79,6 +79,12 @@ def linked_mode_toggle(in_linked_mode: bool) -> None:
         
 
 def set_light(row_col: str, rgb: list[int, int, int], b: bool = True):
+    if (str(row_col[0]) not in ROWS or str(row_col[1]) not in ['0', '1', '2', '3']):
+        log("Invalid row_col passed: " + row_col)
+        return
+    
+    
+    
     _linked_mode_state[row_col] = rgb
     
     if b:
