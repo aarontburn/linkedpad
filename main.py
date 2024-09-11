@@ -60,10 +60,12 @@ def _await_boot_finish() -> None:
         log('\t\tCONNECTION ATTEMPT #' + str(i))
         if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
+            LEDHandler.alert_boot_process(1)
             break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
+            LEDHandler.alert_boot_process(1)
             break
         
         i += 1
@@ -74,8 +76,9 @@ def _await_boot_finish() -> None:
             
         sleep(1)
         
-        
-    LEDHandler.alert_boot_process(1)
+    
+    LEDHandler.cleanup()
+    
     log("\tBoot processed finished.")
     
     
