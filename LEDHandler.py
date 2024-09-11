@@ -79,7 +79,7 @@ def _wifi_listener(is_connected: bool) -> None:
             cleanup()
             
             queue = Queue()
-            start_thread(do_error_pattern, args=queue)
+            start_thread(do_error_pattern, args=(queue))
             
             
             

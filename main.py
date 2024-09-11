@@ -21,7 +21,7 @@ def init():
     WifiHandler.listen_to_wifi()
     
     q = Queue()
-    start_thread(LEDHandler.do_loading_pattern, args=q)
+    start_thread(LEDHandler.do_loading_pattern, args=(q))
     DatabaseHandler.init_db()
     q.put_nowait(1)
     
@@ -54,7 +54,7 @@ def _await_boot_finish() -> None:
     log("\tAwaiting Wifi or PC connection...")
     
     q = Queue()
-    start_thread(LEDHandler.do_loading_pattern, args=q)
+    start_thread(LEDHandler.do_loading_pattern, args=(q))
     
     MAX_POLLING_SECS: int = 15
     
@@ -77,7 +77,7 @@ def _await_boot_finish() -> None:
             q.put_nowait(1)
             
             q = Queue()
-            start_thread(LEDHandler.do_error_pattern, args=q)
+            start_thread(LEDHandler.do_error_pattern, args=(q))
             
         sleep(1)
         
