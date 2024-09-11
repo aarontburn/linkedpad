@@ -90,13 +90,12 @@ def _handle_events(event_string: str) -> None:
         case 'linked-mode':
             log("linked-mode:", split_str[1])
             
-            selected_color = json.loads(split_str[2])
-            
+            if _linked_mode:
+                LEDHandler.set_light('H0', json.loads(split_str[2]))
             _linked_mode = int(split_str[1]) == 1
             LEDHandler.linked_mode_toggle(_linked_mode)
             
-            if _linked_mode:
-                LEDHandler.set_light('H0', selected_color)
+
             
         case 'pc_ready': # Ignore?
             if _is_connected == False:
