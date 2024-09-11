@@ -144,8 +144,12 @@ def _handle_events(event_string: str) -> None:
             
         
         case 'color-options':
-            hex_string: list[str] = split_str[1].split(',')
-            log(hex_string)
+            hex_list: list[str] = split_str[1].split(',')
+            
+            for hex in hex_list:
+                log(ColorHandler.hex_to_rgb(hex))
+            
+            
             
             
             

@@ -33,5 +33,6 @@ def get_current_color() -> list[int, int, int]:
 def rgb_to_hex(rgb: list[int, int, int]) -> str:
     return '#%02x%02x%02x' % (rgb[0], rgb[1], rgb[2])
 
-
+def hex_to_rgb(hex: str) -> list[int, int, int]:
+    return tuple(int(hex[1:][i:i+2], 16) for i in (0, 2, 4))
 
