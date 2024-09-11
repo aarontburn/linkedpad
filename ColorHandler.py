@@ -1,3 +1,5 @@
+from Helper import pwd, log
+
 OFF: list[int, int, int] = [0, 0, 0]
 WHITE: list[int, int, int] = [255, 255, 255]
 RED: list[int, int, int] = [255, 0, 0]
@@ -9,9 +11,26 @@ VIOLET: list[int, int, int] = [125, 0, 255]
 
 _DEFAULT_COLOR_SEQ: list[list[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
 
-_COLOR_SEQ: list[list[int, int, int]] = [WHITE, RED, YELLOW, GREEN, BLUE, VIOLET]
+_COLOR_SEQ: list[list[int, int, int]] = _DEFAULT_COLOR_SEQ
 
 _current_color_index = 0
+
+
+def load_colors_from_storage():
+    with open(pwd() + "/colors.txt", "w+") as f:
+        contents: str = f.read()
+        
+        if (contents == ''):
+            pass # Ignore, leave _COLOR_SEQ as default
+        else:
+            rgb_list: list[list[int, int, int]] = map(hex_to_rgb, contents.split(" "))
+            
+            global _COLOR_SEQ
+            _COLOR_SEQ = rgb_list
+            
+            log(_COLOR_SEQ)
+        
+    
 
 # Default macro press color is white.
 _macro_press_color: list[int, int, int] = WHITE
@@ -22,6 +41,7 @@ def set_macro_press_color(rgb: list[int, int, int]) -> None:
 
 def get_macro_press_color() -> list[int, int, int]:
     return _macro_press_color
+
 
 
 def next_color() -> None:
