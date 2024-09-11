@@ -65,7 +65,8 @@ def init():
     
     
     log("Finished initializing.")
-    
+
+global queue
 queue = Queue()
 def _wifi_listener(is_connected: bool) -> None:
     if SerialHandler.is_connected() == False:
@@ -75,6 +76,7 @@ def _wifi_listener(is_connected: bool) -> None:
             
         else: # Disconnected, but not connected to pc.
             cleanup()
+            
             global queue
             queue = Queue()
             start_thread(do_error_pattern, args=queue)
