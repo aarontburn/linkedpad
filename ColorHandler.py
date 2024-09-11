@@ -20,10 +20,6 @@ def get_macro_press_color() -> list[int, int, int]:
     return _macro_press_color
 
 
-
-
-
-
 def next_color() -> None:
     global _current_color_index
     

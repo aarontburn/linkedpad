@@ -134,7 +134,6 @@ def _handle_events(event_string: str) -> None:
             start_thread(_attempt_wifi, (wifi_ssid, wifi_pass))
             
         case 'reset':
-            log("here")
             for row_col in LEDHandler.LIGHT_MAP:
                 if row_col[0] != 'H':
                     LEDHandler.set_light(row_col, ColorHandler.OFF)
@@ -143,6 +142,14 @@ def _handle_events(event_string: str) -> None:
             rgb: list[int] = json.loads(split_str[1])
             ColorHandler.set_macro_press_color(rgb)
             
+        
+        case 'color-options':
+            log(event_string)
+            log(json.loads(split_str[1]))
+            
+            
+            
+        
         
         case _:
             log('No handler for: ' + split_str[0])
