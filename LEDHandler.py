@@ -69,9 +69,11 @@ def init():
 def _wifi_listener(is_connected: bool) -> None:
     if SerialHandler.is_connected() == False:
         if is_connected:
+            cleanup()
             alert_boot_process(1)
                 
         else: # Disconnected, but not connected to pc.
+            cleanup()
             alert_boot_process(0)
             start_thread(do_error_pattern)
             
