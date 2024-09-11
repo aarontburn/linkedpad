@@ -2,7 +2,9 @@ from time import sleep
 import board
 import neopixel
 import ColorHandler
-from Helper import log
+from Helper import log, start_thread
+import SerialHandler
+import WifiHandler
 
 _BRIGHTNESS_STEPS = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 _BRIGHTNESS_SCALE = 0.5 # Half brightness
@@ -55,6 +57,8 @@ pixels = None
 
 def init():
     log("Initializing...")
+    WifiHandler.add_listener(_wifi_listener)
+    
     global pixels
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=_DEFAULT_BRIGHTNESS * _BRIGHTNESS_SCALE)
     
@@ -62,7 +66,17 @@ def init():
     log("Finished initializing.")
     
     
-
+def _wifi_listener(is_connected: bool) -> None:
+    if SerialHandler.is_connected() == False:
+        if is_connected:
+            alert_boot_process(1)
+                
+        else: # Disconnected, but not connected to pc.
+            alert_boot_process(0)
+            start_thread(do_error_pattern)
+            
+            
+            
 
 def set_brightness(val: float = None) -> None:
     if val is None:
@@ -140,18 +154,16 @@ def do_error_pattern() -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     
     while _boot_flag == 0:
-        if _boot_flag > 0:
-            break
-        
         for row_col in pattern:
+            if _boot_flag > 0:
+                break
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.RED)
 
         sleep(0.5)
         
-        if _boot_flag > 0:
-            break
-        
         for row_col in pattern:
+            if _boot_flag > 0:
+                break
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
         
         sleep(0.5)
