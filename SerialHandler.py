@@ -144,6 +144,7 @@ def _handle_events(event_string: str) -> None:
             
         
         case 'color-options':
+            log(split_str[1])
             hex_list: list[str] = split_str[1].split(' ')
             
             out_str: str = ''
@@ -152,7 +153,7 @@ def _handle_events(event_string: str) -> None:
                 
                 
             with open(pwd() + "/colors.txt", 'a') as f:
-                log("Writing " + hex)
+                log("Writing " + out_str)
                 f.write(out_str.strip())
             
         
