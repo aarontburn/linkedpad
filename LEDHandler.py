@@ -5,6 +5,7 @@ import ColorHandler
 from Helper import log, start_thread
 import SerialHandler
 import WifiHandler
+from queue import Queue
 
 _BRIGHTNESS_STEPS = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 _BRIGHTNESS_SCALE = 0.5 # Half brightness
@@ -65,17 +66,18 @@ def init():
     
     log("Finished initializing.")
     
-    
+queue = Queue()
 def _wifi_listener(is_connected: bool) -> None:
     if SerialHandler.is_connected() == False:
         if is_connected:
             cleanup()
-            alert_boot_process(1)
-                
+            queue.put_nowait(1)
+            
         else: # Disconnected, but not connected to pc.
             cleanup()
-            alert_boot_process(0)
-            start_thread(do_error_pattern)
+            global queue
+            queue = Queue()
+            start_thread(do_error_pattern, args=queue)
             
             
             
@@ -134,37 +136,37 @@ def alert_boot_process(flag: int) -> None:
 
     
 
-def do_loading_pattern() -> None:
+def do_loading_pattern(queue: Queue) -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     set_brightness(0.3)
     
-    while _boot_flag == 0:
+    while queue.qsize() == 0:
         for row_col in pattern:
-            if _boot_flag > 0:
+            if queue.qsize() > 0:
                 break
             
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.WHITE)
             sleep(0.25)
             
-            if _boot_flag > 0:
+            if queue.qsize() > 0:
                 break
             
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
 
             
-def do_error_pattern() -> None:
+def do_error_pattern(queue: Queue) -> None:
     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
     
-    while _boot_flag == 0:
+    while queue.qsize() == 0:
         for row_col in pattern:
-            if _boot_flag > 0:
+            if queue.qsize() > 0:
                 break
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.RED)
 
         sleep(0.5)
         
         for row_col in pattern:
-            if _boot_flag > 0:
+            if queue.qsize() > 0:
                 break
             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
         

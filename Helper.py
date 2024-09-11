@@ -13,6 +13,7 @@ def start_thread(target, args = ()):
     thread.start()
 
 
+
 def get_temp():
     with open('/sys/class/thermal/thermal_zone0/temp') as f:
         return round(int(f.read().strip()) / 1000, 2)

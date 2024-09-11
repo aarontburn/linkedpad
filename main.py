@@ -5,6 +5,8 @@ import LEDHandler
 import SerialHandler
 import WifiHandler
 from Helper import start_thread, log
+from queue import Queue
+
 
 def init():
     log("Booting...")
@@ -50,8 +52,8 @@ def _await_boot_finish() -> None:
     
     log("\tAwaiting Wifi or PC connection...")
     
-    
-    start_thread(LEDHandler.do_loading_pattern)
+    q = Queue()
+    start_thread(LEDHandler.do_loading_pattern, args=q)
     
     MAX_POLLING_SECS: int = 15
     
@@ -60,19 +62,21 @@ def _await_boot_finish() -> None:
         log('\t\tCONNECTION ATTEMPT #' + str(i))
         if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
-            LEDHandler.alert_boot_process(1)
+            q.put_nowait(1)
             break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
-            LEDHandler.alert_boot_process(1)
+            q.put_nowait(1)
             break
         
         i += 1
         if i == MAX_POLLING_SECS:
             log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
-            LEDHandler.alert_boot_process(0)
-            start_thread(LEDHandler.do_error_pattern)
+            q.put_nowait(1)
+            
+            q = Queue()
+            start_thread(LEDHandler.do_error_pattern, args=q)
             
         sleep(1)
         
