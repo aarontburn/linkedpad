@@ -76,7 +76,7 @@ def _await_boot_finish() -> None:
             
         sleep(1)
         
-    
+    sleep(1)
     LEDHandler.cleanup()
     
     log("\tBoot processed finished.")
