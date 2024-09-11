@@ -69,7 +69,6 @@ def _handle_events(event_string: str) -> None:
     global _linked_mode
     global _is_connected
     
-    log(split_str)
     
     match split_str[0]:
         case 'brightness':
