@@ -8,11 +8,15 @@ DELAY_SECONDS: float = 1 # Every second
 
 listeners: list = []
 
+_listener_started = False
+
 _connected: bool = False
 setdefaulttimeout(3)
 
 
 def listen_to_wifi():
+    global _listener_started
+    _listener_started = True
     start_thread(_wifi_listener)
 
 
@@ -41,8 +45,9 @@ def attempt_wifi_connection() -> bool:
         current_status = False
     
     if _connected != current_status:
-        for listener in listeners:
-            listener(current_status)
+        if _listener_started:
+            for listener in listeners:
+                listener(current_status)
 
     _connected = current_status
     return current_status
