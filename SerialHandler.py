@@ -127,6 +127,7 @@ def _handle_events(event_string: str) -> None:
             start_thread(_attempt_wifi, (wifi_ssid, wifi_pass))
             
         case 'reset':
+            log("here")
             for row_col in LEDHandler.LIGHT_MAP:
                 if row_col[0] != 'H':
                     LEDHandler.set_light(row_col, ColorHandler.OFF)
