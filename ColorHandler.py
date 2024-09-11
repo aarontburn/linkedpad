@@ -17,6 +17,7 @@ _current_color_index = 0
 
 
 def load_colors_from_storage():
+    log("Loading saved colors...")
     with open(pwd() + "/colors.txt", "w+") as f:
         contents: str = f.read()
         

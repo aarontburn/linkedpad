@@ -58,9 +58,12 @@ def _wifi_listener(is_connected: bool) -> None:
 def init_db() -> None:
     log("Initializing...")
     
+    
     if WifiHandler.is_connected() == False:
         log("Not connected to the internet.")
         return
+    
+    ColorHandler.load_colors_from_storage()
     
     global _client
     global _database
