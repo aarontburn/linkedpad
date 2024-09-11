@@ -5,13 +5,14 @@ import LEDHandler
 import SerialHandler
 import WifiHandler
 from Helper import start_thread, log
-import signal
 
 def init():
     log("Booting...")
     LEDHandler.init()
     GPIOHandler.setup_gpio()
     DatabaseHandler.init()
+    
+    start_thread(SerialHandler.init)
     
     # Do loading animation
     _await_boot_finish()
@@ -24,7 +25,6 @@ def init():
     LEDHandler.alert_boot_process(1)
     sleep(0.25)
 
-    start_thread(SerialHandler.init)
     start_thread(GPIOHandler.gpio_listen)
     start_thread(DatabaseHandler.db_listen)
 
