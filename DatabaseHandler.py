@@ -1,7 +1,7 @@
 import pymongo
 import ColorHandler
 import SerialHandler
-from Helper import log, pwd
+from Helper import log, pwd, start_thread
 
 import WifiHandler
 if __name__ != "__main__":
@@ -51,10 +51,17 @@ def init() -> None:
 
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
+        LEDHandler.alert_boot_process(1)
+        
         if SerialHandler.is_connected() == False:
             init_db()
     else: # Diconnect
         if SerialHandler.is_connected() == False:
+            LEDHandler.alert_boot_process(0)
+            start_thread(LEDHandler.do_error_pattern)
+            
+            
+            
             
         
         
