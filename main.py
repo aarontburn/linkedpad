@@ -20,11 +20,12 @@ def init():
     _await_boot_finish()
     WifiHandler.listen_to_wifi()
     
-    
-    LEDHandler.alert_boot_process(0)
-    start_thread(LEDHandler.do_loading_pattern)
+    q = Queue()
+    start_thread(LEDHandler.do_loading_pattern, args=q)
     DatabaseHandler.init_db()
-    LEDHandler.alert_boot_process(1)
+    q.put_nowait(1)
+    
+    
     sleep(0.25)
 
     start_thread(GPIOHandler.gpio_listen)

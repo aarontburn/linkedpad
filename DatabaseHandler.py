@@ -52,13 +52,11 @@ def init() -> None:
 def _wifi_listener(is_connected: bool) -> None:
     if is_connected:
         if SerialHandler.is_connected() == False:
-            LEDHandler.alert_boot_process(1)
             init_db()
             
     else: # Disconnect
         if SerialHandler.is_connected() == False:
-            LEDHandler.alert_boot_process(0)
-            start_thread(LEDHandler.do_error_pattern)
+            close()
             
             
             

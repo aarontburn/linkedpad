@@ -1,3 +1,4 @@
+from queue import Queue
 import serial
 import time
 import json
@@ -118,9 +119,11 @@ def _handle_events(event_string: str) -> None:
             
             LEDHandler.set_brightness(LEDHandler._DEFAULT_BRIGHTNESS)
             LEDHandler.alert_boot_process(0)
-            start_thread(LEDHandler.do_loading_pattern)
+            
+            q = Queue()
+            start_thread(LEDHandler.do_loading_pattern, args=q)
             DatabaseHandler.init_db()
-            LEDHandler.alert_boot_process(1)
+            q.put_nowait(1)
             
             start_thread(DatabaseHandler.db_listen)
             init()
