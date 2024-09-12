@@ -23,8 +23,7 @@ def init():
     WifiHandler.listen_to_wifi()
     
     
-    if (SerialHandler.is_connected):
-        LEDHandler.set_light('H3', ColorHandler.WHITE)
+    if (SerialHandler.is_connected() == False):
         DatabaseHandler.init_db()
         
     

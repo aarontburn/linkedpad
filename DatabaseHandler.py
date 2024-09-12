@@ -79,6 +79,7 @@ def init_db() -> None:
     _database = _client.get_database('pad_data')
     _collection = _database.get_collection('data')
     
+    LEDHandler.set_light('H3', ColorHandler.WHITE)
     
     _check_database()
     _collection.find_one({})

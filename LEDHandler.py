@@ -10,7 +10,7 @@ from queue import Queue
 _BRIGHTNESS_STEPS = [0.01, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
 _BRIGHTNESS_SCALE = 0.5 # Half brightness
 _brightness_index = 1
-_DEFAULT_BRIGHTNESS = _BRIGHTNESS_STEPS[1] # 0.1
+_DEFAULT_BRIGHTNESS = _BRIGHTNESS_STEPS[2] # 0.2
 
 
 

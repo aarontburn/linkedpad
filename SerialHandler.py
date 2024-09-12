@@ -120,7 +120,6 @@ def _handle_events(event_string: str) -> None:
                 LEDHandler.set_light(row_col, ColorHandler.OFF)
             
             LEDHandler.set_brightness(LEDHandler._DEFAULT_BRIGHTNESS)
-            LEDHandler.set_light("H3", ColorHandler.WHITE)
             DatabaseHandler.init_db()
             
             start_thread(DatabaseHandler.db_listen)
