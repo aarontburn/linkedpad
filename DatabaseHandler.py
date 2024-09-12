@@ -84,6 +84,8 @@ def init_db() -> None:
     _check_database()
     _collection.find_one({})
     recalibrate()
+    LEDHandler.set_light('H3', ColorHandler.OFF)
+    
     
     global _is_init
     _is_init = True
