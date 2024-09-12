@@ -63,10 +63,10 @@ def _await_boot_finish() -> None:
     while i < MAX_POLLING_SECS:
         log(f'\t\tCONNECTION ATTEMPT #{i}')
         
-        if WifiHandler.attempt_wifi_connection():
-            log("\tWifi connection found.")
-            q_loading.put_nowait(1)
-            break
+        # if WifiHandler.attempt_wifi_connection():
+        #     log("\tWifi connection found.")
+        #     q_loading.put_nowait(1)
+        #     break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
