@@ -32,22 +32,7 @@ def _build_light_map() -> dict[str, int]:
         
     return out
 
-def _build_default_state() -> dict[str, list[int]]:
-    out: dict[str, list[int]] = {}
     
-    for row in ROWS:
-        for col in range(MAX_COLS):
-            out[str(row) + str(col)] = ColorHandler.OFF
-            
-    return out
-        
-    
-
-
-
-_linked_mode_state = _build_default_state()
-
-
 
 
 LIGHT_MAP: dict[str, int] = _build_light_map()
@@ -95,10 +80,8 @@ def set_brightness(val: float = None) -> None:
 
 def linked_mode_toggle(in_linked_mode: bool) -> None: 
     if in_linked_mode:
-        for row_col in _linked_mode_state:
-            set_light(row_col, _linked_mode_state[row_col])
-            
-        # set_light('H0', ColorHandler.get_current_color())
+        pass
+
     else:
         for i in range(len(LIGHT_MAP)):
             pixels[i] = tuple(ColorHandler.OFF)
@@ -111,17 +94,12 @@ def set_light(row_col: str, rgb: list[int, int, int], b: bool = True):
         log("Invalid row_col passed: " + row_col)
         return
     
-    
-    
-    _linked_mode_state[row_col] = rgb
-    
     if b:
         pixels[int(LIGHT_MAP[row_col])] = (rgb[0], rgb[1], rgb[2])
     
     
 def cleanup() -> None:
     for row_col in LIGHT_MAP:
-        _linked_mode_state[row_col] = ColorHandler.OFF
         pixels[LIGHT_MAP[row_col]] = tuple(ColorHandler.OFF)
 
 
