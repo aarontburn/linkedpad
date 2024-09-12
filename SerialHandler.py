@@ -50,10 +50,12 @@ def maintain_connection() -> None:
         
         
 def is_connected() -> bool:
+    global _is_connected
     return _is_connected
 
 
 def in_linked_mode() -> bool:
+    global _is_connected
     return _linked_mode
 
 

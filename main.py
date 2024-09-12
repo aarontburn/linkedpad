@@ -1,3 +1,4 @@
+from threading import Thread
 from time import sleep
 import GPIOHandler
 import DatabaseHandler
@@ -47,46 +48,88 @@ def init():
         _run_with_exception(DatabaseHandler.close)
         _run_with_exception(GPIOHandler.destroy_gpio)
 
-
-
-
 def _await_boot_finish() -> None:
     log("Starting boot")
     
     log("\tAwaiting Wifi or PC connection...")
     
-    q = Queue()
-    start_thread(LEDHandler.do_loading_pattern, args=(q,))
+    q_loading = Queue()
+    thread_loading = Thread(target=LEDHandler.do_loading_pattern, args=(q_loading,))
+    thread_loading.start()
     
     MAX_POLLING_SECS: int = 15
-    
     i: int = 0
-    while True:
-        log('\t\tCONNECTION ATTEMPT #' + str(i))
+    
+    while i < MAX_POLLING_SECS:
+        log(f'\t\tCONNECTION ATTEMPT #{i}')
+        
         if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
-            q.put_nowait(1)
+            q_loading.put_nowait(1)
             break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
-            q.put_nowait(1)
+            q_loading.put_nowait(1)
             break
         
         i += 1
-        if i == MAX_POLLING_SECS:
-            log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
-            q.put_nowait(1)
-            
-            q = Queue()
-            start_thread(LEDHandler.do_error_pattern, args=(q,))
-            
         sleep(1)
         
-    sleep(1)
-    LEDHandler.cleanup()
+    if i == MAX_POLLING_SECS:
+        log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
+        q_loading.put_nowait(1)  # Stop loading pattern
+
+        # Start error LED pattern
+        q_error = Queue()
+        thread_error = Thread(target=LEDHandler.do_error_pattern, args=(q_error,))
+        thread_error.start()
+        
+        q_error.put_nowait(1)  # Signal to stop error pattern
     
-    log("\tBoot processed finished.")
+    # Ensure threads finish before cleanup
+    thread_loading.join()
+    LEDHandler.cleanup()
+
+    log("\tBoot process finished.")
+
+
+# def _await_boot_finish() -> None:
+#     log("Starting boot")
+    
+#     log("\tAwaiting Wifi or PC connection...")
+    
+#     q = Queue()
+#     start_thread(LEDHandler.do_loading_pattern, args=(q,))
+    
+#     MAX_POLLING_SECS: int = 15
+    
+#     i: int = 0
+#     while True:
+#         log('\t\tCONNECTION ATTEMPT #' + str(i))
+#         if WifiHandler.attempt_wifi_connection():
+#             log("\tWifi connection found.")
+#             q.put_nowait(1)
+#             break
+        
+#         if SerialHandler.is_connected():
+#             log("\tConnected to PC.")
+#             q.put_nowait(1)
+#             break
+        
+#         i += 1
+#         if i == MAX_POLLING_SECS:
+#             log(f"\tNo connections found after {MAX_POLLING_SECS} seconds.")
+#             q.put_nowait(1)
+            
+#             q = Queue()
+#             start_thread(LEDHandler.do_error_pattern, args=(q,))
+            
+#         sleep(1)
+#     sleep(1)
+#     LEDHandler.cleanup()
+    
+#     log("\tBoot processed finished.")
     
     
     
