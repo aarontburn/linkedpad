@@ -104,7 +104,9 @@ def _handle_events(event_string: str) -> None:
             
             state: dict[str, list[int]] = json.loads(split_str[1])
             
-            log(state)
+            for row_col in state:
+                LEDHandler.set_light(row_col, state[row_col], _linked_mode)
+            
             
             
             
