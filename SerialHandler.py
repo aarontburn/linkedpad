@@ -102,7 +102,9 @@ def _handle_events(event_string: str) -> None:
             
         case 'linked-state':
             
-            log(split_str[1])
+            state: dict[str, list[int]] = json.loads(split_str[1])
+            
+            log(state)
             
             
             
