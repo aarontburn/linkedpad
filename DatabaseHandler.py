@@ -119,10 +119,6 @@ def close() -> None:
     run_with_exception(_stream._cursor.close)
     run_with_exception(_client.close)
     
-    
-    ()
-    
-    
 
 def reset() -> None:
     _collection.find_one_and_update(
