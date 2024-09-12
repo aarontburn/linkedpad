@@ -138,8 +138,9 @@ def recalibrate() -> None:
     if current_state == None:
         log("Could not recalibrate; '_get_object()' returned 'None'")
         return
-    for key in _KEYS:
-        _set_light(key[0], key[1], ColorHandler.OFF)
+    
+    
+    LEDHandler.cleanup()
         
         
     for key in _KEYS:
