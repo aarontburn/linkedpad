@@ -63,23 +63,17 @@ def init():
     global pixels
     pixels = neopixel.NeoPixel(GPIO, len(LIGHT_MAP), brightness=_DEFAULT_BRIGHTNESS * _BRIGHTNESS_SCALE)
     
-    
     log("Finished initializing.")
 
-queue = Queue()
+
 def _wifi_listener(is_connected: bool) -> None:
-    global queue
-    
     if SerialHandler.is_connected() == False:
         if is_connected:
             cleanup()
             set_light("H3", ColorHandler.OFF)
-
             
         else: # Disconnected, but not connected to pc.
             cleanup()
-            
-            queue = Queue()
             set_light("H3", ColorHandler.RED)
             
             
@@ -131,51 +125,6 @@ def cleanup() -> None:
 
 
 
-# _boot_flag: int = 0
-
-# def alert_boot_process(flag: int) -> None:
-#     global _boot_flag
-#     _boot_flag = flag
-
-    
-
-# def do_loading_pattern(queue: Queue) -> None:
-#     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
-#     set_brightness(0.3)
-    
-#     while queue.qsize() == 0:
-#         for row_col in pattern:
-#             if queue.qsize() > 0:
-#                 break
-            
-#             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.WHITE)
-#             sleep(0.25)
-            
-#             if queue.qsize() > 0:
-#                 break
-            
-#             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
-
-            
-# def do_error_pattern(queue: Queue) -> None:
-#     pattern: list[str] = ['A0', 'A1', 'A2', 'A3', 'B3', 'C3', 'D3', 'D2', 'D1', 'D0', 'C0', 'B0']
-    
-#     while queue.qsize() == 0:
-#         for row_col in pattern:
-#             if queue.qsize() > 0:
-#                 break
-#             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.RED)
-
-#         sleep(0.5)
-        
-#         for row_col in pattern:
-#             if queue.qsize() > 0:
-#                 break
-#             pixels[int(LIGHT_MAP[row_col])] = tuple(ColorHandler.OFF)
-        
-#         sleep(0.5)
-        
-            
         
         
 

@@ -100,7 +100,12 @@ def _handle_events(event_string: str) -> None:
             _linked_mode = int(split_str[1]) == 1
             LEDHandler.linked_mode_toggle(_linked_mode)
             
-
+        case 'linked-state':
+            
+            log(split_str[1])
+            
+            
+            
             
         case 'pc_ready': # Ignore?
             if _is_connected == False:
