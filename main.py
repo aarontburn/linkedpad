@@ -54,6 +54,8 @@ def _await_boot_finish() -> None:
     log("\tAwaiting Wifi or PC connection...")
     
     q_loading = Queue()
+    q_error = Queue()
+    
     thread_loading = Thread(target=LEDHandler.do_loading_pattern, args=(q_loading,))
     thread_loading.start()
     
@@ -66,11 +68,14 @@ def _await_boot_finish() -> None:
         if WifiHandler.attempt_wifi_connection():
             log("\tWifi connection found.")
             q_loading.put_nowait(1)
+            q_error.put_nowait(1)  # Signal to stop error pattern
             break
         
         if SerialHandler.is_connected():
             log("\tConnected to PC.")
             q_loading.put_nowait(1)
+            q_error.put_nowait(1)  # Signal to stop error pattern
+            
             break
         
         i += 1
@@ -81,11 +86,9 @@ def _await_boot_finish() -> None:
         q_loading.put_nowait(1)  # Stop loading pattern
 
         # Start error LED pattern
-        q_error = Queue()
         thread_error = Thread(target=LEDHandler.do_error_pattern, args=(q_error,))
         thread_error.start()
         
-        q_error.put_nowait(1)  # Signal to stop error pattern
     
     # Ensure threads finish before cleanup
     thread_loading.join()
