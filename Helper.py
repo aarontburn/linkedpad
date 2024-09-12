@@ -27,3 +27,9 @@ def log(*message) -> None:
     
     print(filename + ": " + out[1:], flush=True)
     
+    
+def run_with_exception(target) -> None:
+    try:
+        target()
+    except Exception as e:
+        log(e)

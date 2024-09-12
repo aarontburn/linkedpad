@@ -1,4 +1,3 @@
-from threading import Thread
 from time import sleep
 import ColorHandler
 import GPIOHandler
@@ -6,8 +5,7 @@ import DatabaseHandler
 import LEDHandler
 import SerialHandler
 import WifiHandler
-from Helper import start_thread, log
-from queue import Queue
+from Helper import start_thread, log, run_with_exception
 
 
 def init():
@@ -78,20 +76,14 @@ def _await_boot_finish() -> None:
     
     
 
-def _run_with_exception(target) -> None:
-    try:
-        target()
-    except Exception as e:
-        log(e)
-    
 
     
 def _on_exit():
     log("Exiting program...")
-    _run_with_exception(LEDHandler.cleanup)
-    _run_with_exception(SerialHandler.cleanup)
-    _run_with_exception(DatabaseHandler.close)
-    _run_with_exception(GPIOHandler.destroy_gpio)
+    run_with_exception(LEDHandler.cleanup)
+    run_with_exception(SerialHandler.cleanup)
+    run_with_exception(DatabaseHandler.close)
+    run_with_exception(GPIOHandler.destroy_gpio)
     
     
 if __name__ == '__main__':
