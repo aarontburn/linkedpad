@@ -116,8 +116,13 @@ def close() -> None:
     log('Closing...')
     global _is_init
     _is_init = False
-    run_with_exception(_stream._cursor.close)
-    run_with_exception(_client.close)
+    
+    
+    if _stream != None:
+        run_with_exception(_stream._cursor.close)
+    
+    if _client != None:
+        run_with_exception(_client.close)
     
 
 def reset() -> None:
