@@ -93,11 +93,10 @@ def _handle_events(event_string: str) -> None:
         case 'linked-mode':
             log("linked-mode:", split_str[1])
             
+            _linked_mode = int(split_str[1]) == 1
+            
             if _linked_mode:
                 LEDHandler.set_light('H0', json.loads(split_str[2]))
-                
-                
-            _linked_mode = int(split_str[1]) == 1
             LEDHandler.linked_mode_toggle(_linked_mode)
             
         case 'linked-state':
