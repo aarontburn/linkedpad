@@ -121,6 +121,7 @@ def set_light(row_col: str, rgb: list[int, int, int], b: bool = True):
     
 def cleanup() -> None:
     for row_col in LIGHT_MAP:
+        _linked_mode_state[row_col] = ColorHandler.OFF
         pixels[LIGHT_MAP[row_col]] = tuple(ColorHandler.OFF)
 
 
