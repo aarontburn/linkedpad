@@ -41,12 +41,8 @@ def init():
             sleep(0.5)
             # log("Temp: " + str(_get_temp()) + " C")
     except KeyboardInterrupt:
-        log("Exiting program...")
         exiting = True
-        _run_with_exception(LEDHandler.cleanup)
-        _run_with_exception(SerialHandler.cleanup)
-        _run_with_exception(DatabaseHandler.close)
-        _run_with_exception(GPIOHandler.destroy_gpio)
+        _on_exit()
 
 
 
@@ -91,12 +87,19 @@ def _run_with_exception(target) -> None:
     
 
     
-    
-    
+def _on_exit():
+    log("Exiting program...")
+    _run_with_exception(LEDHandler.cleanup)
+    _run_with_exception(SerialHandler.cleanup)
+    _run_with_exception(DatabaseHandler.close)
+    _run_with_exception(GPIOHandler.destroy_gpio)
     
     
 if __name__ == '__main__':
-    init()
+    try:
+        init()
+    except KeyboardInterrupt:
+        _on_exit()
 
 
 
